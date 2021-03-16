@@ -5,7 +5,7 @@ use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
 use Budgetlens\BolRetailerApi\Resources\Shipment as ShipmentResource;
 
 
-class Shipments extends BaseEndpoint
+class Orders extends BaseEndpoint
 {
     public function list()
     {

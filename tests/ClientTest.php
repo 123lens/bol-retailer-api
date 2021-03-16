@@ -1,7 +1,7 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Tests;
 
-use Budgetlens\BolRetailerApi\Endpoints\Shipments;
+use Budgetlens\BolRetailerApi\Endpoints\Orders;
 use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
 
 class ClientTest extends TestCase
@@ -9,7 +9,7 @@ class ClientTest extends TestCase
     /** @test */
     public function client_has_a_shipments_endpoint()
     {
-        $this->assertInstanceOf(Shipments::class, $this->client->shipments);
+        $this->assertInstanceOf(Orders::class, $this->client->shipments);
     }
 
     /** @test */
