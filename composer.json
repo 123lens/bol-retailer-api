@@ -37,7 +37,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Budgetlems\\BolRetailerApi\\Tests\\": "tests/"
+            "Budgetlens\\BolRetailerApi\\Tests\\": "tests/"
         }
     },
     "scripts": {
