@@ -5,13 +5,16 @@
          colors="true"
 >
     <testsuites>
-        <testsuite name="MyParcel API Test Suite">
-            <directory>tests</directory>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
         <include>
-            <directory suffix=".php">./src</directory>
+            <directory suffix=".php">./app</directory>
         </include>
     </coverage>
 </phpunit>
