@@ -24,7 +24,7 @@ abstract class TestCase extends BaseTestCase
             exit('The environment file is invalid: '.$e->getMessage());
         }
 
-        $this->client = new Client(getenv('CLIENT_ID'), getenv('CLIENT_SECRET'));
+        $this->client = new Client();
 
         parent::setUp();
     }

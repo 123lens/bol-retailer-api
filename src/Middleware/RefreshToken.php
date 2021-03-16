@@ -2,6 +2,7 @@
 namespace Budgetlens\BolRetailerApi\Middleware;
 
 
+use Budgetlens\BolRetailerApi\Contracts\Config;
 use Budgetlens\BolRetailerApi\Exceptions\AuthenticationException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
@@ -10,15 +11,12 @@ use GuzzleHttp\Client as HttpClient;
 
 final class RefreshToken
 {
-    private $client;
-    private $clientId;
-    private $clientSecret;
+    private $config;
     private $token;
 
-    public function __construct($clientId, $clientSecret)
+    public function __construct(Config $config)
     {
-        $this->clientId = $clientId;
-        $this->clientSecret = $clientSecret;
+        $this->config = $config;
     }
 
     public function __invoke(callable $next)
@@ -35,6 +33,8 @@ final class RefreshToken
      */
     private function hasValidToken(): bool
     {
+        $this->loadTokenFromCache();
+
         if (!is_array($this->token)) {
             return false;
         }
@@ -48,6 +48,41 @@ final class RefreshToken
         return $this->token['expires_at'] > time();
     }
 
+    /**
+     * Load token from cache
+     */
+    private function loadTokenFromCache(): void
+    {
+        if (!is_array($this->token) &&
+            $this->config->cacheToken()
+        ) {
+            // only load cache if no token is present.
+            $tokenFile = $this->getTokenFile();
+            if (file_exists($tokenFile)) {
+                $this->token = unserialize(file_get_contents($tokenFile));
+            }
+        }
+    }
+
+    /**
+     * Set Token Cache
+     */
+    private function setTokenCache(): void
+    {
+        if ($this->config->cacheToken()) {
+            $tokenFile = $this->getTokenFile();
+            @file_put_contents($tokenFile, serialize($this->token));
+        }
+    }
+
+    /**
+     * Get Token File
+     * @return string
+     */
+    private function getTokenFile(): string
+    {
+        return dirname(__FILE__) . '/../Cache/token.cache';
+    }
     /**
      * Apply bearer token to request
      * @param RequestInterface $request
@@ -85,7 +120,7 @@ final class RefreshToken
             $client = new HttpClient();
             $response = $client->request('POST', 'https://login.bol.com/token?grant_type=client_credentials', [
                 'headers' => $headers,
-                'auth' => [$this->clientId, $this->clientSecret]
+                'auth' => [$this->config->getClientId(), $this->config->getClientSecret()]
             ]);
         } catch (GuzzleException $e) {
             if ($e instanceof RequestException) {
@@ -107,5 +142,6 @@ final class RefreshToken
         $token['expires_at'] = time() + $token['expires_in'] ?? 0;
 
         $this->token = $token;
+        $this->setTokenCache();
     }
 }

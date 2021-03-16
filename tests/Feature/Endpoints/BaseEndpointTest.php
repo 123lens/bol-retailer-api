@@ -1,6 +1,7 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
 
+use Budgetlens\BolRetailerApi\ApiConfig;
 use Budgetlens\BolRetailerApi\Client;
 use Budgetlens\BolRetailerApi\Endpoints\BaseEndpoint;
 use Budgetlens\BolRetailerApi\Exceptions\AuthenticationException;
@@ -13,7 +14,7 @@ class BaseEndpointTest extends TestCase
     public function invalidCredentialsThrowsAnException()
     {
         // overwrite client
-        $client = new Client('invalid', 'credentials');
+        $client = new Client(new ApiConfigStub());
         $this->expectException(AuthenticationException::class);
         $endpoint = new BaseEndpointStub($client);
         $endpoint->performApiCall('GET', 'non-existent');
@@ -49,5 +50,24 @@ class BaseEndpointStub extends BaseEndpoint
     public function performApiCall($httpMethod, $apiMethod, $httpBody = null, $requestHeaders = [])
     {
         return parent::performApiCall($httpMethod, $apiMethod, $httpBody = null, $requestHeaders = []);
+    }
+}
+
+class ApiConfigStub extends ApiConfig
+{
+
+    public function getClientId(): string
+    {
+        return 'invalid';
+    }
+
+    public function getClientSecret(): string
+    {
+        return 'test';
+    }
+
+    public function cacheToken(): bool
+    {
+        return false;
     }
 }

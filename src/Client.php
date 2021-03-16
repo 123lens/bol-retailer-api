@@ -1,6 +1,7 @@
 <?php
 namespace Budgetlens\BolRetailerApi;
 
+use Budgetlens\BolRetailerApi\Contracts\Config;
 use Budgetlens\BolRetailerApi\Exceptions\AuthenticationException;
 use Budgetlens\BolRetailerApi\Middleware\RefreshToken;
 use Composer\CaBundle\CaBundle;
@@ -20,6 +21,9 @@ class Client
     protected const API_VERSION_CONTENT_TYPE = 'application/vnd.retailer.v4+json';
 
     const HTTP_STATUS_NO_CONTENT = 204;
+
+    /** @var Config  */
+    private $config;
 
     /** @var string */
     protected $apiEndpoint = self::API_ENDPOINT;
@@ -41,28 +45,26 @@ class Client
 
 
 
-    public function __construct(string $clientId, string $clientSecret)
+    public function __construct(?Config $config = null)
     {
-        $this->clientId = $clientId;
-        $this->clientSecret = $clientSecret;
+        if (is_null($config)) {
+            $config = new ApiConfig();
+        }
+        $this->config = $config;
 
-        $this->httpClient = self::create($clientId, $clientSecret);
-
-        $this->initializeEndpoints();
-    }
-
-    public static function create(string $clientId, string $clientSecret)
-    {
         $stack = HandlerStack::create();
 
-        $client = new HttpClient([
+        foreach ($config->getMiddleware() as $middlware) {
+            $stack->push($middlware);
+        }
+        $this->httpClient = new HttpClient([
             RequestOptions::VERIFY => CaBundle::getBundledCaBundlePath(),
             'handler' => $stack,
         ]);
         // add token middleware
-        $stack->push(new RefreshToken($clientId, $clientSecret));
+        $stack->push(new RefreshToken($config));
 
-        return $client;
+        $this->initializeEndpoints();
     }
 
     /**
