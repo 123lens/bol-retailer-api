@@ -6,6 +6,8 @@ use Budgetlens\BolRetailerApi\Contracts\Config;
 
 class ApiConfig implements Config
 {
+    private $middleware = [];
+
     public function getClientId(): string
     {
         return getenv('CLIENT_ID');
@@ -28,7 +30,12 @@ class ApiConfig implements Config
 
     public function getMiddleware(): array
     {
-        return [];
+        return $this->middleware;
+    }
+
+    public function addMiddleware($middleware)
+    {
+        $this->middleware[] = $middleware;
     }
 
     public function cacheToken(): bool

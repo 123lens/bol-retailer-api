@@ -1,0 +1,51 @@
+{
+  "orderId": "1209176585",
+  "pickUpPoint": false,
+  "orderPlacedDateTime": "2021-03-16T13:33:00+01:00",
+  "shipmentDetails": {
+    "salutation": "FEMALE",
+    "firstName": "Lisa",
+    "surname": "Test",
+    "streetName": "De Straat",
+    "houseNumber": "1",
+    "zipCode": "1234AA",
+    "city": "Amsterdam",
+    "countryCode": "NL",
+    "email": "some-random-hash@verkopen.bol.com",
+    "language": "nl"
+  },
+  "billingDetails": {
+    "salutation": "FEMALE",
+    "firstName": "Lisa",
+    "surname": "Test",
+    "streetName": "De Straat",
+    "houseNumber": "1",
+    "zipCode": "1234AA",
+    "city": "Amsterdam",
+    "countryCode": "NL",
+    "email": "some-random-hash@verkopen.bol.com"
+  },
+  "orderItems": [
+    {
+      "orderItemId": "2592294022",
+      "cancellationRequest": false,
+      "fulfilment": {
+        "method": "FBR",
+        "distributionParty": "RETAILER",
+        "latestDeliveryDate": "2021-03-23",
+        "expiryDate": "2021-03-26"
+      },
+      "offer": {
+        "offerId": "8c5d5aa9-5f01-7849-e053-828b620a2bd4",
+        "reference": "1356_2590"
+      },
+      "product": {
+        "ean": "8717185945140",
+        "title": "A Great Product"
+      },
+      "quantity": 1,
+      "unitPrice": 28.25,
+      "commission": 0.45
+    }
+  ]
+}
