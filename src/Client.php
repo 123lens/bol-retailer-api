@@ -103,6 +103,8 @@ class Client
             ->merge($requestHeaders)
             ->all();
 
+        print_r($headers);
+        exit;
         $request = new Request(
             $httpMethod,
             "{$this->config->getEndpoint()}/{$apiMethod}",

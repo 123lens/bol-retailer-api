@@ -9,15 +9,8 @@ use Budgetlens\BolRetailerApi\Resources\Order as OrderResource;
 
 class Orders extends BaseEndpoint
 {
-    protected function getApiVersionHeader(): string
-    {
-        return 'application/vnd.retailer.v5+json';
-    }
-
     public function getOpenOrders(string $fulfillmentMethod = 'FBR', int $page = 1)
     {
-        $this->setApiVersionHeader($this->getApiVersionHeader());
-
         $response = $this->performApiCall(
             'GET',
             'orders' . $this->buildQueryString([
@@ -37,8 +30,6 @@ class Orders extends BaseEndpoint
 
     public function get(int $id): OrderResource
     {
-        $this->setApiVersionHeader($this->getApiVersionHeader());
-
         $response = $this->performApiCall(
             'GET',
             "orders/{$id}"
