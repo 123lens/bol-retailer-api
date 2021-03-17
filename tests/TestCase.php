@@ -1,6 +1,8 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Tests;
 
+use Budgetlens\BolRetailerApi\ApiConfig;
+use Budgetlens\BolRetailerApi\Contracts\Config;
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidFileException;
 use Dotenv\Exception\InvalidPathException;
@@ -32,7 +34,7 @@ abstract class TestCase extends BaseTestCase
             exit('The environment file is invalid: '.$e->getMessage());
         }
 
-        $this->client = new Client();
+        $this->client = new Client(new TestApiConfig());
 
         parent::setUp();
     }
@@ -47,7 +49,7 @@ abstract class TestCase extends BaseTestCase
     }
 
 
-    protected function useMock($file)
+    protected function useMock($file, $status = 200)
     {
 
         // set mock client
@@ -56,10 +58,45 @@ abstract class TestCase extends BaseTestCase
             'handler' => $mockHandler
         ]);
         $mockHandler->append(new Response(
-            200,
+            $status,
             $this->defaultResponseHeader,
             $this->getMockfile($file)
         ));
         $this->client->setClient($client);
+    }
+}
+
+class TestApiConfig implements Config
+{
+    private $middleware = [];
+
+    public function getClientId(): string
+    {
+        return getenv('CLIENT_ID');
+    }
+
+    public function getClientSecret(): string
+    {
+        return getenv('CLIENT_SECRET');
+    }
+
+    public function getEndpoint(): string
+    {
+        return 'https://api.bol.com/retailer-demo';
+    }
+
+    public function getMiddleware(): array
+    {
+        return $this->middleware;
+    }
+
+    public function addMiddleware($middleware)
+    {
+        $this->middleware[] = $middleware;
+    }
+
+    public function cacheToken(): bool
+    {
+        return true;
     }
 }

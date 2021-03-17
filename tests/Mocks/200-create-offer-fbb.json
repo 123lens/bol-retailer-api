@@ -1,0 +1,12 @@
+{
+  "id" : 1,
+  "eventType" : "CREATE_OFFER",
+  "description" : "Create an offer with ean 0000007740404.",
+  "status" : "PENDING",
+  "createTimestamp" : "2021-03-17T11:00:31+01:00",
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://api.bol.com/retailer-demo/process-status/1",
+    "method" : "GET"
+  } ]
+}
