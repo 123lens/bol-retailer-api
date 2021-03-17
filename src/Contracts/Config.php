@@ -1,7 +1,6 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Contracts;
 
-
 interface Config
 {
     public function getClientId(): string;

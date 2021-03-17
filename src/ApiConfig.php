@@ -1,7 +1,6 @@
 <?php
 namespace Budgetlens\BolRetailerApi;
 
-
 use Budgetlens\BolRetailerApi\Contracts\Config;
 
 class ApiConfig implements Config
