@@ -1,13 +1,8 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
-use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
-use Budgetlens\BolRetailerApi\Resources\Order;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatusCollection;
-use Budgetlens\BolRetailerApi\Resources\Shipment as ShipmentResource;
-use Illuminate\Support\Collection;
-use Budgetlens\BolRetailerApi\Resources\Order as OrderResource;
 
 class Status extends BaseEndpoint
 {
@@ -75,7 +70,6 @@ class Status extends BaseEndpoint
     public function batch(array $ids): ProcessStatusCollection
     {
         // check if ids contains ProcessStatus resource.
-        $collection = new Collection();
         $items = collect($ids)->map(function ($item) {
             if ($item instanceof ProcessStatus) {
                 return ['id' => $item->id];
