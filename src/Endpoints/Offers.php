@@ -17,11 +17,15 @@ class Offers extends BaseEndpoint
     /**
      * Retrieve offer by Offer ID
      * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_get_offer
-     * @param string $offerId
+     * @param string|Offer $offerId
      * @return Offer
      */
-    public function get(string $offerId): Offer
+    public function get($offerId): Offer
     {
+        if ($offerId instanceof Offer) {
+            $offerId = $offerId->offerId;
+        }
+
         $response = $this->performApiCall(
             'GET',
             "offers/{$offerId}"
@@ -76,11 +80,15 @@ class Offers extends BaseEndpoint
     /**
      * Delete Offer
      * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_delete_offer
-     * @param string $offerId
+     * @param string|Offer $offerId
      * @return ProcessStatus
      */
-    public function delete(string $offerId): ProcessStatus
+    public function delete($offerId): ProcessStatus
     {
+        if ($offerId instanceof Offer) {
+            $offerId = $offerId->offerId;
+        }
+
         $response = $this->performApiCall(
             'DELETE',
             "offers/{$offerId}"
