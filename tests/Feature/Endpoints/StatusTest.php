@@ -17,14 +17,20 @@ class StatusTest extends TestCase
     /** @test */
     public function getStatusById()
     {
-//        $this->useMock('200-orders.json');
-
         $status = $this->client->status->get(1);
         $this->assertInstanceOf(ProcessStatus::class, $status);
         $this->assertSame(1, $status->id);
         $this->assertSame(555551, $status->entityId);
         $this->assertSame('CONFIRM_SHIPMENT', $status->eventType);
         $this->assertSame('PENDING', $status->status);
+    }
+
+    /** @test */
+    public function statusNotFoundException()
+    {
+        $this->expectException(BolRetailerException::class);
+        $this->expectExceptionMessage('Error executing API call : Not Found : Not Found (404)');
+        $status = $this->client->status->get(99999);
     }
 
     /** @test */
