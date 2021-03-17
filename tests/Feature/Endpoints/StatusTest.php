@@ -106,4 +106,15 @@ class StatusTest extends TestCase
         $this->assertSame('CANCEL_ORDER', $status->processStatuses->last()->eventType);
         $this->assertSame('SUCCESS', $status->processStatuses->last()->status);
     }
+
+    /** @test */
+    public function getStatusByProcessWithInvalidDataThrowsException()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Unable to collect status, 'id' or 'entityId' & 'eventType' are required");
+        $status = new ProcessStatus([
+            'eventType' => 'test'
+        ]);
+        $status = $this->client->status->get($status);
+    }
 }
