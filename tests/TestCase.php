@@ -49,7 +49,7 @@ abstract class TestCase extends BaseTestCase
     }
 
 
-    protected function useMock($file, $status = 200)
+    protected function useMock($file, $status = 200, $header = null)
     {
 
         // set mock client
@@ -59,7 +59,7 @@ abstract class TestCase extends BaseTestCase
         ]);
         $mockHandler->append(new Response(
             $status,
-            $this->defaultResponseHeader,
+            $header ?? $this->defaultResponseHeader,
             $this->getMockfile($file)
         ));
         $this->client->setClient($client);

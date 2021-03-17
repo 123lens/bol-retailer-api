@@ -12,6 +12,7 @@ class Offer extends BaseResource
     public $pricing;
     public $stock;
     public $fulfilment;
+    public $mutationDateTime;
 
     public function __construct($attributes = [])
     {
