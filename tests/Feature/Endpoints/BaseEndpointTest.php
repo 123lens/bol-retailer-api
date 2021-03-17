@@ -27,17 +27,6 @@ class BaseEndpointTest extends TestCase
 
         $this->assertEquals('', $endpoint->buildQueryString([]));
     }
-
-    /** @test */
-    public function invalidEndpointThrowsAnException()
-    {
-        $this->expectException(BolRetailerException::class);
-        $this->expectExceptionMessage('Error executing API call : Unauthorized request : Unauthorized Request (403)');
-
-        $endpoint = new BaseEndpointStub($this->client);
-
-        $endpoint->performApiCall('GET', 'non-existent');
-    }
 }
 
 class BaseEndpointStub extends BaseEndpoint
