@@ -9,7 +9,8 @@ class Status extends BaseEndpoint
     /**
      * Get Process Status
      * @param $status - ProcessStatus | int
-     * @return ProcessStatus
+     * @return ProcessStatus|ProcessStatusCollection
+     * @throws \InvalidArgumentException
      */
     public function get($status)
     {
@@ -19,6 +20,10 @@ class Status extends BaseEndpoint
             }
             if ($status->entityId && $status->eventType) {
                 return $this->getByEntityId((int)$status->entityId, $status->eventType);
+            } else {
+                throw new \InvalidArgumentException(
+                    "Unable to collect status, 'id' or 'entityId' & 'eventType' are required"
+                );
             }
         } else {
             return $this->getById((int)$status);
@@ -47,7 +52,7 @@ class Status extends BaseEndpoint
      * @param int $id
      * @param string $eventType
      * @param int $page
-     * @return ProcessStatus
+     * @return ProcessStatusCollection
      */
     public function getByEntityId(int $id, string $eventType, int $page = 1): ProcessStatusCollection
     {
