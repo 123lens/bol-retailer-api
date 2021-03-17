@@ -6,6 +6,7 @@ use Budgetlens\BolRetailerApi\Exceptions\AuthenticationException;
 use Budgetlens\BolRetailerApi\Middleware\RefreshToken;
 use Composer\CaBundle\CaBundle;
 use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
@@ -19,8 +20,11 @@ class Client
 {
     const HTTP_STATUS_NO_CONTENT = 204;
 
+    /** @var string */
+    public $apiVersionHeader = 'application/vnd.retailer.v4+json';
+
     /** @var Config  */
-    private $config;
+    protected $config;
 
     /** @var \Budgetlens\BolRetailerApi\Endpoints\Orders */
     public $orders;
@@ -33,21 +37,44 @@ class Client
         if (is_null($config)) {
             $config = new ApiConfig();
         }
+        // set config
         $this->config = $config;
 
-        $stack = HandlerStack::create();
-
-        foreach ($config->getMiddleware() as $middlware) {
-            $stack->push($middlware);
-        }
-        $this->httpClient = new HttpClient([
-            RequestOptions::VERIFY => CaBundle::getBundledCaBundlePath(),
-            'handler' => $stack,
-        ]);
-        // add token middleware
-        $stack->push(new RefreshToken($config));
-
+        // initialize available endpoints
         $this->initializeEndpoints();
+    }
+
+    /**
+     * Set Client
+     * @param ClientInterface $client
+     */
+    public function setClient(ClientInterface $client)
+    {
+        $this->httpClient = $client;
+    }
+
+    /**
+     * Get Client
+     * @return ClientInterface
+     */
+    public function getClient(): ClientInterface
+    {
+        if (is_null($this->httpClient)) {
+            $stack = HandlerStack::create();
+
+            foreach ($this->config->getMiddleware() as $middlware) {
+                $stack->push($middlware);
+            }
+            $client = new HttpClient([
+                RequestOptions::VERIFY => CaBundle::getBundledCaBundlePath(),
+                'handler' => $stack,
+            ]);
+            // add token middleware
+            $stack->push(new RefreshToken($this->config));
+            $this->setClient($client);
+        }
+
+        return $this->httpClient;
     }
 
     /**
@@ -55,7 +82,7 @@ class Client
      */
     public function initializeEndpoints(): void
     {
-        $this->shipments = new Orders($this);
+        $this->orders = new Orders($this);
     }
 
     /**
@@ -68,7 +95,7 @@ class Client
         array $requestHeaders = []
     ): ResponseInterface {
         $headers = collect([
-            'Accept' => $this->config->getApiVersionHeader(),
+            'Accept' => $this->apiVersionHeader,
         ])
             ->when($httpBody !== null, function ($collection) {
                 return $collection->put('Content-Type', 'application/json');
@@ -84,7 +111,7 @@ class Client
         );
 
         try {
-            $response = $this->httpClient->send($request, ['http_errors' => false, 'debug' => false]);
+            $response = $this->getClient()->send($request, ['http_errors' => false, 'debug' => false]);
 
         } catch (GuzzleException $e) {
             throw new BolRetailerException($e->getMessage(), $e->getCode());
@@ -95,12 +122,5 @@ class Client
         }
 
         return $response;
-    }
-
-    public function setApiKey(?string $value): self
-    {
-        $this->apiKey = trim($value);
-
-        return $this;
     }
 }

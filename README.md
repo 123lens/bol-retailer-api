@@ -26,24 +26,36 @@ composer require budgetlens/bol-retailer-api
 
 ## Getting started
 
-Initialize the Api client and set your API key:
+Initialize the Api client using the client ID / secret defined in an .env file. 
 
 ``` php
 $bol = new \Budgetlens\BolRetailerApi\Client();
-
-$bol->setApiKey('your-api-key');
+```
+Or Use your own config.
+``` php
+$bol = new \Budgetlens\BolRetailerApi\Client(new CustomApiConfig());
 ```
 
 ## Examples
 
-### create offer..
+### List Orders
 
 ``` php
-$offer = new \Budgetlens\Avido\Resources\Offer([
-    'reference' => 'your own reference for the offer',
-    ...
-]);
+// all 
+$orders = $client->orders->getOpenOrders();
+
+// specific fulfilment
+$orders = $client->orders->getOpenOrders('FBR');
+
+// pagination
+$orders = $client->orders->getOpenOrders('FBR', 2);
 ```
+
+### Retrieve a single order
+``` php
+$order = $client->orders->get($orderId);
+```
+
 
 ## Usage with Laravel
 
@@ -54,6 +66,7 @@ You may incorporate this package in your Laravel application by using [this pack
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
 ## Testing
+
 
 ``` bash
 $ composer test
