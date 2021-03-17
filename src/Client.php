@@ -2,6 +2,7 @@
 namespace Budgetlens\BolRetailerApi;
 
 use Budgetlens\BolRetailerApi\Contracts\Config;
+use Budgetlens\BolRetailerApi\Endpoints\Offers;
 use Budgetlens\BolRetailerApi\Exceptions\AuthenticationException;
 use Budgetlens\BolRetailerApi\Middleware\RefreshToken;
 use Composer\CaBundle\CaBundle;
@@ -29,6 +30,9 @@ class Client
     /** @var \Budgetlens\BolRetailerApi\Endpoints\Orders */
     public $orders;
 
+    /** @var \Budgetlens\BolRetailerApi\Endpoints\Offers */
+    public $offers;
+
     /** @var \GuzzleHttp\Client */
     protected $httpClient;
 
@@ -43,6 +47,17 @@ class Client
         // initialize available endpoints
         $this->initializeEndpoints();
     }
+
+
+    /**
+     * Initialize available endpoints
+     */
+    public function initializeEndpoints(): void
+    {
+        $this->orders = new Orders($this);
+        $this->offers = new Offers($this);
+    }
+
 
     /**
      * Set Client
@@ -75,14 +90,6 @@ class Client
         }
 
         return $this->httpClient;
-    }
-
-    /**
-     * Initialize available endpoints
-     */
-    public function initializeEndpoints(): void
-    {
-        $this->orders = new Orders($this);
     }
 
     /**
