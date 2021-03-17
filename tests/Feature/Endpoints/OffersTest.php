@@ -5,11 +5,15 @@ use Budgetlens\BolRetailerApi\Client;
 use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
 use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
 use Budgetlens\BolRetailerApi\Resources\Address;
+use Budgetlens\BolRetailerApi\Resources\Condition;
 use Budgetlens\BolRetailerApi\Resources\Fulfilment;
 use Budgetlens\BolRetailerApi\Resources\Offer;
 use Budgetlens\BolRetailerApi\Resources\Order;
+use Budgetlens\BolRetailerApi\Resources\Pricing;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\Product;
+use Budgetlens\BolRetailerApi\Resources\Stock;
+use Budgetlens\BolRetailerApi\Resources\Store;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
 use Illuminate\Support\Collection;
 
@@ -53,6 +57,47 @@ class OffersTest extends TestCase
         $this->assertSame(1, $status->id);
         $this->assertSame('CREATE_OFFER', $status->eventType);
         $this->assertSame('PENDING', $status->status);
+    }
+
+    /** @test */
+    public function updateOffer()
+    {
+        $offer = new Offer([
+            'offerId' => 'e96100bb-0e49-44bd-bc79-090262debc7a',
+            'onHoldByRetailer' => false,
+            'fulfilment' => 'FBR'
+        ]);
+        $status = $this->client->offers->update($offer);
+
+        $this->assertInstanceOf(ProcessStatus::class, $status);
+        $this->assertSame(1, $status->id);
+        $this->assertSame('UPDATE_OFFER', $status->eventType);
+        $this->assertSame('PENDING', $status->status);
+    }
+
+
+    /** @test */
+    public function getOfferById()
+    {
+        $offer = $this->client->offers->get('13722de8-8182-d161-5422-4a0a1caab5c8');
+        $this->assertInstanceOf(Offer::class, $offer);
+        $this->assertSame('3165140085229', $offer->ean);
+        $this->assertSame('02224499', $offer->reference);
+        $this->assertInstanceOf(Condition::class, $offer->condition);
+        $this->assertSame('NEW', $offer->condition->name);
+        $this->assertInstanceOf(Pricing::class, $offer->pricing);
+        $this->assertSame(4499, $offer->pricing->bundlePrices->first()->unitPrice);
+        $this->assertSame(1, $offer->pricing->bundlePrices->first()->quantity);
+        $this->assertSame(3999, $offer->pricing->bundlePrices->last()->unitPrice);
+        $this->assertSame(12, $offer->pricing->bundlePrices->last()->quantity);
+        $this->assertInstanceOf(Stock::class, $offer->stock);
+        $this->assertSame(3, $offer->stock->amount);
+        $this->assertSame(false, $offer->stock->managedByRetailer);
+        $this->assertInstanceOf(Fulfilment::class, $offer->fulfilment);
+        $this->assertSame('FBR', $offer->fulfilment->method);
+        $this->assertSame('24uurs-15', $offer->fulfilment->deliveryCode);
+        $this->assertInstanceOf(Store::class, $offer->store);
+        $this->assertSame('Bosch Waterpomp voor boormachine 2500 L/M', $offer->store->productTitle);
     }
 
     /** @test */

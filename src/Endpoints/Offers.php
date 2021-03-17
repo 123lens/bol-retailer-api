@@ -13,6 +13,23 @@ use Budgetlens\BolRetailerApi\Resources\Order as OrderResource;
 
 class Offers extends BaseEndpoint
 {
+
+    /**
+     * Retrieve offer by Offer ID
+     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_get_offer
+     * @param string $offerId
+     * @return Offer
+     */
+    public function get(string $offerId): Offer
+    {
+        $response = $this->performApiCall(
+            'GET',
+            "offers/{$offerId}"
+        );
+
+        return new Offer(collect($response));
+    }
+
     /**
      * Create new offer
      * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_create_new_offer
@@ -29,6 +46,33 @@ class Offers extends BaseEndpoint
 
         return new ProcessStatus(collect($response));
     }
+
+    /**
+     * Update Offer
+     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_update_offer
+     * @param Offer $offer
+     * @return ProcessStatus
+     */
+    public function update(Offer $offer): ProcessStatus
+    {
+        $update = collect([
+            'reference' => $offer->reference,
+            'onHoldByRetailer' => $offer->onHoldByRetailer,
+            'unknownProductTitle' => $offer->unknownProductTitle,
+            'fulfilment' => $offer->fulfilment->toArray()
+        ])->reject(function ($item) {
+            return empty($item);
+        })->all();
+
+        $response = $this->performApiCall(
+            'PUT',
+            "offers/{$offer->offerId}",
+            json_encode($update)
+        );
+
+        return new ProcessStatus(collect($response));
+    }
+
 
     /**
      * Request Offers Export
