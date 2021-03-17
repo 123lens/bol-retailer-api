@@ -75,7 +75,6 @@ class OffersTest extends TestCase
         $this->assertCount(10, $offers);
         $this->assertInstanceOf(Offer::class, $offers->first());
         $this->assertSame('offer-id-1', $offers->first()->offerId);
-
     }
 
     /** @test */
