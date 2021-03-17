@@ -43,6 +43,11 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit"
+        "style": "vendor/bin/phpcs --standard=PSR2 --extensions=php --colors ./src/*",
+        "lint": "vendor/bin/phplint --no-configuration --no-cache --no-interaction --extensions=php ./src/*",
+        "test": "vendor/bin/phpunit",
+        "post-install-cmd": [
+            "php -r \"chmod('./Cache', 0777);\""
+        ]
     }
 }
