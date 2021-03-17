@@ -1,15 +1,14 @@
 <?php
+namespace Budgetlens\BolRetailerApi\Tests\Unit\Resources;
 
-namespace Mvdnbrk\MyParcel\Tests\Unit\Resources;
-
-use Mvdnbrk\MyParcel\Exceptions\JsonEncodingException;
-use Mvdnbrk\MyParcel\Resources\BaseResource;
-use Mvdnbrk\MyParcel\Tests\TestCase;
+use Budgetlens\BolRetailerApi\Exceptions\JsonEncodingException;
+use Budgetlens\BolRetailerApi\Resources\BaseResource;
+use Budgetlens\BolRetailerApi\Tests\TestCase;
 
 class BaseResourceTest extends TestCase
 {
     /** @test */
-    public function create_a_new_resource_with_array()
+    public function createNewResourceWithArray()
     {
         $resource = new ResourceStub([
             'foo' => 'bar',
@@ -19,7 +18,7 @@ class BaseResourceTest extends TestCase
     }
 
     /** @test */
-    public function set_attribute()
+    public function setAttribute()
     {
         $resource = new ResourceStub();
         $resource->setAttribute('foo', 'bar');
@@ -28,7 +27,7 @@ class BaseResourceTest extends TestCase
     }
 
     /** @test */
-    public function set_mutator()
+    public function setMutator()
     {
         $resource = new ResourceStub();
 
@@ -44,7 +43,7 @@ class BaseResourceTest extends TestCase
     }
 
     /** @test */
-    public function get_mutator()
+    public function getMutator()
     {
         $resource = new ResourceStub();
 
@@ -56,7 +55,7 @@ class BaseResourceTest extends TestCase
     }
 
     /** @test */
-    public function get_attribute_value()
+    public function getAttributeValue()
     {
         $resource = new ResourceStub();
         $resource->foo = 'test';
@@ -65,7 +64,7 @@ class BaseResourceTest extends TestCase
     }
 
     /** @test */
-    public function to_array_test()
+    public function toArrayTest()
     {
         $resource = new ResourceStub([
             'foo' => 'bar',
@@ -78,7 +77,7 @@ class BaseResourceTest extends TestCase
     }
 
     /** @test */
-    public function to_array_removes_attributes_with_null_values()
+    public function toArrayRemovesAttributesWithNullValues()
     {
         $resource = new ResourceStub([
             'foo' => null,
@@ -90,7 +89,7 @@ class BaseResourceTest extends TestCase
     }
 
     /** @test */
-    public function to_json_test()
+    public function toJsonTest()
     {
         $resource = new ResourceStub([
             'foo' => 'bar',
@@ -100,10 +99,13 @@ class BaseResourceTest extends TestCase
     }
 
     /** @test */
-    public function encoding_malformed_json_throws_an_exception()
+    public function encodingMalformedJsonThrowsAnException()
     {
         $this->expectException(JsonEncodingException::class);
-        $this->expectExceptionMessage('Error encoding resource [Mvdnbrk\MyParcel\Tests\Unit\Resources\ResourceStub] to JSON: Malformed UTF-8 characters, possibly incorrectly encoded.');
+        $this->expectExceptionMessage(
+            "Error encoding resource [Budgetlens\BolRetailerApi\Tests\Unit\Resources\ResourceStub] to JSON: " .
+            "Malformed UTF-8 characters, possibly incorrectly encoded."
+        );
 
         $obj = new \stdClass;
         $obj->foo = "b\xF8r";
