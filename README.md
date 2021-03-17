@@ -56,7 +56,20 @@ $orders = $client->orders->getOpenOrders('FBR', 2);
 $order = $client->orders->get($orderId);
 ```
 
-
+### Create FBB Offer
+``` php
+$offer = new Offer([
+    'ean' => '0000007740404',
+    'condition' => 'NEW',
+    'reference' => 'unit-test',
+    'onHoldByRetailer' => true,
+    'unknownProductTitle' => 'unit-test',
+    'price' => 9999,
+    'stock' => 0,
+    'fulfilment' => 'FBB'
+]);
+$status = $client->offers->create($offer);
+```
 ## Usage with Laravel
 
 You may incorporate this package in your Laravel application by using [this package](https://github.com/123lens/bol-laravel-client).
