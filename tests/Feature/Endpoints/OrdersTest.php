@@ -1,19 +1,13 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
 
-use Budgetlens\BolRetailerApi\ApiConfig;
 use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
 use Budgetlens\BolRetailerApi\Resources\Address;
 use Budgetlens\BolRetailerApi\Resources\Fulfilment;
 use Budgetlens\BolRetailerApi\Resources\Offer;
 use Budgetlens\BolRetailerApi\Resources\Order;
 use Budgetlens\BolRetailerApi\Resources\Product;
-use Budgetlens\BolRetailerApi\Resources\Shipment;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
-
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
-use function GuzzleHttp\Psr7\parse_response;
 
 class OrdersTest extends TestCase
 {
