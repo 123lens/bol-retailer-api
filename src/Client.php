@@ -103,10 +103,11 @@ class Client
     ): ResponseInterface {
         $headers = collect([
             'Accept' => $this->apiVersionHeader,
+            'Content-Type' => $this->apiVersionHeader,
         ])
-            ->when($httpBody !== null, function ($collection) {
-                return $collection->put('Content-Type', 'application/json');
-            })
+//            ->when($httpBody !== null, function ($collection) {
+//                return $collection->put('Content-Type', 'application/json');
+//            })
             ->merge($requestHeaders)
             ->all();
 
