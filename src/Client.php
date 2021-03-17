@@ -112,7 +112,6 @@ class Client
 
         try {
             $response = $this->getClient()->send($request, ['http_errors' => false, 'debug' => false]);
-
         } catch (GuzzleException $e) {
             throw new BolRetailerException($e->getMessage(), $e->getCode());
         }

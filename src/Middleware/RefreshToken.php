@@ -1,7 +1,6 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Middleware;
 
-
 use Budgetlens\BolRetailerApi\Contracts\Config;
 use Budgetlens\BolRetailerApi\Exceptions\AuthenticationException;
 use GuzzleHttp\Exception\GuzzleException;
