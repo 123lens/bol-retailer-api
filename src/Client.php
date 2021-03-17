@@ -103,8 +103,6 @@ class Client
             ->merge($requestHeaders)
             ->all();
 
-        print_r($headers);
-        exit;
         $request = new Request(
             $httpMethod,
             "{$this->config->getEndpoint()}/{$apiMethod}",
@@ -124,12 +122,5 @@ class Client
         }
 
         return $response;
-    }
-
-    public function setApiKey(?string $value): self
-    {
-        $this->apiKey = trim($value);
-
-        return $this;
     }
 }
