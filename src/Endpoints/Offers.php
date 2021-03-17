@@ -73,6 +73,21 @@ class Offers extends BaseEndpoint
         return new ProcessStatus(collect($response));
     }
 
+    /**
+     * Delete Offer
+     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_delete_offer
+     * @param string $offerId
+     * @return ProcessStatus
+     */
+    public function delete(string $offerId): ProcessStatus
+    {
+        $response = $this->performApiCall(
+            'DELETE',
+            "offers/{$offerId}"
+        );
+
+        return new ProcessStatus(collect($response));
+    }
 
     /**
      * Request Offers Export

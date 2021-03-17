@@ -63,7 +63,7 @@ class OffersTest extends TestCase
     public function updateOffer()
     {
         $offer = new Offer([
-            'offerId' => 'e96100bb-0e49-44bd-bc79-090262debc7a',
+            'offerId' => '13722de8-8182-d161-5422-4a0a1caab5c8',
             'onHoldByRetailer' => false,
             'fulfilment' => 'FBR'
         ]);
@@ -75,6 +75,16 @@ class OffersTest extends TestCase
         $this->assertSame('PENDING', $status->status);
     }
 
+    /** @test */
+    public function deleteOffer()
+    {
+        $status = $this->client->offers->delete('13722de8-8182-d161-5422-4a0a1caab5c8');
+
+        $this->assertInstanceOf(ProcessStatus::class, $status);
+        $this->assertSame(1, $status->id);
+        $this->assertSame('DELETE_OFFER', $status->eventType);
+        $this->assertSame('PENDING', $status->status);
+    }
 
     /** @test */
     public function getOfferById()
