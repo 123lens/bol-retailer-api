@@ -54,7 +54,7 @@ class Status extends BaseEndpoint
      * @param int $page
      * @return ProcessStatus
      */
-    public function getByEntityId(int $id, string $eventType, int $page = 1): ProcessStatus
+    public function getByEntityId(int $id, string $eventType, int $page = 1): ProcessStatusCollection
     {
         $response = $this->performApiCall(
             'GET',
@@ -64,8 +64,7 @@ class Status extends BaseEndpoint
                 'page' => $page
             ])
         );
-
-        return new ProcessStatus(collect($response));
+        return new ProcessStatusCollection(collect($response));
     }
 
     /**
@@ -76,7 +75,8 @@ class Status extends BaseEndpoint
     public function batch(array $ids): ProcessStatusCollection
     {
         // check if ids contains ProcessStatus resource.
-        $statusIds = collect($ids)->each(function ($item) {
+        $collection = new Collection();
+        $items = collect($ids)->map(function ($item) {
             if ($item instanceof ProcessStatus) {
                 return ['id' => $item->id];
             }
@@ -87,7 +87,7 @@ class Status extends BaseEndpoint
             'POST',
             'process-status',
             json_encode([
-                'processStatusQueries' => $statusIds
+                'processStatusQueries' => $items
             ])
         );
 

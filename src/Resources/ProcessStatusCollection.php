@@ -1,6 +1,8 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Resources;
 
+use Illuminate\Support\Collection;
+
 class ProcessStatusCollection extends BaseResource
 {
     public $processStatuses;
@@ -32,9 +34,11 @@ class ProcessStatusCollection extends BaseResource
     public function setProcessStatusesAttribute($value): self
     {
         if (is_array($value)) {
-            foreach ($value as $item) {
-                $this->processStatuses[] = new ProcessStatus($item);
-            }
+            $items = new Collection();
+            collect($value)->each(function ($item) use ($items) {
+                $items->push(new ProcessStatus($item));
+            });
+            $this->processStatuses = $items;
         }
 
         return $this;
