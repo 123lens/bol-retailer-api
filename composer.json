@@ -47,7 +47,7 @@
         "lint": "vendor/bin/phplint --no-configuration --no-cache --no-interaction --extensions=php ./src/*",
         "test": "vendor/bin/phpunit",
         "post-install-cmd": [
-            "php -r \"chmod('./Cache', 0777);\""
+            "php -r \"chmod('./src/Cache', 0766);\""
         ]
     }
 }
