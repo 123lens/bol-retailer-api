@@ -20,8 +20,11 @@ class Client
 {
     const HTTP_STATUS_NO_CONTENT = 204;
 
+    /** @var string */
+    public $apiVersionHeader = 'application/vnd.retailer.v4+json';
+
     /** @var Config  */
-    private $config;
+    protected $config;
 
     /** @var \Budgetlens\BolRetailerApi\Endpoints\Orders */
     public $orders;
@@ -34,8 +37,10 @@ class Client
         if (is_null($config)) {
             $config = new ApiConfig();
         }
+        // set config
         $this->config = $config;
 
+        // initialize available endpoints
         $this->initializeEndpoints();
     }
 
@@ -90,7 +95,7 @@ class Client
         array $requestHeaders = []
     ): ResponseInterface {
         $headers = collect([
-            'Accept' => $this->config->getApiVersionHeader(),
+            'Accept' => $this->apiVersionHeader,
         ])
             ->when($httpBody !== null, function ($collection) {
                 return $collection->put('Content-Type', 'application/json');

@@ -23,11 +23,6 @@ class ApiConfig implements Config
         return 'https://api.bol.com/retailer';
     }
 
-    public function getApiVersionHeader(): string
-    {
-        return 'application/vnd.retailer.v4+json';
-    }
-
     public function getMiddleware(): array
     {
         return $this->middleware;

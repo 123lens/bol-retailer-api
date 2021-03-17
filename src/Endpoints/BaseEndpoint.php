@@ -16,6 +16,16 @@ abstract class BaseEndpoint
         $this->boot();
     }
 
+    /**
+     * Overwrite default api version header
+     * @param string $versionHeader
+     * @return string
+     */
+    protected function setApiVersionHeader(string $versionHeader): void
+    {
+        $this->apiClient->apiVersionHeader = $versionHeader;
+    }
+
     protected function boot(): void
     {
     }
