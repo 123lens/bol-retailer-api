@@ -3,13 +3,12 @@ namespace Budgetlens\BolRetailerApi;
 
 use Budgetlens\BolRetailerApi\Contracts\Config;
 use Budgetlens\BolRetailerApi\Endpoints\Offers;
-use Budgetlens\BolRetailerApi\Exceptions\AuthenticationException;
+use Budgetlens\BolRetailerApi\Endpoints\Status;
 use Budgetlens\BolRetailerApi\Middleware\RefreshToken;
 use Composer\CaBundle\CaBundle;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
@@ -32,6 +31,9 @@ class Client
 
     /** @var \Budgetlens\BolRetailerApi\Endpoints\Offers */
     public $offers;
+
+    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Status */
+    public $status;
 
     /** @var \GuzzleHttp\Client */
     protected $httpClient;
@@ -56,6 +58,7 @@ class Client
     {
         $this->orders = new Orders($this);
         $this->offers = new Offers($this);
+        $this->status = new Status($this);
     }
 
 
