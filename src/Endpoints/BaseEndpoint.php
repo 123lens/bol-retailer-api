@@ -3,6 +3,7 @@ namespace Budgetlens\BolRetailerApi\Endpoints;
 
 use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
 use Budgetlens\BolRetailerApi\Client;
+use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
 
 abstract class BaseEndpoint
 {
@@ -56,6 +57,7 @@ abstract class BaseEndpoint
         ?string $httpBody = null,
         array $requestHeaders = []
     ) {
+
         $response = $this->apiClient->performHttpCall($httpMethod, $apiMethod, $httpBody, $requestHeaders);
 
         if (collect($response->getHeader('Content-Type'))->first() == 'application/pdf') {
@@ -81,6 +83,11 @@ abstract class BaseEndpoint
         // error handling
         if ($response->getStatusCode() >= 400) {
             $error = collect($object);
+            // do we have violations?
+            if ($error->has('violations')) {
+                throw new ValidationException($error->get('violations'));
+            }
+
             $messageBag = collect('Error executing API call');
 
             if ($error->has('detail')) {
