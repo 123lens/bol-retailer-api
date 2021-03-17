@@ -9,6 +9,13 @@ use Budgetlens\BolRetailerApi\Resources\Order as OrderResource;
 
 class Orders extends BaseEndpoint
 {
+    /**
+     * Get Open Orders
+     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/orders-shipments.html#_retrieve_open_orders
+     * @param string $fulfillmentMethod
+     * @param int $page
+     * @return Collection
+     */
     public function getOpenOrders(string $fulfillmentMethod = 'FBR', int $page = 1)
     {
         $response = $this->performApiCall(
@@ -27,7 +34,12 @@ class Orders extends BaseEndpoint
         return $collection;
     }
 
-
+    /**
+     * Retrieve a single order
+     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/orders-shipments.html#_retrieve_a_single_order
+     * @param int $id
+     * @return OrderResource
+     */
     public function get(int $id): OrderResource
     {
         $response = $this->performApiCall(
@@ -36,23 +48,5 @@ class Orders extends BaseEndpoint
         );
 
         return new OrderResource(collect($response));
-    }
-
-    protected function getShipmentsResource(string $apiMethod, string $message = ''): ShipmentResource
-    {
-        $response = $this->performApiCall(
-            'GET',
-            $apiMethod
-        );
-
-        $shipment = collect($response->data->shipments)->first();
-
-        if ($shipment === null) {
-            throw new BolRetailerException($message);
-        }
-
-        return new ShipmentResource(
-            collect($shipment)->all()
-        );
     }
 }
