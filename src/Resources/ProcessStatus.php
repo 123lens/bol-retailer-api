@@ -32,18 +32,6 @@ class ProcessStatus extends BaseResource
     }
 
     /**
-     * Set Entity ID Attribute
-     * @param $value
-     * @return $this
-     */
-    public function setEntityIdAttribute($value): self
-    {
-        $this->entityId = (int)$value;
-
-        return $this;
-    }
-
-    /**
      * Set Defaults
      *
      * @return $this
