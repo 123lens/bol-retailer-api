@@ -70,6 +70,47 @@ $offer = new Offer([
 ]);
 $status = $client->offers->create($offer);
 ```
+
+### Get Process Status By ID
+``` php
+$status = $client->status->get(1);
+// or
+$status = $client->status->getById(1);
+```
+Or you may pass the ProcessStatus instance directly to this method:
+``` php
+$statusResource = new ProcessStatus([
+    'id' => 1
+]);
+$status = $client->status->get($statusResource);
+```
+
+### Get Process Status By Entity ID / Event TYPE
+``` php
+$statusResource = new ProcessStatus([
+    'entityId' => 1,
+    'eventType' => 'CONFIRM_SHIPMENT'
+]);
+$status = $client->status->get($statusResource);
+// or 
+$statusses = $client->status->getByEntityId(1, 'CONFIRM_SHIPMENT');
+```
+
+### Retrieve multiple statusses by id
+``` php
+$status = $client->status->batch([1,2,3]);
+// or 
+$batch = [
+    new ProcessStatus(['id' => 1]),
+    new ProcessStatus(['id' => 2]),
+    new ProcessStatus(['id' => 3])
+];
+$statusses = $client->status->batch($batch);
+```
+
+
+
+
 ## Usage with Laravel
 
 You may incorporate this package in your Laravel application by using [this package](https://github.com/123lens/bol-laravel-client).
