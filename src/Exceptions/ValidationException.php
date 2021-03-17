@@ -17,7 +17,7 @@ class ValidationException extends \Exception
     public function setViolations($violations)
     {
         if (is_array($violations)) {
-            $this->violations = $violations;
+            $this->violations = collect($violations);
         }
     }
 
