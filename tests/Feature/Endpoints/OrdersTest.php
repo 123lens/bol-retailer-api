@@ -75,6 +75,7 @@ class OrdersTest extends TestCase
     /** @test */
     public function unknownOrderThrowsException()
     {
+        $this->useMock('404-order-not-found.json', 404);
         $this->expectException(BolRetailerException::class);
         $this->expectExceptionMessage('Error executing API call : Order for order id 9999999999 not found. : Not Found (404)');
 
