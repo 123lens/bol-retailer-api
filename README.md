@@ -57,6 +57,7 @@ $orders = $client->orders->getOpenOrders('FBR', 2);
 ``` php
 $order = $client->orders->get($orderId);
 ```
+---
 
 ## Offers
 The offer related calls are async. Every action returns a `StatusProcess` resource. \
@@ -189,12 +190,26 @@ $status = $client->offers->requestUnpublishedExport();
 $offers = $client->offers->getUnpublishedExport('$reportId');
 ```
 
+---
+
+## Shipping Labels
+
+### Get Delivery Options
+```php
+$options = $client->shipping->getDeliveryOptions($orderResource);
+```
 
 
 
 
 
 
+
+---
+
+
+
+## Process Status
 
 ### Get Process Status By ID
 ``` php
@@ -232,6 +247,7 @@ $batch = [
 ];
 $statusses = $client->status->batch($batch);
 ```
+
 
 
 
