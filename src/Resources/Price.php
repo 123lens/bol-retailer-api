@@ -22,4 +22,12 @@ class Price extends BaseResource
 
         return $this;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'quantity' => (int)$this->quantity,
+            'unitPrice' => number_format(($this->unitPrice/100), 2)
+        ];
+    }
 }

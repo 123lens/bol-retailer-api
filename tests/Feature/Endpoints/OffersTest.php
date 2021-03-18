@@ -28,11 +28,12 @@ class OffersTest extends TestCase
             'reference' => 'unit-test',
             'onHoldByRetailer' => true,
             'unknownProductTitle' => 'unit-test',
-            'price' => 9999,
+            'price' => 99.99,
             'stock' => 0,
             'fulfilment' => 'FBB'
         ]);
         $status = $this->client->offers->create($offer);
+
         $this->assertInstanceOf(ProcessStatus::class, $status);
         $this->assertSame(1, $status->id);
         $this->assertSame('CREATE_OFFER', $status->eventType);
@@ -48,7 +49,7 @@ class OffersTest extends TestCase
             'reference' => 'unit-test',
             'onHoldByRetailer' => true,
             'unknownProductTitle' => 'unit-test',
-            'price' => 9999,
+            'price' => 99.99,
             'stock' => 0,
             'fulfilment' => 'FBR'
         ]);
@@ -160,9 +161,9 @@ class OffersTest extends TestCase
             'offerId' => '13722de8-8182-d161-5422-4a0a1caab5c8',
             'pricing' => new Pricing([
                 'bundlePrices' => [
-                    ['quantity' => 1, 'unitPrice' => '99.99'],
-                    ['quantity' => 2, 'unitPrice' => '89.99'],
-                    ['quantity' => 3, 'unitPrice' => '85.99']
+                    ['quantity' => 1, 'unitPrice' => 99.99],
+                    ['quantity' => 2, 'unitPrice' => 89.99],
+                    ['quantity' => 3, 'unitPrice' => 85.99]
                 ]
             ])
         ]);
@@ -226,7 +227,7 @@ class OffersTest extends TestCase
             'reference' => 'unit-test',
             'onHoldByRetailer' => true,
             'unknownProductTitle' => 'unit-test',
-            'price' => 9999,
+            'price' => 99.99,
             'stock' => 0,
             'fulfilment' => 'FBB'
         ]);

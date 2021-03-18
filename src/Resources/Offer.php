@@ -37,6 +37,9 @@ class Offer extends BaseResource
     public function setConditionAttribute($value): self
     {
         if (!$value instanceof Condition) {
+            if (is_string($value)) {
+                $value = ['name' => $value];
+            }
             $value = new Condition($value);
         }
 
@@ -79,10 +82,10 @@ class Offer extends BaseResource
 
     /**
      * Set Offer Price
-     * @param int $price
+     * @param string $price
      * @return $this
      */
-    public function setPriceAttribute(int $price): self
+    public function setPriceAttribute(float $price): self
     {
         $this->pricing = (new Pricing())
             ->add($price);
