@@ -1,11 +1,13 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
 
+use Budgetlens\BolRetailerApi\Client;
 use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
 use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
 use Budgetlens\BolRetailerApi\Resources\Address;
 use Budgetlens\BolRetailerApi\Resources\DeliveryOption;
 use Budgetlens\BolRetailerApi\Resources\Fulfilment;
+use Budgetlens\BolRetailerApi\Resources\Label;
 use Budgetlens\BolRetailerApi\Resources\Offer;
 use Budgetlens\BolRetailerApi\Resources\Order;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
@@ -22,11 +24,15 @@ class ShippingTest extends TestCase
         $order = new Order([
             'orderItems' => [
                 [
-                    'orderItemId' => 2095052647
+                    'orderItemId' => 2593223245 //2095052647
                 ]
             ]
         ]);
-        $options = $this->client->shipping->getDeliveryOptions($order);
+        $client = new Client();
+        $options = $client->shipping->getDeliveryOptions($order);
+
+        print_r($options);
+        exit;
         $this->assertInstanceOf(Collection::class, $options);
         $this->assertCount(2, $options);
         $this->assertInstanceOf(DeliveryOption::class, $options->first());
@@ -36,5 +42,34 @@ class ShippingTest extends TestCase
         $this->assertSame('10 kg', $options->first()->packageRestrictions->maxWeight);
         $this->assertSame(true, $options->first()->handoverDetails->meetsCustomerExpectation);
         $this->assertInstanceOf(\DateTime::class, $options->first()->handoverDetails->latestHandoverDateTime);
+    }
+
+    /** @test */
+    public function createShippingLabel()
+    {
+        $order = new Order([
+            'orderItems' => [
+                [
+                    'orderItemId' => 2593223245// 2095052647
+                ]
+            ]
+        ]);
+        $status = $this->client->shipping->createLabel($order, '8f956bfc-fabe-45b4-b0e1-1b52a0896b74');
+
+        $this->assertInstanceOf(ProcessStatus::class, $status);
+        $this->assertSame(1, $status->id);
+        $this->assertSame('CREATE_SHIPPING_LABEL', $status->eventType);
+        $this->assertSame('PENDING', $status->status);
+    }
+
+    /** @test */
+    public function getLabel()
+    {
+        $id = 'c628ba4f-f31a-4fac-a6a0-062326d0dbbd';
+        $label = $this->client->shipping->getLabel($id);
+
+        $this->assertInstanceOf(Label::class, $label);
+        $this->assertSame($id, $label->id);
+        $this->assertNotNull($label->label);
     }
 }
