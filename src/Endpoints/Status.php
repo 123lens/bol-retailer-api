@@ -49,12 +49,12 @@ class Status extends BaseEndpoint
     /**
      * Retrieve Process status by entitiyId & eventyType
      * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/process-status.html
-     * @param int $id
+     * @param string $id
      * @param string $eventType
      * @param int $page
      * @return ProcessStatusCollection
      */
-    public function getByEntityId(int $id, string $eventType, int $page = 1): ProcessStatusCollection
+    public function getByEntityId(string $id, string $eventType, int $page = 1): ProcessStatusCollection
     {
         $response = $this->performApiCall(
             'GET',

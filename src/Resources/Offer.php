@@ -1,6 +1,8 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Resources;
 
+use Illuminate\Support\Collection;
+
 class Offer extends BaseResource
 {
     public $ean;
@@ -12,6 +14,9 @@ class Offer extends BaseResource
     public $pricing;
     public $stock;
     public $fulfilment;
+    public $mutationDateTime;
+    public $store;
+    public $notPublishableReasons;
 
     public function __construct($attributes = [])
     {
@@ -32,9 +37,10 @@ class Offer extends BaseResource
     public function setConditionAttribute($value): self
     {
         if (!$value instanceof Condition) {
-            $value = new Condition([
-                'name' => $value
-            ]);
+            if (is_string($value)) {
+                $value = ['name' => $value];
+            }
+            $value = new Condition($value);
         }
 
         $this->condition = $value;
@@ -59,11 +65,27 @@ class Offer extends BaseResource
     }
 
     /**
-     * Set Offer Price
-     * @param int $price
+     * Set Pricing Attribute
+     * @param $value
      * @return $this
      */
-    public function setPriceAttribute(int $price): self
+    public function setPricingAttribute($value): self
+    {
+        if (!$value instanceof Pricing) {
+            $value = new Pricing($value);
+        }
+
+        $this->pricing = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set Offer Price
+     * @param string $price
+     * @return $this
+     */
+    public function setPriceAttribute(float $price): self
     {
         $this->pricing = (new Pricing())
             ->add($price);
@@ -73,18 +95,19 @@ class Offer extends BaseResource
 
     /**
      * Set Stock
-     * @param $stock
+     * @param $value
      * @return $this
      */
-    public function setStockAttribute($stock): self
+    public function setStockAttribute($value): self
     {
-        if (!$stock instanceof Stock) {
-            $stock = new Stock([
-                'amount' => $stock
-            ]);
+        if (!$value instanceof Stock) {
+            if (is_numeric($value)) {
+                $value = ['amount' => $value];
+            }
+            $value = new Stock($value);
         }
 
-        $this->stock = $stock;
+        $this->stock = $value;
 
         return $this;
     }
@@ -97,15 +120,52 @@ class Offer extends BaseResource
     public function setFulfilmentAttribute($value): self
     {
         if (!$value instanceof Fulfilment) {
-            $value = new Fulfilment([
-                'method' => $value
-            ]);
+            if (is_string($value)) {
+                $value = ['method' => $value];
+            }
+            $value = new Fulfilment($value);
         }
         $this->fulfilment = $value;
 
         return $this;
     }
 
+    /**
+     * Set Store Attribute
+     * @param $value
+     * @return $this
+     */
+    public function setStoreAttribute($value): self
+    {
+        if (!$value instanceof Store) {
+            $value = new Store($value);
+        }
+
+        $this->store = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set Not Published Reasons
+     * @param $value
+     * @return $this
+     */
+    public function setNotPublishableReasonsAttribute($value): self
+    {
+        $items = new Collection();
+        collect($value)->each(function ($item) use ($items) {
+            $items->push(new NotPublishedReason($item));
+        });
+        $this->notPublishableReasons = $items;
+
+        return $this;
+    }
+
+    /**
+     * Output to array
+     * @return array
+     */
     public function toArray(): array
     {
         return collect(parent::toArray())

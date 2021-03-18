@@ -1,9 +1,24 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Resources;
 
+use Illuminate\Support\Collection;
+
 class Pricing extends BaseResource
 {
     public $bundlePrices = [];
+
+    public function setBundlePricesAttribute($value)
+    {
+        if (is_array($value)) {
+            $items = new Collection();
+            collect($value)->each(function ($item) use ($items) {
+                $items->push(new Price($item));
+            });
+            $this->bundlePrices = $items;
+        }
+
+        return $this;
+    }
 
     /**
      * Add Bundle Price
@@ -13,13 +28,10 @@ class Pricing extends BaseResource
      */
     public function add($price, int $quantity = 1): self
     {
-        if (!is_int($price)) {
-            $price = $price * 100;
-        }
-        $this->bundlePrices[] = [
+        $this->bundlePrices[] = new Price([
             'quantity' => $quantity,
             'unitPrice' => $price
-        ];
+        ]);
 
         return $this;
     }
@@ -29,10 +41,7 @@ class Pricing extends BaseResource
         return collect(parent::toArray())
             ->when(count($this->bundlePrices), function ($collection) {
                 $pricing = collect($this->bundlePrices)->map(function ($item) {
-                    return [
-                        'quantity' => $item['quantity'],
-                        'unitPrice' => number_format($item['unitPrice']/100, 2)
-                    ];
+                    return $item->toArray();
                 });
                 return $collection->put('bundlePrices', $pricing->all());
             })

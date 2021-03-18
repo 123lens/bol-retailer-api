@@ -60,7 +60,9 @@ abstract class BaseEndpoint
 
         $response = $this->apiClient->performHttpCall($httpMethod, $apiMethod, $httpBody, $requestHeaders);
 
-        if (collect($response->getHeader('Content-Type'))->first() == 'application/pdf') {
+        if (collect($response->getHeader('Content-Type'))->first() === 'application/pdf' ||
+            collect($response->getHeader('Content-Type'))->first() === 'application/vnd.retailer.v4+csv;charset=UTF-8'
+        ) {
             return $response->getBody()->getContents();
         }
 
