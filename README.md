@@ -36,7 +36,9 @@ Or Use your own config.
 $bol = new \Budgetlens\BolRetailerApi\Client(new CustomApiConfig());
 ```
 
-## Examples
+# Examples
+
+## Orders
 
 ### List Orders
 
@@ -56,6 +58,13 @@ $orders = $client->orders->getOpenOrders('FBR', 2);
 $order = $client->orders->get($orderId);
 ```
 
+## Offers
+The offer related calls are async. Every action returns a `StatusProcess` resource. \
+With this resource you can `poll` the status of the transaction.
+
+**Note** After creating a new offer the `offerId` is set in the `entityId` property of the 
+`StatusProcess` resource. (if state is `success`).
+
 ### Create FBB Offer
 ``` php
 $offer = new Offer([
@@ -64,12 +73,128 @@ $offer = new Offer([
     'reference' => 'unit-test',
     'onHoldByRetailer' => true,
     'unknownProductTitle' => 'unit-test',
-    'price' => 9999,
+    'price' => 99.99,
     'stock' => 0,
     'fulfilment' => 'FBB'
 ]);
 $status = $client->offers->create($offer);
 ```
+
+### Create FBR Offer
+``` php
+$offer = new Offer([
+    'ean' => '0000007740404',
+    'condition' => 'NEW',
+    'reference' => 'unit-test',
+    'onHoldByRetailer' => true,
+    'unknownProductTitle' => 'unit-test',
+    'price' => 99.99,
+    'stock' => 0,
+    'fulfilment' => new Fulfilment([
+        'method' => 'FBR',
+        'deliveryCode' => DeliveryCodes::WITHIN_24_HOURS_BEFORE_23
+    ])
+]);
+$status = $client->offers->create($offer);
+
+```
+
+### Update Offer
+```php
+$offer = new Offer([
+    'offerId' => 'offerId',
+    'onHoldByRetailer' => false,
+    'fulfilment' => 'FBR'
+]);
+$status = $client->offers->update($offer);
+```
+
+### Delete offer
+```php
+    $status = $client->offers->delete('$offerId');
+```
+Or you may pass the Offer instance directly to this method:
+```php
+    $offer = new Offer(['offerId' => '$offerId']);
+    $status = $client->offers->delete($offer);
+```
+
+### Retrieve offer
+```php
+    $offer = $client->offers->get('$offerId');
+```
+Or you may pass the Offer instance directly to this method:
+```php
+    $offer = new Offer(['offerId' => '$offerId']);
+    $offer = $client->offers->get($offer);
+```
+
+### Update offer pricing
+```php
+$offer = new Offer([
+    'offerId' => '$offerId',
+    'pricing' => new Pricing([
+        'bundlePrices' => [
+            ['quantity' => 1, 'unitPrice' => 99.99],
+            ['quantity' => 2, 'unitPrice' => 89.99],
+            ['quantity' => 3, 'unitPrice' => 85.99]
+        ]
+    ])
+]);
+$status = $client->offers->updatePrice($offer);
+```
+
+### Update Stock
+```php
+$offer = new Offer([
+    'offerId' => '$offerId',
+    'stock' => new Stock([
+        'amount' => 100
+    ])
+]);
+$status = $client->offers->updateStock($offer);
+```
+
+### Request Offers Export
+The offers export comes with 2 steps.
+- request the export
+- retrieve the export
+
+The request returns a status process to poll. Once the state is `success` the `entityId` contains the 
+report-id to use for retrieving the export.
+
+```php
+$status = $client->offers->requestExport();
+```
+
+### Retrieve Offers Export
+```php
+$offers = $client->offers->getExport('$reportId');
+```
+
+### Request unpublished offers export
+The unpublished offers export comes with 2 steps.
+- request the export
+- retrieve the export
+
+The request returns a status process to poll. Once the state is `success` the `entityId` contains the
+report-id to use for retrieving the export.
+
+```php
+$status = $client->offers->requestUnpublishedExport();
+```
+
+### Retrieve Unpublished Offers Export
+```php
+$offers = $client->offers->getUnpublishedExport('$reportId');
+```
+
+
+
+
+
+
+
 
 ### Get Process Status By ID
 ``` php
