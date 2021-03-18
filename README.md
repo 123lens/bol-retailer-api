@@ -250,6 +250,17 @@ $status = $client->status->get($statusResource);
 $statusses = $client->status->getByEntityId(1, 'CONFIRM_SHIPMENT');
 ```
 
+### Get Process Status and wait for it to complete
+```php
+$status = $this->client->status->waitUntilComplete($processId);
+
+// try at least 10 times.
+$status = $this->client->status->waitUntilComplete($processId, 10);
+
+// try 10 times with a timeout of of 5 seconds.
+$status = $this->client->status->waitUntilComplete($processId, 10, 5);
+```
+
 ### Retrieve multiple statusses by id
 ``` php
 $status = $client->status->batch([1,2,3]);

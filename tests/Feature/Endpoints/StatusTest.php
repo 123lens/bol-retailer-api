@@ -20,7 +20,7 @@ class StatusTest extends TestCase
     /** @test */
     public function waitForStatusToComplete()
     {
-        $status = $this->client->status->waitUntilComplete(2, 2, 1);
+        $status = $this->client->status->waitUntilComplete(2, 2, 3);
         $this->assertInstanceOf(ProcessStatus::class, $status);
         $this->assertSame(2, $status->id);
         $this->assertSame('555552', $status->entityId);
