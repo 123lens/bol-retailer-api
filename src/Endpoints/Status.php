@@ -1,11 +1,47 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
+use Budgetlens\BolRetailerApi\Exceptions\ProcessStillPendingException;
+use Budgetlens\BolRetailerApi\Exceptions\RateLimitException;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatusCollection;
 
 class Status extends BaseEndpoint
 {
+
+    /**
+     * Get process status and wait for it to finish
+     * @param $status
+     * @param int $maxRetries
+     * @param int $timeOut
+     * @return ProcessStatus
+     * @throws ProcessStillPendingException
+     */
+    public function waitUntilComplete($status, int $maxRetries = 10, int $timeOut = 3): ProcessStatus
+    {
+        $processStatus = null;
+        $pending = true;
+        for ($i = 0; $i < $maxRetries && $pending; $i++) {
+            try {
+                $processStatus = $this->get($status);
+                $pending = $processStatus->isPending();
+                if ($pending) {
+                    sleep($timeOut);
+                }
+            } catch (RateLimitException $e) {
+                // hit a rate limit.use retry-after to wait.
+                sleep($e->getRetryAfter());
+            }
+        }
+
+        if ($pending) {
+            // still pending
+            throw new ProcessStillPendingException();
+        } else {
+            return $processStatus;
+        }
+    }
+
     /**
      * Get Process Status
      * @param $status - ProcessStatus | int

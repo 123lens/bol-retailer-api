@@ -2,18 +2,32 @@
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
 
 use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
+use Budgetlens\BolRetailerApi\Exceptions\ProcessStillPendingException;
 use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
-use Budgetlens\BolRetailerApi\Resources\Address;
-use Budgetlens\BolRetailerApi\Resources\Fulfilment;
-use Budgetlens\BolRetailerApi\Resources\Offer;
-use Budgetlens\BolRetailerApi\Resources\Order;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatusCollection;
-use Budgetlens\BolRetailerApi\Resources\Product;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
 
 class StatusTest extends TestCase
 {
+    /** @test */
+    public function pendingStateWillEndInException()
+    {
+        $this->expectException(ProcessStillPendingException::class);
+        $this->client->status->waitUntilComplete(1, 2, 1);
+    }
+
+    /** @test */
+    public function waitForStatusToComplete()
+    {
+        $status = $this->client->status->waitUntilComplete(2, 2, 3);
+        $this->assertInstanceOf(ProcessStatus::class, $status);
+        $this->assertSame(2, $status->id);
+        $this->assertSame('555552', $status->entityId);
+        $this->assertSame('CANCEL_ORDER', $status->eventType);
+        $this->assertSame('SUCCESS', $status->status);
+    }
+
     /** @test */
     public function getStatusById()
     {
