@@ -154,6 +154,29 @@ class OffersTest extends TestCase
     }
 
     /** @test */
+    public function updatePricing()
+    {
+        $offer = new Offer([
+            'offerId' => '13722de8-8182-d161-5422-4a0a1caab5c8',
+            'pricing' => new Pricing([
+                'bundlePrices' => [
+                    ['quantity' => 1, 'unitPrice' => '99.99'],
+                    ['quantity' => 2, 'unitPrice' => '89.99'],
+                    ['quantity' => 3, 'unitPrice' => '85.99']
+                ]
+            ])
+        ]);
+        $status = $this->client->offers->updatePrice($offer);
+
+        $this->assertInstanceOf(ProcessStatus::class, $status);
+        $this->assertSame(1, $status->id);
+        $this->assertSame('UPDATE_OFFER_PRICE', $status->eventType);
+        $this->assertSame('PENDING', $status->status);
+    }
+
+
+
+    /** @test */
     public function requestOffersExport()
     {
         $status = $this->client->offers->requestExport();

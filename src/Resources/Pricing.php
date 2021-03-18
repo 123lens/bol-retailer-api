@@ -41,10 +41,7 @@ class Pricing extends BaseResource
         return collect(parent::toArray())
             ->when(count($this->bundlePrices), function ($collection) {
                 $pricing = collect($this->bundlePrices)->map(function ($item) {
-                    return [
-                        'quantity' => $item['quantity'],
-                        'unitPrice' => number_format($item['unitPrice']/100, 2)
-                    ];
+                    return $item->toArray();
                 });
                 return $collection->put('bundlePrices', $pricing->all());
             })

@@ -97,6 +97,30 @@ class Offers extends BaseEndpoint
         return new ProcessStatus(collect($response));
     }
 
+    public function updatePrice(Offer $offer)
+    {
+        $tmp = $offer->pricing->bundlePrices->map(function ($item) {
+            return [
+                'quantity' => $item->quantity,
+                'unitPrice' => number_format($item->unitPrice/100, 2)
+            ];
+        })->all();
+
+        $body = json_encode([
+            'pricing' => [
+                'bundlePrices' => $tmp
+            ]
+        ]);
+
+        $response = $this->performApiCall(
+            'PUT',
+            "offers/{$offer->offerId}/price",
+            $body
+        );
+
+        return new ProcessStatus(collect($response));
+    }
+
     /**
      * Request Offers Export
      * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_offers_export_api_endpoints
