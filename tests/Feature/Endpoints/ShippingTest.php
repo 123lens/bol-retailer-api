@@ -1,18 +1,10 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
 
-use Budgetlens\BolRetailerApi\Client;
-use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
-use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
-use Budgetlens\BolRetailerApi\Resources\Address;
 use Budgetlens\BolRetailerApi\Resources\DeliveryOption;
-use Budgetlens\BolRetailerApi\Resources\Fulfilment;
 use Budgetlens\BolRetailerApi\Resources\Label;
-use Budgetlens\BolRetailerApi\Resources\Offer;
 use Budgetlens\BolRetailerApi\Resources\Order;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
-use Budgetlens\BolRetailerApi\Resources\ProcessStatusCollection;
-use Budgetlens\BolRetailerApi\Resources\Product;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
 use Illuminate\Support\Collection;
 
@@ -24,15 +16,13 @@ class ShippingTest extends TestCase
         $order = new Order([
             'orderItems' => [
                 [
-                    'orderItemId' => 2593223245 //2095052647
+                    'orderItemId' => 2095052647
                 ]
             ]
         ]);
-        $client = new Client();
-        $options = $client->shipping->getDeliveryOptions($order);
 
-        print_r($options);
-        exit;
+        $options = $this->client->shipping->getDeliveryOptions($order);
+
         $this->assertInstanceOf(Collection::class, $options);
         $this->assertCount(2, $options);
         $this->assertInstanceOf(DeliveryOption::class, $options->first());
