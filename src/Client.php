@@ -3,6 +3,7 @@ namespace Budgetlens\BolRetailerApi;
 
 use Budgetlens\BolRetailerApi\Contracts\Config;
 use Budgetlens\BolRetailerApi\Endpoints\Offers;
+use Budgetlens\BolRetailerApi\Endpoints\Shipping;
 use Budgetlens\BolRetailerApi\Endpoints\Status;
 use Budgetlens\BolRetailerApi\Middleware\RefreshToken;
 use Composer\CaBundle\CaBundle;
@@ -35,6 +36,9 @@ class Client
     /** @var  \Budgetlens\BolRetailerApi\Endpoints\Status */
     public $status;
 
+    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Shipping */
+    public $shipping;
+
     /** @var \GuzzleHttp\Client */
     protected $httpClient;
 
@@ -59,6 +63,7 @@ class Client
         $this->orders = new Orders($this);
         $this->offers = new Offers($this);
         $this->status = new Status($this);
+        $this->shipping = new Shipping($this);
     }
 
 
