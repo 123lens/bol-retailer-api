@@ -175,6 +175,23 @@ class OffersTest extends TestCase
     }
 
 
+    /** @test */
+    public function updateStock()
+    {
+        $offer = new Offer([
+            'offerId' => '13722de8-8182-d161-5422-4a0a1caab5c8',
+            'stock' => new Stock([
+                'amount' => 100
+            ])
+        ]);
+        $status = $this->client->offers->updateStock($offer);
+
+        $this->assertInstanceOf(ProcessStatus::class, $status);
+        $this->assertSame(1, $status->id);
+        $this->assertSame('UPDATE_OFFER_STOCK', $status->eventType);
+        $this->assertSame('PENDING', $status->status);
+    }
+
 
     /** @test */
     public function requestOffersExport()

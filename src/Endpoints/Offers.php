@@ -128,6 +128,26 @@ class Offers extends BaseEndpoint
     }
 
     /**
+     * Update Offer Stock
+     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_update_offer_stock
+     * @param Offer $offer
+     * @return ProcessStatus
+     */
+    public function updateStock(Offer $offer): ProcessStatus
+    {
+        $response = $this->performApiCall(
+            'PUT',
+            "offers/{$offer->offerId}/stock",
+            json_encode([
+                'amount' => $offer->stock->amount,
+                'managedByRetailer' => $offer->stock->managedByRetailer
+            ])
+        );
+
+        return new ProcessStatus(collect($response));
+    }
+
+    /**
      * Request Offers Export
      * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_offers_export_api_endpoints
      * @return ProcessStatus
