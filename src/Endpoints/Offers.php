@@ -97,9 +97,15 @@ class Offers extends BaseEndpoint
         return new ProcessStatus(collect($response));
     }
 
-    public function updatePrice(Offer $offer)
+    /**
+     * Update Offer Price
+     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_update_offer_price
+     * @param Offer $offer
+     * @return ProcessStatus
+     */
+    public function updatePrice(Offer $offer): ProcessStatus
     {
-        $tmp = $offer->pricing->bundlePrices->map(function ($item) {
+        $prices = $offer->pricing->bundlePrices->map(function ($item) {
             return [
                 'quantity' => $item->quantity,
                 'unitPrice' => number_format($item->unitPrice/100, 2)
@@ -108,7 +114,7 @@ class Offers extends BaseEndpoint
 
         $body = json_encode([
             'pricing' => [
-                'bundlePrices' => $tmp
+                'bundlePrices' => $prices
             ]
         ]);
 
