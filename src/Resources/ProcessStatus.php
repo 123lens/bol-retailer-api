@@ -1,6 +1,8 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Resources;
 
+use \Budgetlens\BolRetailerApi\Types\ProcessStatus as ProcessStatusType;
+
 class ProcessStatus extends BaseResource
 {
     public $id;
@@ -41,5 +43,37 @@ class ProcessStatus extends BaseResource
         $this->status = \Budgetlens\BolRetailerApi\Types\ProcessStatus::DEFAULT;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPending(): bool
+    {
+        return $this->status === ProcessStatusType::PENDING;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFailure(): bool
+    {
+        return $this->status === ProcessStatusType::FAILURE;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTimeout(): bool
+    {
+        return $this->status === ProcessStatusType::TIMEOUT;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSuccess(): bool
+    {
+        return $this->status === ProcessStatusType::SUCCESS;
     }
 }

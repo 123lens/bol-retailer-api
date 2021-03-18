@@ -3,6 +3,7 @@ namespace Budgetlens\BolRetailerApi\Endpoints;
 
 use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
 use Budgetlens\BolRetailerApi\Client;
+use Budgetlens\BolRetailerApi\Exceptions\RateLimitException;
 use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
 
 abstract class BaseEndpoint
@@ -83,6 +84,12 @@ abstract class BaseEndpoint
 
         if (json_last_error() != JSON_ERROR_NONE) {
             throw new BolRetailerException("Unable to decode response: '{$body}'.");
+        }
+
+        // hit a rate limit ?
+        if ($response->getStatusCode() === 429) {
+            $retryAfter = collect($response->getHeader('Retry-After'))->first();
+            throw new RateLimitException($retryAfter);
         }
 
         // error handling
