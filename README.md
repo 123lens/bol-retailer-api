@@ -199,8 +199,22 @@ $offers = $client->offers->getUnpublishedExport('$reportId');
 $options = $client->shipping->getDeliveryOptions($orderResource);
 ```
 
+### Create Shipping Label
+```php
+$order = new Order([
+    'orderItems' => [
+        [
+            'orderItemId' => 2095052647
+        ]
+    ]
+]);
+$status = $client->shipping->createLabel($order, '$shippingLabelOfferId');
+```
 
-
+### Get Shipping Label
+```php
+$label = $this->client->shipping->getLabel('$shippingLabelId');
+```
 
 
 
