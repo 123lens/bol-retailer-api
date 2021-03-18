@@ -193,7 +193,6 @@ class OffersTest extends TestCase
         $this->assertSame('PENDING', $status->status);
     }
 
-
     /** @test */
     public function requestOffersExport()
     {
@@ -215,6 +214,32 @@ class OffersTest extends TestCase
         $this->assertInstanceOf(Offer::class, $offers->first());
         $this->assertSame('offer-id-1', $offers->first()->offerId);
     }
+
+    /** @test */
+    public function requestUnpublishedOffersExport()
+    {
+        $status = $this->client->offers->requestUnpublishedExport();
+
+        $this->assertInstanceOf(ProcessStatus::class, $status);
+        $this->assertSame(1, $status->id);
+        $this->assertSame('UNPUBLISHED_OFFER_REPORT', $status->eventType);
+        $this->assertSame('PENDING', $status->status);
+    }
+
+    /** @test */
+    public function getUnpublishedOffersExport()
+    {
+        $this->useMock('200-unpublished-offers-export.csv', 200, ['Content-Type' => 'application/vnd.retailer.v4+csv;charset=UTF-8']);
+        $offers = $this->client->offers->getUnpublishedExport('3c343f0e-c189-49cc-ae46-da33b3d47ee6');
+        $this->assertInstanceOf(Collection::class, $offers);
+        $this->assertCount(10, $offers);
+        $this->assertInstanceOf(Offer::class, $offers->first());
+        $this->assertSame('offer-id-1', $offers->first()->offerId);
+        $this->assertSame('PRICE_NOT_COMPETITIVE', $offers->first()->notPublishableReasons->first()->code);
+        $this->assertSame('Price too high', $offers->first()->notPublishableReasons->first()->description);
+    }
+
+
 
     /** @test */
     public function missingEancodeThrowsAValidationException()

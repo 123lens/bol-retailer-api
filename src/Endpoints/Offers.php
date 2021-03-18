@@ -8,6 +8,7 @@ use Budgetlens\BolRetailerApi\Resources\Offer;
 use Budgetlens\BolRetailerApi\Resources\Order;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\Shipment as ShipmentResource;
+use Budgetlens\BolRetailerApi\Support\Arr;
 use Illuminate\Support\Collection;
 use Budgetlens\BolRetailerApi\Resources\Order as OrderResource;
 
@@ -150,13 +151,33 @@ class Offers extends BaseEndpoint
     /**
      * Request Offers Export
      * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_offers_export_api_endpoints
+     * @param string $format
      * @return ProcessStatus
      */
-    public function requestExport(): ProcessStatus
+    public function requestExport(string $format = 'CSV'): ProcessStatus
     {
         $response = $this->performApiCall(
             'POST',
             'offers/export',
+            json_encode([
+                'format' => $format
+            ])
+        );
+
+        return new ProcessStatus(collect($response));
+    }
+
+    /**
+     * Request Unpublished Offers Export
+     * @see https://api.bol.com/retailer/public/redoc/v4#operation/post-unpublished-offer-report
+     * @param string $format
+     * @return ProcessStatus
+     */
+    public function requestUnpublishedExport(string $format = 'CSV'): ProcessStatus
+    {
+        $response = $this->performApiCall(
+            'POST',
+            'offers/unpublished',
             json_encode([
                 'format' => 'CSV'
             ])
@@ -208,6 +229,52 @@ class Offers extends BaseEndpoint
                 'onHoldByRetailer' => $cols[8],
                 'mutationDateTime' => $cols[10],
                 'reference' => $cols[11]
+            ]));
+        });
+
+        return $collection;
+    }
+
+    /**
+     * Retrieve Upublished Offers CSV Export
+     * @see https://api.bol.com/retailer/public/redoc/v4#operation/post-unpublished-offer-report
+     * Columns/headers:
+     * offerId,ean,notPublishableReason,notPublishableReasonDescription
+     * @param string $id
+     * @return Collection
+     */
+    public function getUnpublishedExport(string $id): Collection
+    {
+        $this->setApiVersionHeader('application/vnd.retailer.v4+csv');
+
+        $response = $this->performApiCall(
+            'GET',
+            "offers/unpublished/{$id}"
+        );
+
+        $lines = collect(explode("\n", $response))->reject(function ($line) {
+            return empty($line);
+        })->map(function ($item) {
+            return explode(",", $item);
+        });
+        // shift first line
+        $headers = $lines->shift();
+
+        // apply headers to columns
+        $items = collect(Arr::replaceKeyWithNames($lines->all(), $headers));
+
+        $collection = new Collection();
+
+        $items->each(function ($item) use ($collection) {
+            $collection->push(new Offer([
+                'offerId' => $item['offerId'] ?? null,
+                'ean' => $item['ean'] ?? null,
+                'notPublishableReasons' => [
+                    [
+                        'code' => $item['notPublishableReason'] ?? null,
+                        'description' => $item['notPublishableReasonDescription'] ?? null
+                    ]
+                ]
             ]));
         });
 
