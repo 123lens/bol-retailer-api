@@ -99,4 +99,12 @@ class TestApiConfig implements Config
     {
         return true;
     }
+    public function getTimeout(): int
+    {
+        return 0;
+    }
+    public function getUserAgent(): string
+    {
+        return '';
+    }
 }
