@@ -1,0 +1,36 @@
+{
+  "offerId" : "13722de8-8182-d161-5422-4a0a1caab5c8",
+  "ean" : "3165140085229",
+  "reference" : "02224499",
+  "onHoldByRetailer" : false,
+  "pricing" : {
+    "bundlePrices" : [ {
+      "quantity" : 1,
+      "unitPrice" : 44.99
+    }, {
+      "quantity" : 6,
+      "unitPrice" : 42.99
+    }, {
+      "quantity" : 12,
+      "unitPrice" : 39.99
+    } ]
+  },
+  "stock" : {
+    "amount" : 3,
+    "correctedStock" : 3,
+    "managedByRetailer" : false
+  },
+  "fulfilment" : {
+    "method" : "FBR",
+    "deliveryCode" : "24uurs-15"
+  },
+  "store" : {
+    "productTitle" : "Bosch Waterpomp voor boormachine 2500 L/M",
+    "visible" : [ {
+      "countryCode" : "BE"
+    } ]
+  },
+  "condition" : {
+    "name" : "NEW"
+  }
+}

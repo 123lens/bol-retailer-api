@@ -1,0 +1,13 @@
+{
+  "id" : 1,
+  "entityId" : "13722de8-8182-d161-5422-4a0a1caab5c8",
+  "eventType" : "UPDATE_OFFER_STOCK",
+  "description" : "Update price for offer with id 13722de8-8182-d161-5422-4a0a1caab5c8.",
+  "status" : "PENDING",
+  "createTimestamp" : "2021-03-19T09:26:34+01:00",
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://api.bol.com/retailer-demo/process-status/1",
+    "method" : "GET"
+  } ]
+}
