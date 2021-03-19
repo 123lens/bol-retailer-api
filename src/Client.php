@@ -98,7 +98,7 @@ class Client
             $client = new HttpClient([
                 RequestOptions::VERIFY => CaBundle::getBundledCaBundlePath(),
                 'handler' => $stack,
-                'timeout' => $this->config->getTimeout()
+                'timeout' => $this->config->getTimeout(),
             ]);
             // add token middleware
             $stack->push(new RefreshToken($this->config));

@@ -39,7 +39,7 @@ class ApiConfig implements Config
 
     public function getTimeout(): int
     {
-        return 60;
+        return 180;
     }
 
     public function getUserAgent(): string
