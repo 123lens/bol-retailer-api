@@ -36,4 +36,14 @@ class ApiConfig implements Config
     {
         return true;
     }
+
+    public function getTimeout(): int
+    {
+        return 60;
+    }
+
+    public function getUserAgent(): string
+    {
+        return '';
+    }
 }
