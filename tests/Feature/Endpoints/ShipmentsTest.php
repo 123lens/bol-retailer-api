@@ -2,12 +2,9 @@
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
 
 use Budgetlens\BolRetailerApi\Resources\Address;
-use Budgetlens\BolRetailerApi\Resources\DeliveryOption;
 use Budgetlens\BolRetailerApi\Resources\Fulfilment;
-use Budgetlens\BolRetailerApi\Resources\Label;
 use Budgetlens\BolRetailerApi\Resources\Offer;
 use Budgetlens\BolRetailerApi\Resources\Order;
-use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\Shipment;
 use Budgetlens\BolRetailerApi\Resources\ShipmentItem;
 use Budgetlens\BolRetailerApi\Resources\Transport;
@@ -17,7 +14,7 @@ use Illuminate\Support\Collection;
 class ShipmentsTest extends TestCase
 {
     /** @test */
-    public function getShipments()
+    public function getShipmentsList()
     {
         $shipments = $this->client->shipments->list();
         $this->assertInstanceOf(Collection::class, $shipments);
