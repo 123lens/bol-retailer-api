@@ -1,0 +1,12 @@
+{
+  "id" : 1,
+  "eventType" : "CREATE_OFFER_EXPORT",
+  "description" : "Create an offer export.",
+  "status" : "PENDING",
+  "createTimestamp" : "2021-03-19T09:28:42+01:00",
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://api.bol.com/retailer-demo/process-status/1",
+    "method" : "GET"
+  } ]
+}

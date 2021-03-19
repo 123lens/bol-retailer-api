@@ -1,17 +1,12 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
 
-use Budgetlens\BolRetailerApi\Client;
-use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
 use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
-use Budgetlens\BolRetailerApi\Resources\Address;
 use Budgetlens\BolRetailerApi\Resources\Condition;
 use Budgetlens\BolRetailerApi\Resources\Fulfilment;
 use Budgetlens\BolRetailerApi\Resources\Offer;
-use Budgetlens\BolRetailerApi\Resources\Order;
 use Budgetlens\BolRetailerApi\Resources\Pricing;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
-use Budgetlens\BolRetailerApi\Resources\Product;
 use Budgetlens\BolRetailerApi\Resources\Stock;
 use Budgetlens\BolRetailerApi\Resources\Store;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
@@ -22,6 +17,7 @@ class OffersTest extends TestCase
     /** @test */
     public function createNewFbbOffer()
     {
+        $this->useMock('200-create-offer-fbb.json', 200);
         $offer = new Offer([
             'ean' => '0000007740404',
             'condition' => 'NEW',
@@ -43,6 +39,8 @@ class OffersTest extends TestCase
     /** @test */
     public function createNewFbrOffer()
     {
+        $this->useMock('200-create-offer-fbr.json', 200);
+
         $offer = new Offer([
             'ean' => '0000007740404',
             'condition' => 'NEW',
@@ -63,6 +61,8 @@ class OffersTest extends TestCase
     /** @test */
     public function updateOffer()
     {
+        $this->useMock('200-update-offer.json');
+
         $offer = new Offer([
             'offerId' => '13722de8-8182-d161-5422-4a0a1caab5c8',
             'onHoldByRetailer' => false,
@@ -79,6 +79,8 @@ class OffersTest extends TestCase
     /** @test */
     public function deleteOffer()
     {
+        $this->useMock('200-delete-offer.json');
+
         $status = $this->client->offers->delete('13722de8-8182-d161-5422-4a0a1caab5c8');
 
         $this->assertInstanceOf(ProcessStatus::class, $status);
@@ -90,6 +92,8 @@ class OffersTest extends TestCase
     /** @test */
     public function deleteOfferWithResource()
     {
+        $this->useMock('200-delete-offer.json');
+
         $offer = new Offer([
             'offerId' => '13722de8-8182-d161-5422-4a0a1caab5c8'
         ]);
@@ -105,6 +109,8 @@ class OffersTest extends TestCase
     /** @test */
     public function getOfferById()
     {
+        $this->useMock('200-offer-by-id.json');
+
         $offer = $this->client->offers->get('13722de8-8182-d161-5422-4a0a1caab5c8');
         $this->assertInstanceOf(Offer::class, $offer);
         $this->assertSame('3165140085229', $offer->ean);
@@ -129,6 +135,8 @@ class OffersTest extends TestCase
     /** @test */
     public function getOfferByResource()
     {
+        $this->useMock('200-offer-by-id.json');
+
         $offerResource = new Offer([
             'offerId' => '13722de8-8182-d161-5422-4a0a1caab5c8'
         ]);
@@ -157,6 +165,8 @@ class OffersTest extends TestCase
     /** @test */
     public function updatePricing()
     {
+        $this->useMock('200-update-offer-pricing.json');
+
         $offer = new Offer([
             'offerId' => '13722de8-8182-d161-5422-4a0a1caab5c8',
             'pricing' => new Pricing([
@@ -179,6 +189,8 @@ class OffersTest extends TestCase
     /** @test */
     public function updateStock()
     {
+        $this->useMock('200-update-offer-stock.json');
+
         $offer = new Offer([
             'offerId' => '13722de8-8182-d161-5422-4a0a1caab5c8',
             'stock' => new Stock([
@@ -196,6 +208,8 @@ class OffersTest extends TestCase
     /** @test */
     public function requestOffersExport()
     {
+        $this->useMock('200-offers-export.json');
+
         $status = $this->client->offers->requestExport();
         $this->assertInstanceOf(ProcessStatus::class, $status);
         $this->assertSame(1, $status->id);
@@ -218,6 +232,8 @@ class OffersTest extends TestCase
     /** @test */
     public function requestUnpublishedOffersExport()
     {
+        $this->useMock('200-unpublished-offers-export.json');
+
         $status = $this->client->offers->requestUnpublishedExport();
 
         $this->assertInstanceOf(ProcessStatus::class, $status);
@@ -230,6 +246,7 @@ class OffersTest extends TestCase
     public function getUnpublishedOffersExport()
     {
         $this->useMock('200-unpublished-offers-export.csv', 200, ['Content-Type' => 'application/vnd.retailer.v4+csv;charset=UTF-8']);
+
         $offers = $this->client->offers->getUnpublishedExport('3c343f0e-c189-49cc-ae46-da33b3d47ee6');
         $this->assertInstanceOf(Collection::class, $offers);
         $this->assertCount(10, $offers);
@@ -244,6 +261,7 @@ class OffersTest extends TestCase
     /** @test */
     public function missingEancodeThrowsAValidationException()
     {
+        $this->useMock('400-create-offer-fbb-invalid-eancode.json', 400);
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('Validation Failed, See violations');
         $offer = new Offer([
