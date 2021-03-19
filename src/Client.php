@@ -22,6 +22,8 @@ class Client
 {
     const HTTP_STATUS_NO_CONTENT = 204;
 
+    const USER_AGENT = "Budgetlens/BolRetailerApi/V1.0.0";
+
     /** @var string */
     public $apiVersionHeader = 'application/vnd.retailer.v4+json';
 
@@ -96,6 +98,7 @@ class Client
             $client = new HttpClient([
                 RequestOptions::VERIFY => CaBundle::getBundledCaBundlePath(),
                 'handler' => $stack,
+                'timeout' => $this->config->getTimeout(),
             ]);
             // add token middleware
             $stack->push(new RefreshToken($this->config));
@@ -103,6 +106,16 @@ class Client
         }
 
         return $this->httpClient;
+    }
+
+    /**
+     * Retrieve User Agent
+     * @return string
+     */
+    private function getUserAgent(): string
+    {
+        $agent = $this->config->getUserAgent();
+        return $agent !== '' ? $agent : self::USER_AGENT;
     }
 
     /**
@@ -117,10 +130,8 @@ class Client
         $headers = collect([
             'Accept' => $this->apiVersionHeader,
             'Content-Type' => $this->apiVersionHeader,
+            'User-Agent' => $this->getUserAgent()
         ])
-//            ->when($httpBody !== null, function ($collection) {
-//                return $collection->put('Content-Type', 'application/json');
-//            })
             ->merge($requestHeaders)
             ->all();
 
