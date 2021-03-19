@@ -8,9 +8,15 @@ class Address extends BaseResource
     public $surname;
     public $streetName;
     public $houseNumber;
+    public $houseNumberExtension;
+    public $extraAddressInformation;
     public $zipCode;
     public $city;
     public $countryCode;
     public $email;
     public $language;
+    public $company;
+    public $vatNumber;
+    public $kvkNumber;
+    public $orderReference;
 }

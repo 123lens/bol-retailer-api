@@ -216,11 +216,26 @@ $status = $client->shipping->createLabel($order, '$shippingLabelOfferId');
 $label = $this->client->shipping->getLabel('$shippingLabelId');
 ```
 
-
-
-
 ---
 
+## Shipments
+
+### Get Shipments List
+```php
+$shipments = $client->shipments->list();
+
+// get FBR Shipments only
+$shipments = $client->shipments->list('FBR');
+
+// get Shipments Belonging to specific orderID
+$shipments = $client->shipments->list(null, '$orderId');
+```
+
+### Get Shipment By ID
+```php
+$shipment = $this->client->shipments->get('$shipmentId');
+```
+---
 
 
 ## Process Status

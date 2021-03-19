@@ -1,6 +1,8 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Resources;
 
+use Illuminate\Support\Collection;
+
 class Shipment extends BaseResource
 {
     public $shipmentId;
@@ -13,12 +15,100 @@ class Shipment extends BaseResource
     public $shipmentItems;
     public $transport;
 
-    public function setPriceAttribute($value): void
+    /**
+     * Set Shipment Details Attribute
+     * @param $value
+     * @return $this
+     */
+    public function setShipmentDetailsAttribute($value)
     {
-        if ($value instanceof Money) {
-            $this->price = $value;
-        } else {
-            $this->price = new Money($value);
+        if (!$value instanceof Address) {
+            $value = new Address($value);
         }
+
+        $this->shipmentDetails = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set Billing Details Attribute
+     * @param $value
+     * @return $this
+     */
+    public function setBillingDetailsAttribute($value): self
+    {
+        if (!$value instanceof Address) {
+            $value = new Address($value);
+        }
+
+        $this->billingDetails = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set Shipment Date Attribute
+     * @param $value
+     * @return $this
+     * @throws \Exception
+     */
+    public function setShipmentDateTimeAttribute($value): self
+    {
+        if (!$value instanceof \DateTime) {
+            $value = new \DateTime($value);
+        }
+
+        $this->shipmentDateTime = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set Order Attribute
+     *
+     * @param $value
+     * @return $this
+     */
+    public function setOrderAttribute($value): self
+    {
+        if (!$value instanceof Order) {
+            $value = new Order($value);
+        }
+
+        $this->order = $value;
+
+        return $this;
+    }
+    /**
+     * Set Shipment Items Attribute
+     * @param $value
+     * @return $this
+     */
+    public function setShipmentItemsAttribute($value): self
+    {
+        $items = new Collection();
+        collect($value)->each(function ($item) use ($items) {
+            $items->push(new ShipmentItem($item));
+        });
+        $this->shipmentItems = $items;
+
+        return $this;
+    }
+
+    /**
+     * Set Transport Attribute
+     * @param $value
+     * @return $this
+     */
+    public function setTransportAttribute($value): self
+    {
+        if (!$value instanceof Transport) {
+            $value = new Transport($value);
+        }
+
+        $this->transport = $value;
+
+        return $this;
     }
 }
