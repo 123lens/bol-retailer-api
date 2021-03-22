@@ -1,0 +1,22 @@
+{
+  "processStatuses" : [ {
+    "id" : 1,
+    "entityId" : "555551",
+    "eventType" : "CONFIRM_SHIPMENT",
+    "description" : "This is a mocked process status.",
+    "status" : "PENDING",
+    "createTimestamp" : "2021-03-22T09:22:28.02041+01:00",
+    "links" : [ {
+      "rel" : "self",
+      "href" : "https://api.bol.com/retailer-demo/process-status/1",
+      "method" : "GET"
+    } ]
+  }, {
+    "id" : 2,
+    "entityId" : "555552",
+    "eventType" : "CANCEL_ORDER",
+    "description" : "This is a mocked process status.",
+    "status" : "SUCCESS",
+    "createTimestamp" : "2021-03-22T09:22:28.020412+01:00"
+  } ]
+}

@@ -1,0 +1,8 @@
+{
+  "id" : 2,
+  "entityId" : "555552",
+  "eventType" : "CANCEL_ORDER",
+  "description" : "This is a mocked process status.",
+  "status" : "SUCCESS",
+  "createTimestamp" : "2021-03-22T09:10:33.955061+01:00"
+}

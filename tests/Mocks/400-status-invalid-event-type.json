@@ -1,0 +1,12 @@
+{
+  "type" : "https://api.bol.com/problems",
+  "title" : "Error validating request body. Consult the bol.com API documentation for more information.",
+  "status" : 400,
+  "detail" : "Bad request",
+  "host" : "Instance-101",
+  "instance" : "https://api.bol.com/retailer-demo/process-status?entity-id=555551&event-type=INVALID_EVENT_TYPE&page=1",
+  "violations" : [ {
+    "name" : "process-status-event-type",
+    "reason" : "Request contains invalid value(s): 'INVALID_EVENT_TYPE', allowed values: CONFIRM_SHIPMENT, CANCEL_ORDER, CHANGE_TRANSPORT, HANDLE_RETURN_ITEM, CREATE_RETURN_ITEM, CREATE_INBOUND, DELETE_OFFER, CREATE_OFFER, UPDATE_OFFER, UPDATE_OFFER_STOCK, UPDATE_OFFER_PRICE, CREATE_OFFER_EXPORT, UNPUBLISHED_OFFER_REPORT, CREATE_PRODUCT_CONTENT, CREATE_SUBSCRIPTION, UPDATE_SUBSCRIPTION, DELETE_SUBSCRIPTION, SEND_SUBSCRIPTION_TST_MSG, CREATE_SHIPPING_LABEL, CREATE_REPLENISHMENT, UPDATE_REPLENISHMENT."
+  } ]
+}
