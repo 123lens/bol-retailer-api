@@ -16,6 +16,8 @@ class ShipmentsTest extends TestCase
     /** @test */
     public function getShipmentsList()
     {
+        $this->useMock('200-shipments-list.json');
+
         $shipments = $this->client->shipments->list();
         $this->assertInstanceOf(Collection::class, $shipments);
         $this->assertCount(4, $shipments);
@@ -37,6 +39,8 @@ class ShipmentsTest extends TestCase
     /** @test */
     public function getShipmentsFBB()
     {
+        $this->useMock('200-shipments-list-fbb.json');
+
         $shipments = $this->client->shipments->list('FBB');
 
         $this->assertInstanceOf(Collection::class, $shipments);
@@ -57,6 +61,8 @@ class ShipmentsTest extends TestCase
     /** @test */
     public function getShipmentsForOrder()
     {
+        $this->useMock('200-shipments-for-order-id.json');
+
         $shipments = $this->client->shipments->list(null, 7616222250);
 
         $this->assertInstanceOf(Collection::class, $shipments);
@@ -77,6 +83,8 @@ class ShipmentsTest extends TestCase
     /** @test */
     public function getShipmentById()
     {
+        $this->useMock('200-get-shipment-by-id.json');
+
         $id = '914587795';
         $shipment = $this->client->shipments->get($id);
         $this->assertInstanceOf(Shipment::class, $shipment);

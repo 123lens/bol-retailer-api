@@ -1,0 +1,18 @@
+{
+  "shipments" : [ {
+    "shipmentId" : 914587795,
+    "shipmentDateTime" : "2018-04-20T19:20:11+02:00",
+    "shipmentReference" : "Shipment1",
+    "order" : {
+      "orderId" : "7616222250",
+      "orderPlacedDateTime" : "2018-01-08T10:45:12+01:00"
+    },
+    "shipmentItems" : [ {
+      "orderItemId" : "6107434013",
+      "ean" : "8718712021740"
+    } ],
+    "transport" : {
+      "transportId" : 358612589
+    }
+  } ]
+}
