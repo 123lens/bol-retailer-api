@@ -1,0 +1,8 @@
+{
+  "type" : "https://api.bol.com/problems",
+  "title" : "Not Found",
+  "status" : 404,
+  "detail" : "Not Found",
+  "host" : "Instance-101",
+  "instance" : "https://api.bol.com/retailer-demo/process-status/99999"
+}
