@@ -1,0 +1,65 @@
+{
+  "shipmentId" : 914587795,
+  "shipmentDateTime" : "2018-04-20T19:20:11+02:00",
+  "shipmentReference" : "Shipment1",
+  "pickUpPoint" : true,
+  "order" : {
+    "orderId" : "7616222250",
+    "orderPlacedDateTime" : "2018-04-20T16:13:31+02:00"
+  },
+  "shipmentDetails" : {
+    "pickUpPointName" : "Albert Heijn: UTRECHT",
+    "salutation" : "MALE",
+    "firstName" : "Anakin",
+    "surname" : "Skywalker",
+    "streetName" : "Tatooinestraat",
+    "houseNumber" : "100",
+    "houseNumberExtension" : "B",
+    "zipCode" : "3528BJ",
+    "city" : "Utrecht",
+    "countryCode" : "NL",
+    "email" : "25whxgzlkmvotjhskwf5x27wlrldny@verkopen.test2.bol.com",
+    "deliveryPhoneNumber" : "0612345678",
+    "language" : "nl"
+  },
+  "billingDetails" : {
+    "salutation" : "MALE",
+    "firstName" : "Anakin",
+    "surname" : "Skywalker",
+    "streetName" : "Tatooinestraat",
+    "houseNumber" : "100",
+    "houseNumberExtension" : "B",
+    "extraAddressInformation" : "Extra informatie",
+    "zipCode" : "3528BJ",
+    "city" : "UTRECHT",
+    "countryCode" : "NL",
+    "email" : "25whxgzlkmvotjhskwf5x27wlrldny@verkopen.test2.bol.com",
+    "company" : "Pieter Post",
+    "vatNumber" : "NL123456789B01",
+    "kvkNumber" : "99887766",
+    "orderReference" : "Mijn order ref"
+  },
+  "shipmentItems" : [ {
+    "orderItemId" : "6107434013",
+    "fulfilment" : {
+      "method" : "FBR",
+      "latestDeliveryDate" : "2018-04-21"
+    },
+    "offer" : {
+      "offerId" : "8f6085e3-de98-c97f-e053-3542090a63b3",
+      "reference" : "Test1"
+    },
+    "product" : {
+      "ean" : "8712626055150",
+      "title" : "Star Wars - Original Trilogy"
+    },
+    "quantity" : 3,
+    "unitPrice" : 34.99,
+    "commission" : 14.00
+  } ],
+  "transport" : {
+    "transportId" : 358612589,
+    "transporterCode" : "TNT",
+    "trackAndTrace" : "3SAOLD1234567"
+  }
+}
