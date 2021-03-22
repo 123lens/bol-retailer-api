@@ -1,0 +1,37 @@
+{
+  "deliveryOptions" : [ {
+    "shippingLabelOfferId" : "32c4a88c-3c64-41ad-83a1-24450b341747",
+    "validUntilDate" : "2020-10-17",
+    "transporterCode" : "TNT",
+    "labelType" : "PARCEL",
+    "labelPrice" : {
+      "totalPrice" : 4.41
+    },
+    "packageRestrictions" : {
+      "maxWeight" : "10 kg",
+      "maxDimensions" : "100 x 50 x 50 cm"
+    },
+    "handoverDetails" : {
+      "meetsCustomerExpectation" : true,
+      "latestHandoverDateTime" : "2020-10-03T18:00:00+02:00",
+      "collectionMethod" : "DROP_OFF"
+    }
+  }, {
+    "shippingLabelOfferId" : "fb7f20c0-d847-4d62-9c57-7aba64fb9b52",
+    "validUntilDate" : "2020-10-08",
+    "transporterCode" : "TNT_BRIEF",
+    "labelType" : "MAILBOX_LIGHT",
+    "labelPrice" : {
+      "totalPrice" : 2.88
+    },
+    "packageRestrictions" : {
+      "maxWeight" : "2 kg",
+      "maxDimensions" : "38 x 26,5 x 3,2 cm"
+    },
+    "handoverDetails" : {
+      "meetsCustomerExpectation" : true,
+      "latestHandoverDateTime" : "2020-09-24T18:30:00+02:00",
+      "collectionMethod" : "DROP_OFF"
+    }
+  } ]
+}

@@ -13,6 +13,8 @@ class ShippingTest extends TestCase
     /** @test */
     public function getDeliveryOptions()
     {
+        $this->useMock('200-delivery-options.json');
+
         $order = new Order([
             'orderItems' => [
                 [
@@ -37,6 +39,8 @@ class ShippingTest extends TestCase
     /** @test */
     public function createShippingLabel()
     {
+        $this->useMock('200-create-shipping-label.json');
+
         $order = new Order([
             'orderItems' => [
                 [
