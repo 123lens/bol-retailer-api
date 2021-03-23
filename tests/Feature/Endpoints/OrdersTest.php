@@ -162,4 +162,22 @@ class OrdersTest extends TestCase
         $this->assertSame(EventTypes::CANCEL_ORDER, $status->eventType);
         $this->assertSame('PENDING', $status->status);
     }
+
+    /** @test */
+    public function cancelOrderItemInvalidCancelReasonThrowsAnException()
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Validation Failed, See violations');
+
+        $this->useMock('400-cancel-order-items-invalid-reason-code.json', 400);
+
+        try {
+            $status = $this->client->orders->cancelOrderItem('7616222250', 'Unknown');
+        } catch (ValidationException $e) {
+            $violations = $e->getViolations();
+            $this->assertSame('orderItems[0].reasonCode', $violations->first()->name);
+            $this->assertSame("Request contains invalid value(s): 'Unknown', allowed values: OUT_OF_STOCK, REQUESTED_BY_CUSTOMER, BAD_CONDITION, HIGHER_SHIPCOST, INCORRECT_PRICE, NOT_AVAIL_IN_TIME, NO_BOL_GUARANTEE, ORDERED_TWICE, RETAIN_ITEM, TECH_ISSUE, UNFINDABLE_ITEM, OTHER.", $violations->first()->reason);
+            throw $e;
+        }
+    }
 }
