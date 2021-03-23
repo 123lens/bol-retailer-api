@@ -66,7 +66,7 @@ abstract class BaseEndpoint
             'application/vnd.retailer.v4+xml;charset=UTF-8'
         ];
 
-        if (in_array(collect($response->getHeader('Content-Type'))->first(), $directResponseHeaders)) {
+        if (in_array(collect($response->getHeader('Content-Type'))->first(), E$directResponseHeaders)) {
             return $response->getBody()->getContents();
         }
 
