@@ -11,8 +11,6 @@ class Invoice extends BaseResource
     public $type;
     public $contents;
 
-
-
     public function __construct($attributes = [])
     {
         parent::__construct($attributes);

@@ -1,18 +1,14 @@
 <?php
-namespace Budgetlens\BolRetailerApi\Resources;
+namespace Budgetlens\BolRetailerApi\Resources\Invoice;
 
-use Budgetlens\BolRetailerApi\Resources\InvoiceItem as InvoiceResource;
-use Illuminate\Support\Collection;
-
-class InvoicePDF extends BaseResource
+class InvoicePDF extends AbstractInvoice
 {
-    public $type = 'pdf';
-    public $id;
     public $contents;
 
     public function __construct($attributes = [])
     {
         parent::__construct($attributes);
+        $this->type = 'pdf';
     }
 
     /**

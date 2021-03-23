@@ -1,18 +1,14 @@
 <?php
-namespace Budgetlens\BolRetailerApi\Resources;
+namespace Budgetlens\BolRetailerApi\Resources\Invoice;
 
-use Budgetlens\BolRetailerApi\Resources\InvoiceItem as InvoiceResource;
-use Illuminate\Support\Collection;
-
-class InvoiceXML extends BaseResource
+class InvoiceXML extends AbstractInvoice
 {
-    public $type = 'xml';
-    public $id;
     public $contents;
 
     public function __construct($attributes = [])
     {
         parent::__construct($attributes);
+        $this->type = 'xml';
     }
 
     /**

@@ -2,17 +2,16 @@
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
 use Budgetlens\BolRetailerApi\Exceptions\InvalidFormatException;
-use Budgetlens\BolRetailerApi\Resources\InvoicePDF;
-use Budgetlens\BolRetailerApi\Resources\InvoiceXML;
-use Illuminate\Support\Collection;
+use Budgetlens\BolRetailerApi\Resources\Invoice\InvoicePDF;
+use Budgetlens\BolRetailerApi\Resources\Invoice\InvoiceXML;
 use Budgetlens\BolRetailerApi\Resources\Invoice as InvoiceResource;
 
 class Invoices extends BaseEndpoint
 {
     private $availableFormats = [
-        'json',
         'xml',
-        'pdf'
+        'pdf',
+        'json'
     ];
 
     /**
@@ -55,6 +54,7 @@ class Invoices extends BaseEndpoint
                 'Accept' => $this->getAcceptHeader($format)
             ]
         );
+
         switch ($format) {
             case 'xml':
                 return new InvoiceXML([
@@ -66,9 +66,25 @@ class Invoices extends BaseEndpoint
                     'id' => $invoiceId,
                     'contents' => $response
                 ]);
-            default:
-                return new InvoiceResource(collect($response));
         }
+    }
+
+    public function getSpecification(string $invoiceId, $format = 'pdf')
+    {
+        if (!in_array($format, $this->availableFormats)) {
+            throw new InvalidFormatException();
+        }
+
+        $response = $this->performApiCall(
+            'GET',
+            "invoices/{$invoiceId}/specification",
+            null,
+            [
+                'Accept' => $this->getAcceptHeader($format)
+            ]
+        );
+        print_r($response);
+        exit;
     }
 
     /**
