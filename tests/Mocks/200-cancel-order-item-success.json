@@ -1,0 +1,13 @@
+{
+  "id" : 1,
+  "entityId" : "7616222250",
+  "eventType" : "CANCEL_ORDER",
+  "description" : "Cancel order item with id 7616222250.",
+  "status" : "PENDING",
+  "createTimestamp" : "2021-03-23T12:07:51+01:00",
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://api.bol.com/retailer-demo/process-status/1",
+    "method" : "GET"
+  } ]
+}
