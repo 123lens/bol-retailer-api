@@ -1,0 +1,12 @@
+{
+  "type" : "https://api.bol.com/problems",
+  "title" : "Error validating request body. Consult the bol.com API documentation for more information.",
+  "status" : 400,
+  "detail" : "Bad request",
+  "host" : "Instance-101",
+  "instance" : "https://api.bol.com/retailer-demo/orders/shipment",
+  "violations" : [ {
+    "name" : "orderItems",
+    "reason" : "Collection size must be between 1 and 1."
+  } ]
+}

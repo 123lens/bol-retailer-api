@@ -4,4 +4,6 @@ namespace Budgetlens\BolRetailerApi\Resources;
 class Transport extends BaseResource
 {
     public $transportId;
+    public $transporterCode;
+    public $trackAndTrace;
 }

@@ -2,12 +2,16 @@
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
 
 use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
+use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
 use Budgetlens\BolRetailerApi\Resources\Address;
 use Budgetlens\BolRetailerApi\Resources\Fulfilment;
 use Budgetlens\BolRetailerApi\Resources\Offer;
 use Budgetlens\BolRetailerApi\Resources\Order;
+use Budgetlens\BolRetailerApi\Resources\OrderItem;
 use Budgetlens\BolRetailerApi\Resources\Product;
+use Budgetlens\BolRetailerApi\Resources\Transport;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
+use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 
 class OrdersTest extends TestCase
 {
@@ -80,5 +84,73 @@ class OrdersTest extends TestCase
         $this->expectExceptionMessage('Error executing API call : Order for order id 9999999999 not found. : Not Found (404)');
 
         $this->client->orders->get('9999999999');
+    }
+
+    /** @test */
+    public function shipOrderItemUsingTransport()
+    {
+        $this->useMock('200-ship-order-item.json');
+
+        $orderItems = [
+            new OrderItem(['orderItemId' => '6107434013'])
+        ];
+        $shipmentReference = 'unit-test';
+        $transport = new Transport([
+            'transporterCode' => 'TNT',
+            'trackAndTrace' => '3SAOLD1234567'
+        ]);
+
+        $status = $this->client->orders->shipOrderItem($orderItems, $shipmentReference, null, $transport);
+
+        $this->assertInstanceOf(ProcessStatus::class, $status);
+        $this->assertSame(1, $status->id);
+        $this->assertSame('6107434013', $status->entityId);
+        $this->assertSame('CONFIRM_SHIPMENT', $status->eventType);
+        $this->assertSame('PENDING', $status->status);
+    }
+
+    /** @test */
+    public function shipOrderItemUsingShipmentlabel()
+    {
+        $this->useMock('200-ship-order-item.json');
+
+        $orderItems = [
+            new OrderItem(['orderItemId' => '6107434013'])
+        ];
+        $shipmentReference = 'unit-test';
+        $shipmentLabelId = 'd4c50077-0c19-435f-9bee-1b30b9f4ba1a';
+
+        $status = $this->client->orders->shipOrderItem($orderItems, $shipmentReference, $shipmentLabelId);
+
+        $this->assertInstanceOf(ProcessStatus::class, $status);
+        $this->assertSame(1, $status->id);
+        $this->assertSame('6107434013', $status->entityId);
+        $this->assertSame('CONFIRM_SHIPMENT', $status->eventType);
+        $this->assertSame('PENDING', $status->status);
+    }
+
+    /** @test */
+    public function shipOrderItemMultipleItemsThrowsException()
+    {
+        $this->useMock('400-ship-order-items-to-much-items.json', 400);
+
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Validation Failed, See violations');
+
+        $orderItems = [
+            new OrderItem(['orderItemId' => '6107434013']),
+            new OrderItem(['orderItemId' => '6107434014'])
+        ];
+        $shipmentReference = 'unit-test';
+        $shipmentLabelId = 'd4c50077-0c19-435f-9bee-1b30b9f4ba1a';
+
+        try {
+            $status = $this->client->orders->shipOrderItem($orderItems, $shipmentReference, $shipmentLabelId);
+        } catch (ValidationException $e) {
+            $violations = $e->getViolations();
+            $this->assertSame('orderItems', $violations->first()->name);
+            $this->assertSame('Collection size must be between 1 and 1.', $violations->first()->reason);
+            throw $e;
+        }
     }
 }
