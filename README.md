@@ -54,9 +54,37 @@ $orders = $client->orders->getOpenOrders('FBR', 2);
 ```
 
 ### Retrieve a single order
-``` php
+```php
 $order = $client->orders->get($orderId);
 ```
+
+### Ship Order Item With Transporter information
+```php
+$orderItemId = '6107434013';
+$shipmentReference = 'unit-test';
+$transport = new Transport([
+    'transporterCode' => 'TNT',
+    'trackAndTrace' => '3SAOLD1234567'
+]);
+
+$status = $client->orders->shipOrderItem($orderItemId, $shipmentReference, null, $transport);
+```
+
+### Ship Order Item using Bol Shipment Label
+```php
+$orderItemId = '6107434013';
+$shipmentReference = 'unit-test';
+$shipmentLabelId = 'd4c50077-0c19-435f-9bee-1b30b9f4ba1a';
+
+$status = $client->orders->shipOrderItem($orderItemId, $shipmentReference, $shipmentLabelId);
+```
+
+### Cancel Order Item
+```php
+$orderItemId = '7616222250';
+$status = $client->orders->cancelOrderItem($orderItemId, CancelReasonCodes::REQUESTED_BY_CUSTOMER);
+```
+
 ---
 
 ## Offers
