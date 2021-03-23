@@ -12,6 +12,8 @@ use Budgetlens\BolRetailerApi\Resources\Product;
 use Budgetlens\BolRetailerApi\Resources\Transport;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
+use Budgetlens\BolRetailerApi\Types\CancelReasonCodes;
+use Budgetlens\BolRetailerApi\Types\EventTypes;
 
 class OrdersTest extends TestCase
 {
@@ -147,5 +149,17 @@ class OrdersTest extends TestCase
         }
     }
 
+    /** @test */
+    public function cancelOrderItemRequestedByCustomer()
+    {
+        $this->useMock('200-cancel-order-item-success.json');
 
+        $status = $this->client->orders->cancelOrderItem('7616222250', CancelReasonCodes::REQUESTED_BY_CUSTOMER);
+
+        $this->assertInstanceOf(ProcessStatus::class, $status);
+        $this->assertSame(1, $status->id);
+        $this->assertSame('7616222250', $status->entityId);
+        $this->assertSame(EventTypes::CANCEL_ORDER, $status->eventType);
+        $this->assertSame('PENDING', $status->status);
+    }
 }
