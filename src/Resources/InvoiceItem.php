@@ -82,5 +82,4 @@ class InvoiceItem extends BaseResource
 
         return $this;
     }
-
 }
