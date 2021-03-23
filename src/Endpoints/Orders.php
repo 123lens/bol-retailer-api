@@ -54,25 +54,21 @@ class Orders extends BaseEndpoint
     }
 
     public function shipOrderItem(
-        array $orderItems,
+        string $orderItemId,
         string $shipmentReference = null,
         string $shipmentLabelId = null,
         ?Transport $transport = null
     ): ProcessStatus {
         $payload = collect([
+            'orderItems' => [
+                'orderItemId' => $orderItemId
+            ],
             'shipmentReference' => $shipmentReference,
             'shippingLabelId' => $shipmentLabelId,
             'transport' => $transport
         ])
             ->when(!is_null($transport), function ($collection) use ($transport) {
                 return $collection->put('transport', $transport->toArray());
-            })
-            ->when(count($orderItems), function ($collection) use ($orderItems) {
-                $return = [];
-                foreach ($orderItems as $item) {
-                    $return[] = $item->toArray();
-                }
-                return $collection->put('orderItems', $return);
             })
             ->reject(function ($value) {
                 return is_null($value);

@@ -6,7 +6,6 @@
   "host" : "Instance-101",
   "instance" : "https://api.bol.com/retailer-demo/orders/shipment",
   "violations" : [ {
-    "name" : "orderItems",
-    "reason" : "Collection size must be between 1 and 1."
+    "reason" : "Conflicting transport method: Either provide Transport or ShippingLabelId. The current request contains both."
   } ]
 }

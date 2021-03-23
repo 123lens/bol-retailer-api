@@ -91,16 +91,13 @@ class OrdersTest extends TestCase
     {
         $this->useMock('200-ship-order-item.json');
 
-        $orderItems = [
-            new OrderItem(['orderItemId' => '6107434013'])
-        ];
         $shipmentReference = 'unit-test';
         $transport = new Transport([
             'transporterCode' => 'TNT',
             'trackAndTrace' => '3SAOLD1234567'
         ]);
 
-        $status = $this->client->orders->shipOrderItem($orderItems, $shipmentReference, null, $transport);
+        $status = $this->client->orders->shipOrderItem('6107434013', $shipmentReference, null, $transport);
 
         $this->assertInstanceOf(ProcessStatus::class, $status);
         $this->assertSame(1, $status->id);
@@ -114,13 +111,10 @@ class OrdersTest extends TestCase
     {
         $this->useMock('200-ship-order-item.json');
 
-        $orderItems = [
-            new OrderItem(['orderItemId' => '6107434013'])
-        ];
         $shipmentReference = 'unit-test';
         $shipmentLabelId = 'd4c50077-0c19-435f-9bee-1b30b9f4ba1a';
 
-        $status = $this->client->orders->shipOrderItem($orderItems, $shipmentReference, $shipmentLabelId);
+        $status = $this->client->orders->shipOrderItem('6107434013', $shipmentReference, $shipmentLabelId);
 
         $this->assertInstanceOf(ProcessStatus::class, $status);
         $this->assertSame(1, $status->id);
@@ -130,27 +124,28 @@ class OrdersTest extends TestCase
     }
 
     /** @test */
-    public function shipOrderItemMultipleItemsThrowsException()
+    public function shipOrderItemMultipleTransportInformationThrowsException()
     {
-        $this->useMock('400-ship-order-items-to-much-items.json', 400);
+        $this->useMock('400-ship-order-items-multiple-transport-information.json', 400);
 
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('Validation Failed, See violations');
 
-        $orderItems = [
-            new OrderItem(['orderItemId' => '6107434013']),
-            new OrderItem(['orderItemId' => '6107434014'])
-        ];
         $shipmentReference = 'unit-test';
         $shipmentLabelId = 'd4c50077-0c19-435f-9bee-1b30b9f4ba1a';
+        $transport = new Transport([
+            'transporterCode' => 'TNT',
+            'trackAndTrace' => '3SAOLD1234567'
+        ]);
 
         try {
-            $status = $this->client->orders->shipOrderItem($orderItems, $shipmentReference, $shipmentLabelId);
+            $status = $this->client->orders->shipOrderItem('6107434013', $shipmentReference, $shipmentLabelId, $transport);
         } catch (ValidationException $e) {
             $violations = $e->getViolations();
-            $this->assertSame('orderItems', $violations->first()->name);
-            $this->assertSame('Collection size must be between 1 and 1.', $violations->first()->reason);
+            $this->assertSame('Conflicting transport method: Either provide Transport or ShippingLabelId. The current request contains both.', $violations->first()->reason);
             throw $e;
         }
     }
+
+
 }
