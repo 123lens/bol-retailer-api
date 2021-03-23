@@ -220,6 +220,18 @@ $offers = $client->offers->getUnpublishedExport('$reportId');
 
 ---
 
+## Inventory
+
+### Get LVB/FBB inventory
+```php
+$inventory = $client->inventory->get();
+// filter inventory by quantity range. (0-20)
+$inventory = $client->inventory->get('0-20');
+```
+
+
+--- 
+
 ## Shipping Labels
 
 ### Get Delivery Options
