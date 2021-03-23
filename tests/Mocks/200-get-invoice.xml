@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+             xmlns:ns2="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+             xmlns:ns3="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+             xmlns:ns4="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+    <UBLVersionID>2.1</UBLVersionID>
+    <CustomizationID>
+        urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0:extended:urn:www.simplerinvoicing.org:si:si-ubl:ver1.1.x
+    </CustomizationID>
+    <ProfileID>urn:www.cenbii.eu:profile:bii04:ver2.0</ProfileID>
+    <ID>4500022543921</ID>
+    <IssueDate>2021-03-01+01:00</IssueDate>
+    <InvoiceTypeCode listID="UNCL1001">380</InvoiceTypeCode>
+    <DocumentCurrencyCode>EUR</DocumentCurrencyCode>
+    <ns3:InvoicePeriod>
+        <StartDate>2021-02-01+01:00</StartDate>
+        <EndDate>2021-02-28+01:00</EndDate>
+    </ns3:InvoicePeriod>
+    <ns3:AccountingSupplierParty>
+        <ns3:Party>
+            <ns3:PartyIdentification>
+                <ID schemeID="NL:KVK">32147382</ID>
+            </ns3:PartyIdentification>
+            <ns3:PartyName>
+                <Name>Bol.com B.V.</Name>
+            </ns3:PartyName>
+            <ns3:PostalAddress>
+                <StreetName>Papendorpseweg</StreetName>
+                <BuildingNumber>100</BuildingNumber>
+                <CityName>Utrecht</CityName>
+                <PostalZone>3528 BJ</PostalZone>
+                <ns3:Country>
+                    <IdentificationCode listID="ISO3166-1:Alpha2" listAgencyID="6">NL</IdentificationCode>
+                </ns3:Country>
+            </ns3:PostalAddress>
+            <ns3:PartyTaxScheme>
+                <CompanyID schemeID="NL:VAT" schemeAgencyID="ZZZ">NL820471616B01</CompanyID>
+                <ns3:TaxScheme>
+                    <ID schemeID="UN/ECE 5153" schemeAgencyID="6">VAT</ID>
+                </ns3:TaxScheme>
+            </ns3:PartyTaxScheme>
+            <ns3:PartyLegalEntity>
+                <CompanyID schemeID="NL:KVK" schemeAgencyID="ZZZ">32147382</CompanyID>
+            </ns3:PartyLegalEntity>
+            <ns3:Contact>
+                <Name>Bol.com B.V.</Name>
+                <Telephone>+31 (0)30 6008888</Telephone>
+            </ns3:Contact>
+        </ns3:Party>
+    </ns3:AccountingSupplierParty>
+</ns4:Invoice>

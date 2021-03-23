@@ -229,7 +229,25 @@ $inventory = $client->inventory->get();
 $inventory = $client->inventory->get('0-20');
 ```
 
+## Invoices
 
+### Get All Invoices
+```php
+$invoices = $client->invoices->list();
+```
+
+### Get Invoice 
+```php
+// format pdf
+$invoicePdf = $client->invoices->get($invoiceId, 'pdf');
+// -- save pdf 
+$invoicePdf->save('path for storage');
+
+// format xml
+$invoiceXml = $client->invoices->get($invoiceId, 'xml');
+// -- get xml
+$invoiceXml->getXml();
+```
 --- 
 
 ## Shipping Labels

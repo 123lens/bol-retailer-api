@@ -3,6 +3,7 @@ namespace Budgetlens\BolRetailerApi;
 
 use Budgetlens\BolRetailerApi\Contracts\Config;
 use Budgetlens\BolRetailerApi\Endpoints\Inventory;
+use Budgetlens\BolRetailerApi\Endpoints\Invoices;
 use Budgetlens\BolRetailerApi\Endpoints\Offers;
 use Budgetlens\BolRetailerApi\Endpoints\Shipments;
 use Budgetlens\BolRetailerApi\Endpoints\Shipping;
@@ -49,6 +50,9 @@ class Client
     /** @var  \Budgetlens\BolRetailerApi\Endpoints\Inventory */
     public $inventory;
 
+    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Invoices */
+    public $invoices;
+
     /** @var \GuzzleHttp\Client */
     protected $httpClient;
 
@@ -76,6 +80,7 @@ class Client
         $this->shipping = new Shipping($this);
         $this->shipments = new Shipments($this);
         $this->inventory = new Inventory($this);
+        $this->invoices = new Invoices($this);
     }
 
 
