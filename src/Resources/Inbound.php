@@ -42,10 +42,7 @@ class Inbound extends BaseResource
      */
     public function setTimeSlotAttribute($value): self
     {
-        $this->timeSlot = collect([
-            'startDateTime' => new \DateTime($value->startDateTime),
-            'endDateTime' => new \DateTime($value->endDateTime)
-        ])->all();
+        $this->timeSlot = new Timeslot($value);
 
         return $this;
     }
