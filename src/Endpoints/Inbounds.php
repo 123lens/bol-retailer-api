@@ -4,14 +4,17 @@ namespace Budgetlens\BolRetailerApi\Endpoints;
 use Budgetlens\BolRetailerApi\Exceptions\InvalidFormatException;
 use Budgetlens\BolRetailerApi\Resources\Inbound;
 use Budgetlens\BolRetailerApi\Resources\InboundPackinglist;
+use Budgetlens\BolRetailerApi\Resources\InboundProductLabels;
 use Budgetlens\BolRetailerApi\Resources\InboundShippingLabel;
 use Budgetlens\BolRetailerApi\Resources\Invoice\InvoicePDF;
 use Budgetlens\BolRetailerApi\Resources\Invoice\InvoiceXML;
 use Budgetlens\BolRetailerApi\Resources\Invoice as InvoiceResource;
+use Budgetlens\BolRetailerApi\Resources\Label;
 use Budgetlens\BolRetailerApi\Resources\Order as OrderResource;
 use Budgetlens\BolRetailerApi\Resources\Timeslot;
 use Budgetlens\BolRetailerApi\Resources\Transporter;
 use Budgetlens\BolRetailerApi\Types\InboundState;
+use Budgetlens\BolRetailerApi\Types\LabelFormat;
 use Illuminate\Support\Collection;
 
 class Inbounds extends BaseEndpoint
@@ -21,6 +24,15 @@ class Inbounds extends BaseEndpoint
         InboundState::CANCELLED,
         InboundState::DRAFT,
         InboundState::PREANNOUNCED
+    ];
+
+    private $availableProductLabelFormat = [
+        LabelFormat::AVERY_3474,
+        LabelFormat::AVERY_J8159,
+        LabelFormat::AVERY_J8160,
+        LabelFormat::BROTHER_DK11208D,
+        LabelFormat::DYMO_99012,
+        LabelFormat::ZEBRA_Z_PERFORM_1000T
     ];
 
     /**
@@ -134,6 +146,42 @@ class Inbounds extends BaseEndpoint
         );
         return new InboundShippingLabel([
             'id' => $inboundId,
+            'contents' => $response
+        ]);
+    }
+
+    /**
+     * Get Product Labels
+     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get-product-labels
+     * @param array $productLabels
+     * @param string $format
+     * @return InboundProductLabels
+     */
+    public function getProductLabels(
+        array $productLabels,
+        string $format = LabelFormat::ZEBRA_Z_PERFORM_1000T
+    ): InboundProductLabels {
+        if (!in_array($format, $this->availableProductLabelFormat)) {
+            throw new \InvalidArgumentException("Invalid format");
+        }
+
+        $payload = collect([
+            'productLabels' => $productLabels,
+            'format' => $format
+        ])->reject(function ($item) {
+            return is_array($item) && !count($item);
+        })->all();
+        $response = $this->performApiCall(
+            'POST',
+            "inbounds/productlabels",
+            json_encode($payload),
+            [
+                'Accept' => 'application/vnd.retailer.v4+pdf'
+            ]
+        );
+
+        return new InboundProductLabels([
+            'id' => 'product-labels',
             'contents' => $response
         ]);
     }

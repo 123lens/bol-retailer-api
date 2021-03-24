@@ -4,10 +4,12 @@ namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
 use Budgetlens\BolRetailerApi\Client;
 use Budgetlens\BolRetailerApi\Resources\Inbound;
 use Budgetlens\BolRetailerApi\Resources\InboundPackinglist;
+use Budgetlens\BolRetailerApi\Resources\InboundProductLabels;
 use Budgetlens\BolRetailerApi\Resources\InboundShippingLabel;
 use Budgetlens\BolRetailerApi\Resources\Timeslot;
 use Budgetlens\BolRetailerApi\Resources\Transporter;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
+use Budgetlens\BolRetailerApi\Types\LabelFormat;
 use Cassandra\Date;
 use Illuminate\Support\Collection;
 
@@ -67,6 +69,18 @@ class InboundsTest extends TestCase
         $this->assertSame($id, $inbound->id);
     }
 
+    /** @test */
+    public function getProductLabels()
+    {
+        $products = [
+            ['ean' => '8717185945126', 'quantity' => 1],
+            ['ean' => '8717185944747', 'quantity' => 2]
+        ];
+
+        $labels = $this->client->inbounds->getProductLabels($products, LabelFormat::ZEBRA_Z_PERFORM_1000T);
+
+        $this->assertInstanceOf(InboundProductLabels::class, $labels);
+    }
     /** @test */
     public function invalidStateThrowsAnException()
     {

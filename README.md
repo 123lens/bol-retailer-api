@@ -322,6 +322,18 @@ $label->save('$path');
 // save pdf with custom filename
 $label->save('$path', 'my-shipping-label.pdf');
 ```
+### Get Product Labels
+```php
+$products = [
+    ['ean' => '0000000000000', 'quantity' => 1],
+    ['ean' => '1111111111111', 'quantity' => 2]
+];
+$labels = $client->inbounds->getProductLabels($products, LabelFormat::ZEBRA_Z_PERFORM_1000T);
+// save pdf  (the filename is product-labels.pdf)
+$labels->save('$path');
+// save pdf with custom filename
+$labels->save('$path', 'my-product-labels.pdf');
+```
 
 ### Get Delivery Windows
 ```php
