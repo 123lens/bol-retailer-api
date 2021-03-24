@@ -1,7 +1,10 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
 
+use Budgetlens\BolRetailerApi\Client;
 use Budgetlens\BolRetailerApi\Resources\Inbound;
+use Budgetlens\BolRetailerApi\Resources\InboundPackinglist;
+use Budgetlens\BolRetailerApi\Resources\InboundShippingLabel;
 use Budgetlens\BolRetailerApi\Resources\Timeslot;
 use Budgetlens\BolRetailerApi\Resources\Transporter;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
@@ -43,6 +46,28 @@ class InboundsTest extends TestCase
     }
 
     /** @test */
+    public function getPackingList()
+    {
+        $id = '5850051250';
+//        $id = '3514874281';
+
+        $inbound = $this->client->inbounds->getPackingList($id);
+
+        $this->assertInstanceOf(InboundPackinglist::class, $inbound);
+        $this->assertSame($id, $inbound->id);
+    }
+
+    /** @test */
+    public function getShippingLabel()
+    {
+        $id = '5850051250';
+
+        $inbound = $this->client->inbounds->getShippingLabel($id);
+        $this->assertInstanceOf(InboundShippingLabel::class, $inbound);
+        $this->assertSame($id, $inbound->id);
+    }
+
+    /** @test */
     public function invalidStateThrowsAnException()
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -77,5 +102,7 @@ class InboundsTest extends TestCase
         $this->assertNotNull($transporters->first()->name);
         $this->assertNotNull($transporters->first()->code);
     }
+
+
 
 }

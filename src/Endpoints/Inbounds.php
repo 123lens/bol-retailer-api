@@ -3,6 +3,8 @@ namespace Budgetlens\BolRetailerApi\Endpoints;
 
 use Budgetlens\BolRetailerApi\Exceptions\InvalidFormatException;
 use Budgetlens\BolRetailerApi\Resources\Inbound;
+use Budgetlens\BolRetailerApi\Resources\InboundPackinglist;
+use Budgetlens\BolRetailerApi\Resources\InboundShippingLabel;
 use Budgetlens\BolRetailerApi\Resources\Invoice\InvoicePDF;
 use Budgetlens\BolRetailerApi\Resources\Invoice\InvoiceXML;
 use Budgetlens\BolRetailerApi\Resources\Invoice as InvoiceResource;
@@ -21,6 +23,18 @@ class Inbounds extends BaseEndpoint
         InboundState::PREANNOUNCED
     ];
 
+    /**
+     * Get Inbounds
+     *
+     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get-inbounds
+     * @param string|null $reference
+     * @param string|null $bsku
+     * @param \DateTime|null $creationStartDate
+     * @param \DateTime|null $creationEndDate
+     * @param string|null $state
+     * @param int $page
+     * @return Collection
+     */
     public function list(
         string $reference = null,
         string $bsku = null,
@@ -64,6 +78,12 @@ class Inbounds extends BaseEndpoint
         return $collection;
     }
 
+    /**
+     * Get Inbound by Id
+     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get-inbound
+     * @param string $inboundId
+     * @return Inbound
+     */
     public function get(string $inboundId): Inbound
     {
         $response = $this->performApiCall(
@@ -75,7 +95,52 @@ class Inbounds extends BaseEndpoint
     }
 
     /**
+     * Get Inbound Packing List
+     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get%20packing%20list
+     * @param string $inboundId
+     * @return InboundPackinglist
+     */
+    public function getPackingList(string $inboundId): InboundPackinglist
+    {
+        $response = $this->performApiCall(
+            'GET',
+            "inbounds/{$inboundId}/packinglist",
+            null,
+            [
+                'Accept' => 'application/vnd.retailer.v4+pdf'
+            ]
+        );
+        return new InboundPackinglist([
+            'id' => $inboundId,
+            'contents' => $response
+        ]);
+    }
+
+    /**
+     * Get Inbound Shipping Label
+     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get-inbound-shipping-label
+     * @param string $inboundId
+     * @return InboundShippingLabel
+     */
+    public function getShippingLabel(string $inboundId): InboundShippingLabel
+    {
+        $response = $this->performApiCall(
+            'GET',
+            "inbounds/{$inboundId}/shippinglabel",
+            null,
+            [
+                'Accept' => 'application/vnd.retailer.v4+pdf'
+            ]
+        );
+        return new InboundShippingLabel([
+            'id' => $inboundId,
+            'contents' => $response
+        ]);
+    }
+
+    /**
      * Get Delivery Windows
+     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get-delivery-windows
      * @param \DateTime|null $deliveryDate
      * @param int $itemsToSend
      * @return Collection
@@ -109,6 +174,7 @@ class Inbounds extends BaseEndpoint
 
     /**
      * Get Transporters
+     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get-inbound-transporters
      * @return Collection
      */
     public function getTransporters(): Collection
