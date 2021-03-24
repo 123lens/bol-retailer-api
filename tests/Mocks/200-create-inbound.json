@@ -1,0 +1,12 @@
+{
+  "id" : 1,
+  "eventType" : "CREATE_INBOUND",
+  "description" : "Create an inbound with reference unit-test.",
+  "status" : "PENDING",
+  "createTimestamp" : "2021-03-24T16:40:21+01:00",
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://api.bol.com/retailer-demo/process-status/1",
+    "method" : "GET"
+  } ]
+}

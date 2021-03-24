@@ -6,6 +6,7 @@ use Budgetlens\BolRetailerApi\Resources\Inbound;
 use Budgetlens\BolRetailerApi\Resources\InboundPackinglist;
 use Budgetlens\BolRetailerApi\Resources\InboundProductLabels;
 use Budgetlens\BolRetailerApi\Resources\InboundShippingLabel;
+use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\Timeslot;
 use Budgetlens\BolRetailerApi\Resources\Transporter;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
@@ -48,10 +49,41 @@ class InboundsTest extends TestCase
     }
 
     /** @test */
+    public function createInbound()
+    {
+        $this->useMock('200-create-inbound.json');
+
+        $inbound = new Inbound([
+            'reference' => 'unit-test',
+            'timeSlot' => new Timeslot([
+                'startDateTime' => new \DateTime('2018-04-05 12:00:00'),
+                'endDateTime' => new \DateTime('2018-04-05 17:00:00')
+            ]),
+            'inboundTransporter' => new Transporter([
+                'name' => 'PostNL',
+                'code' => 'PostNL'
+            ]),
+            'labellingService' => false,
+            'products' => [
+                ['ean' => '8718526069331', 'announcedQuantity' => 1],
+                ['ean' => '8718526069332', 'announcedQuantity' => 2],
+                ['ean' => '8718526069333', 'announcedQuantity' => 3],
+                ['ean' => '8718526069334', 'announcedQuantity' => 4]
+            ]
+        ]);
+
+        $status = $this->client->inbounds->create($inbound);
+
+        $this->assertInstanceOf(ProcessStatus::class, $status);
+        $this->assertSame(1, $status->id);
+        $this->assertSame('CREATE_INBOUND', $status->eventType);
+        $this->assertSame('PENDING', $status->status);
+    }
+
+    /** @test */
     public function getPackingList()
     {
         $id = '5850051250';
-//        $id = '3514874281';
 
         $inbound = $this->client->inbounds->getPackingList($id);
 

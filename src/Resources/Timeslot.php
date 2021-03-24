@@ -1,6 +1,8 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Resources;
 
+use Cassandra\Date;
+
 class Timeslot extends BaseResource
 {
     public $startDateTime;
@@ -14,7 +16,11 @@ class Timeslot extends BaseResource
      */
     public function setStartDateTimeAttribute($value): self
     {
-        $this->startDateTime = new \DateTime($value);
+        if (!$value instanceof \DateTime) {
+            $value = new \DateTime($value);
+        }
+
+        $this->startDateTime = $value;
 
         return $this;
     }
@@ -27,8 +33,23 @@ class Timeslot extends BaseResource
      */
     public function setEndDateTimeAttribute($value): self
     {
-        $this->endDateTime = new \DateTime($value);
+        if (!$value instanceof \DateTime) {
+            $value = new \DateTime($value);
+        }
+
+        $this->endDateTime = $value;
 
         return $this;
+    }
+
+    public function toArray(): array
+    {
+        return collect(parent::toArray())
+            ->map(function ($item) {
+                if ($item instanceof \DateTime) {
+                    return $item->format('c');
+                }
+            })
+            ->all();
     }
 }

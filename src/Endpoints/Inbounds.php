@@ -11,6 +11,7 @@ use Budgetlens\BolRetailerApi\Resources\Invoice\InvoiceXML;
 use Budgetlens\BolRetailerApi\Resources\Invoice as InvoiceResource;
 use Budgetlens\BolRetailerApi\Resources\Label;
 use Budgetlens\BolRetailerApi\Resources\Order as OrderResource;
+use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\Timeslot;
 use Budgetlens\BolRetailerApi\Resources\Transporter;
 use Budgetlens\BolRetailerApi\Types\InboundState;
@@ -104,6 +105,23 @@ class Inbounds extends BaseEndpoint
         );
 
         return new Inbound(collect($response));
+    }
+
+    /**
+     * Create Inbound Shipment
+     * @see https://api.bol.com/retailer/public/redoc/v4#operation/post-inbound
+     * @param Inbound $inbound
+     * @return ProcessStatus
+     */
+    public function create(Inbound $inbound): ProcessStatus
+    {
+        $response = $this->performApiCall(
+            'POST',
+            'inbounds',
+            $inbound->toJson()
+        );
+
+        return new ProcessStatus(collect($response));
     }
 
     /**
