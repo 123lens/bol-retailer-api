@@ -1,8 +1,12 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Resources\Invoice;
 
+use Budgetlens\BolRetailerApi\Resources\Concerns\HasSaveable;
+
 class InvoicePDF extends AbstractInvoice
 {
+    use HasSaveable;
+
     public $contents;
 
     public function __construct($attributes = [])
@@ -21,19 +25,5 @@ class InvoicePDF extends AbstractInvoice
         $this->contents = $value;
 
         return $this;
-    }
-
-    /**
-     * Save PDF
-     * @param $path
-     * @return string|null
-     */
-    public function save($path): ?string
-    {
-        if (!@file_put_contents("{$path}/{$this->id}.pdf", $this->contents)) {
-            return null;
-        } else {
-            return "{$path}/{$this->id}.pdf";
-        }
     }
 }

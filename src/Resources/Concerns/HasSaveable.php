@@ -21,5 +21,4 @@ trait HasSaveable
             return "{$path}/{$filename}";
         }
     }
-
 }

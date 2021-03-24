@@ -1,7 +1,6 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Types;
 
-
 final class InboundState
 {
     const DRAFT = "DRAFT";

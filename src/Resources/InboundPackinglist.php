@@ -15,6 +15,4 @@ class InboundPackinglist extends BaseResource
     {
         parent::__construct($attributes);
     }
-
-
 }
