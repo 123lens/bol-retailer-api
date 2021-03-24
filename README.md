@@ -295,6 +295,81 @@ $shipment = $this->client->shipments->get('$shipmentId');
 ```
 ---
 
+## Inbounds
+### Create Inbound
+```php
+$inbound = new Inbound([
+    'reference' => 'my-reference',
+    'timeSlot' => new Timeslot([
+        'startDateTime' => new \DateTime('2018-04-05 12:00:00'),
+        'endDateTime' => new \DateTime('2018-04-05 17:00:00')
+    ]),
+    'inboundTransporter' => new Transporter([
+        'name' => 'PostNL',
+        'code' => 'PostNL'
+    ]),
+    'labellingService' => false,
+    'products' => [
+        ['ean' => '8718526069331', 'announcedQuantity' => 1],
+        ['ean' => '8718526069332', 'announcedQuantity' => 2],
+        ['ean' => '8718526069333', 'announcedQuantity' => 3],
+        ['ean' => '8718526069334', 'announcedQuantity' => 4]
+    ]
+]);
+$status = $client->inbounds->create($inbound);
+```
+
+### List Inbounds
+```php
+$inbounds = $client->inbounds->list();
+```
+
+### Get Inbound Details
+```php
+$inbound = $client->inbounds->get($inboundId);
+```
+
+### Get Inbound Packing List
+```php
+$packing = $client->inbounds->getPackingList($inboundId);
+// save pdf  (the filename is $inboundId.pdf)
+$packing->save('$path');
+// save pdf with custom filename
+$packing->save('$path', 'my-filename.pdf');
+```
+### Get Inbound Shipping Label
+```php
+$label = $client->inbounds->getShippingLabel($inboundId);
+// save pdf  (the filename is $inboundId.pdf)
+$label->save('$path');
+// save pdf with custom filename
+$label->save('$path', 'my-shipping-label.pdf');
+```
+### Get Product Labels
+```php
+$products = [
+    ['ean' => '0000000000000', 'quantity' => 1],
+    ['ean' => '1111111111111', 'quantity' => 2]
+];
+$labels = $client->inbounds->getProductLabels($products, LabelFormat::ZEBRA_Z_PERFORM_1000T);
+// save pdf  (the filename is product-labels.pdf)
+$labels->save('$path');
+// save pdf with custom filename
+$labels->save('$path', 'my-product-labels.pdf');
+```
+
+### Get Delivery Windows
+```php
+$expectedDeliveryDate = new \DateTime();
+$itemsToSend = 1;
+$deliveryWindows = $client->inbounds->getDeliveryWindows($expectedDeliveryDate, $itemsToSend);
+```
+
+### Get Inbound transporters
+```php
+$transporters = $client->inbounds->getTransporters();
+```
+---
 
 ## Process Status
 
