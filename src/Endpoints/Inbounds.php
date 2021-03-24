@@ -8,10 +8,19 @@ use Budgetlens\BolRetailerApi\Resources\Invoice\InvoiceXML;
 use Budgetlens\BolRetailerApi\Resources\Invoice as InvoiceResource;
 use Budgetlens\BolRetailerApi\Resources\Order as OrderResource;
 use Budgetlens\BolRetailerApi\Resources\Timeslot;
+use Budgetlens\BolRetailerApi\Resources\Transporter;
+use Budgetlens\BolRetailerApi\Types\InboundState;
 use Illuminate\Support\Collection;
 
 class Inbounds extends BaseEndpoint
 {
+    private $availableStates = [
+        InboundState::ARRIVEDATWH,
+        InboundState::CANCELLED,
+        InboundState::DRAFT,
+        InboundState::PREANNOUNCED
+    ];
+
     public function list(
         string $reference = null,
         string $bsku = null,
@@ -20,6 +29,12 @@ class Inbounds extends BaseEndpoint
         string $state = null,
         int $page = 1
     ): Collection {
+        if (!is_null($state) &&
+            !in_array($state, $this->availableStates)
+        ) {
+                throw new \InvalidArgumentException("Invalid state");
+        }
+
         $parameters = collect([
             'reference' => $reference,
             'bsku' => $bsku,
@@ -47,6 +62,16 @@ class Inbounds extends BaseEndpoint
         });
 
         return $collection;
+    }
+
+    public function get(string $inboundId): Inbound
+    {
+        $response = $this->performApiCall(
+            'GET',
+            "inbounds/{$inboundId}"
+        );
+
+        return new Inbound(collect($response));
     }
 
     /**
@@ -77,6 +102,26 @@ class Inbounds extends BaseEndpoint
 
         collect($response->timeSlots)->each(function ($item) use ($collection) {
             $collection->push(new Timeslot($item));
+        });
+
+        return $collection;
+    }
+
+    /**
+     * Get Transporters
+     * @return Collection
+     */
+    public function getTransporters(): Collection
+    {
+        $response = $this->performApiCall(
+            'GET',
+            "inbounds/inbound-transporters"
+        );
+
+        $collection = new Collection();
+
+        collect($response->transporters)->each(function ($item) use ($collection) {
+            $collection->push(new Transporter($item));
         });
 
         return $collection;
