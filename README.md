@@ -295,6 +295,46 @@ $shipment = $this->client->shipments->get('$shipmentId');
 ```
 ---
 
+## Inbounds
+### List Inbounds
+```php
+$inbounds = $client->inbounds->list();
+```
+
+### Get Inbound Details
+```php
+$inbound = $client->inbounds->get($inboundId);
+```
+
+### Get Inbound Packing List
+```php
+$packing = $client->inbounds->getPackingList($inboundId);
+// save pdf  (the filename is $inboundId.pdf)
+$packing->save('$path');
+// save pdf with custom filename
+$packing->save('$path', 'my-filename.pdf');
+```
+### Get Inbound Shipping Label
+```php
+$label = $client->inbounds->getShippingLabel($inboundId);
+// save pdf  (the filename is $inboundId.pdf)
+$label->save('$path');
+// save pdf with custom filename
+$label->save('$path', 'my-shipping-label.pdf');
+```
+
+### Get Delivery Windows
+```php
+$expectedDeliveryDate = new \DateTime();
+$itemsToSend = 1;
+$deliveryWindows = $client->inbounds->getDeliveryWindows($expectedDeliveryDate, $itemsToSend);
+```
+
+### Get Inbound transporters
+```php
+$transporters = $client->inbounds->getTransporters();
+```
+---
 
 ## Process Status
 
