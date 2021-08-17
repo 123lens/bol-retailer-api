@@ -39,7 +39,7 @@ class Inbounds extends BaseEndpoint
     /**
      * Get Inbounds
      *
-     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get-inbounds
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-inbounds
      * @param string|null $reference
      * @param string|null $bsku
      * @param \DateTime|null $creationStartDate
@@ -93,7 +93,7 @@ class Inbounds extends BaseEndpoint
 
     /**
      * Get Inbound by Id
-     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get-inbound
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-inbound
      * @param string $inboundId
      * @return Inbound
      */
@@ -109,7 +109,7 @@ class Inbounds extends BaseEndpoint
 
     /**
      * Create Inbound Shipment
-     * @see https://api.bol.com/retailer/public/redoc/v4#operation/post-inbound
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/post-inbound
      * @param Inbound $inbound
      * @return ProcessStatus
      */
@@ -126,7 +126,7 @@ class Inbounds extends BaseEndpoint
 
     /**
      * Get Inbound Packing List
-     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get%20packing%20list
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get%20packing%20list
      * @param string $inboundId
      * @return InboundPackinglist
      */
@@ -137,7 +137,7 @@ class Inbounds extends BaseEndpoint
             "inbounds/{$inboundId}/packinglist",
             null,
             [
-                'Accept' => 'application/vnd.retailer.v4+pdf'
+                'Accept' => 'application/vnd.retailer.v5+pdf'
             ]
         );
         return new InboundPackinglist([
@@ -148,7 +148,7 @@ class Inbounds extends BaseEndpoint
 
     /**
      * Get Inbound Shipping Label
-     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get-inbound-shipping-label
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-inbound-shipping-label
      * @param string $inboundId
      * @return InboundShippingLabel
      */
@@ -159,7 +159,7 @@ class Inbounds extends BaseEndpoint
             "inbounds/{$inboundId}/shippinglabel",
             null,
             [
-                'Accept' => 'application/vnd.retailer.v4+pdf'
+                'Accept' => 'application/vnd.retailer.v5+pdf'
             ]
         );
         return new InboundShippingLabel([
@@ -170,7 +170,7 @@ class Inbounds extends BaseEndpoint
 
     /**
      * Get Product Labels
-     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get-product-labels
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-product-labels
      * @param array $productLabels
      * @param string $format
      * @return InboundProductLabels
@@ -194,7 +194,7 @@ class Inbounds extends BaseEndpoint
             "inbounds/productlabels",
             json_encode($payload),
             [
-                'Accept' => 'application/vnd.retailer.v4+pdf'
+                'Accept' => 'application/vnd.retailer.v5+pdf'
             ]
         );
 
@@ -206,7 +206,7 @@ class Inbounds extends BaseEndpoint
 
     /**
      * Get Delivery Windows
-     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get-delivery-windows
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-delivery-windows
      * @param \DateTime|null $deliveryDate
      * @param int $itemsToSend
      * @return Collection
@@ -240,7 +240,7 @@ class Inbounds extends BaseEndpoint
 
     /**
      * Get Transporters
-     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get-inbound-transporters
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-inbound-transporters
      * @return Collection
      */
     public function getTransporters(): Collection

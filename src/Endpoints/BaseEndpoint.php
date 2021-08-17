@@ -61,9 +61,9 @@ abstract class BaseEndpoint
         $response = $this->apiClient->performHttpCall($httpMethod, $apiMethod, $httpBody, $requestHeaders);
 
         $directResponseHeaders = [
-            'application/vnd.retailer.v4+pdf;charset=UTF-8',
-            'application/vnd.retailer.v4+csv;charset=UTF-8',
-            'application/vnd.retailer.v4+xml;charset=UTF-8'
+            'application/vnd.retailer.v5+pdf;charset=UTF-8',
+            'application/vnd.retailer.v5+csv;charset=UTF-8',
+            'application/vnd.retailer.v5+xml;charset=UTF-8'
         ];
 
         if (in_array(collect($response->getHeader('Content-Type'))->first(), $directResponseHeaders)) {

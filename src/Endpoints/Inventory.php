@@ -9,7 +9,7 @@ class Inventory extends BaseEndpoint
 
     /**
      * Retrieve Inventory
-     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get-inventory
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-inventory
      * @param string|null $quantity
      * @param string|null $stock
      * @param string|null $state

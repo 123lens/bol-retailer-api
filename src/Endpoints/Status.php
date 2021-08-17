@@ -68,7 +68,7 @@ class Status extends BaseEndpoint
 
     /**
      * Get Process status by id
-     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/process-status.html
+     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/process-status.html
      * @param int $id
      * @return ProcessStatus
      */
@@ -84,7 +84,7 @@ class Status extends BaseEndpoint
 
     /**
      * Retrieve Process status by entitiyId & eventyType
-     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/process-status.html
+     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/process-status.html
      * @param string $id
      * @param string $eventType
      * @param int $page
