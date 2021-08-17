@@ -194,6 +194,7 @@ class Inbounds extends BaseEndpoint
             "inbounds/productlabels",
             json_encode($payload),
             [
+                'Content-Type' => 'application/vnd.retailer.v4+json',
                 'Accept' => 'application/vnd.retailer.v4+pdf'
             ]
         );

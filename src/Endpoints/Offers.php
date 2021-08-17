@@ -17,7 +17,7 @@ class Offers extends BaseEndpoint
 
     /**
      * Retrieve offer by Offer ID
-     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_get_offer
+     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/offers.html#_get_offer
      * @param string|Offer $offerId
      * @return Offer
      */
@@ -37,7 +37,7 @@ class Offers extends BaseEndpoint
 
     /**
      * Create new offer
-     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_create_new_offer
+     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/offers.html#_create_new_offer
      * @param Offer $offer
      * @return ProcessStatus
      */
@@ -54,7 +54,7 @@ class Offers extends BaseEndpoint
 
     /**
      * Update Offer
-     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_update_offer
+     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/offers.html#_update_offer
      * @param Offer $offer
      * @return ProcessStatus
      */
@@ -80,7 +80,7 @@ class Offers extends BaseEndpoint
 
     /**
      * Delete Offer
-     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_delete_offer
+     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/offers.html#_delete_offer
      * @param string|Offer $offerId
      * @return ProcessStatus
      */
@@ -100,7 +100,7 @@ class Offers extends BaseEndpoint
 
     /**
      * Update Offer Price
-     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_update_offer_price
+     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/offers.html#_update_offer_price
      * @param Offer $offer
      * @return ProcessStatus
      */
@@ -130,7 +130,7 @@ class Offers extends BaseEndpoint
 
     /**
      * Update Offer Stock
-     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_update_offer_stock
+     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/offers.html#_update_offer_stock
      * @param Offer $offer
      * @return ProcessStatus
      */
@@ -150,7 +150,7 @@ class Offers extends BaseEndpoint
 
     /**
      * Request Offers Export
-     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/offers.html#_offers_export_api_endpoints
+     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/offers.html#_offers_export_api_endpoints
      * @param string $format
      * @return ProcessStatus
      */
@@ -169,7 +169,7 @@ class Offers extends BaseEndpoint
 
     /**
      * Request Unpublished Offers Export
-     * @see https://api.bol.com/retailer/public/redoc/v4#operation/post-unpublished-offer-report
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/post-unpublished-offer-report
      * @param string $format
      * @return ProcessStatus
      */
@@ -196,7 +196,7 @@ class Offers extends BaseEndpoint
      */
     public function getExport(string $id): Collection
     {
-        $this->setApiVersionHeader('application/vnd.retailer.v4+csv');
+        $this->setApiVersionHeader('application/vnd.retailer.v5+csv');
 
         $response = $this->performApiCall(
             'GET',
@@ -237,7 +237,7 @@ class Offers extends BaseEndpoint
 
     /**
      * Retrieve Upublished Offers CSV Export
-     * @see https://api.bol.com/retailer/public/redoc/v4#operation/post-unpublished-offer-report
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/post-unpublished-offer-report
      * Columns/headers:
      * offerId,ean,notPublishableReason,notPublishableReasonDescription
      * @param string $id
@@ -245,7 +245,7 @@ class Offers extends BaseEndpoint
      */
     public function getUnpublishedExport(string $id): Collection
     {
-        $this->setApiVersionHeader('application/vnd.retailer.v4+csv');
+        $this->setApiVersionHeader('application/vnd.retailer.v5+csv');
 
         $response = $this->performApiCall(
             'GET',

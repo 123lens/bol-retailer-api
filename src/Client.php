@@ -28,7 +28,7 @@ class Client
     const USER_AGENT = "Budgetlens/BolRetailerApi/V1.0.0";
 
     /** @var string */
-    public $apiVersionHeader = 'application/vnd.retailer.v4+json';
+    public $apiVersionHeader = 'application/vnd.retailer.v5+json';
 
     /** @var Config  */
     protected $config;

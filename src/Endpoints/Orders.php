@@ -15,7 +15,7 @@ class Orders extends BaseEndpoint
 {
     /**
      * Get Open Orders
-     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/orders-shipments.html#_retrieve_open_orders
+     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/orders-shipments.html#_retrieve_open_orders
      * @param string $fulfillmentMethod
      * @param int $page
      * @return Collection
@@ -40,7 +40,7 @@ class Orders extends BaseEndpoint
 
     /**
      * Retrieve a single order
-     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/orders-shipments.html#_retrieve_a_single_order
+     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/orders-shipments.html#_retrieve_a_single_order
      * @param int $id
      * @return OrderResource
      */
@@ -56,7 +56,7 @@ class Orders extends BaseEndpoint
 
     /**
      * Ship Order Item
-     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/orders-shipments.html#_ship_order_item
+     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/orders-shipments.html#_ship_order_item
      * @param string $orderItemId
      * @param string|null $shipmentReference
      * @param string|null $shipmentLabelId
@@ -95,7 +95,7 @@ class Orders extends BaseEndpoint
 
     /**
      * Cancel Order Item
-     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/orders-shipments.html#_cancel_order_item
+     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/orders-shipments.html#_cancel_order_item
      * @param string $orderItemId
      * @param string $reasonCode
      * @return ProcessStatus

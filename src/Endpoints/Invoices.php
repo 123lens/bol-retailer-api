@@ -16,7 +16,7 @@ class Invoices extends BaseEndpoint
 
     /**
      * Get All Invoices
-     * @see https://api.bol.com/retailer/public/redoc/v4#tag/Invoices
+     * @see https://api.bol.com/retailer/public/redoc/v5#tag/Invoices
      * @param \DateTime|null $periodStartDate
      * @param \DateTime|null $periodEndDate
      * @return InvoiceResource
@@ -96,11 +96,11 @@ class Invoices extends BaseEndpoint
     {
         switch ($format) {
             case 'pdf':
-                return 'application/vnd.retailer.v4+pdf';
+                return 'application/vnd.retailer.v5+pdf';
             case 'xml':
-                return 'application/vnd.retailer.v4+xml';
+                return 'application/vnd.retailer.v5+xml';
             default:
-                return 'application/vnd.retailer.v4+json';
+                return 'application/vnd.retailer.v5+json';
         }
     }
 }

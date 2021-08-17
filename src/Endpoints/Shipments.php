@@ -44,7 +44,7 @@ class Shipments extends BaseEndpoint
 
     /**
      * Get Shipment By Id
-     * @see https://api.bol.com/retailer/public/Retailer-API/v4/functional/orders-shipments.html#_retrieve_a_single_shipment
+     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/orders-shipments.html#_retrieve_a_single_shipment
      * @param string $id
      * @return Shipment
      */
