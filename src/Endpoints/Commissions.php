@@ -1,22 +1,7 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
-use Budgetlens\BolRetailerApi\Exceptions\InvalidFormatException;
 use Budgetlens\BolRetailerApi\Resources\Commission;
-use Budgetlens\BolRetailerApi\Resources\Inbound;
-use Budgetlens\BolRetailerApi\Resources\InboundPackinglist;
-use Budgetlens\BolRetailerApi\Resources\InboundProductLabels;
-use Budgetlens\BolRetailerApi\Resources\InboundShippingLabel;
-use Budgetlens\BolRetailerApi\Resources\Invoice\InvoicePDF;
-use Budgetlens\BolRetailerApi\Resources\Invoice\InvoiceXML;
-use Budgetlens\BolRetailerApi\Resources\Invoice as InvoiceResource;
-use Budgetlens\BolRetailerApi\Resources\Label;
-use Budgetlens\BolRetailerApi\Resources\Order as OrderResource;
-use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
-use Budgetlens\BolRetailerApi\Resources\Timeslot;
-use Budgetlens\BolRetailerApi\Resources\Transporter;
-use Budgetlens\BolRetailerApi\Types\InboundState;
-use Budgetlens\BolRetailerApi\Types\LabelFormat;
 use Illuminate\Support\Collection;
 
 class Commissions extends BaseEndpoint
@@ -54,10 +39,6 @@ class Commissions extends BaseEndpoint
             $collection->push(new Commission($item));
         });
 
-        echo "<pre>";
-        print_r($collection);
-        exit;
-
         return $collection;
     }
 
@@ -73,7 +54,7 @@ class Commissions extends BaseEndpoint
     {
         $parameters = collect([
             'condition' => $condition,
-            'unit-price' => number_format($unitPrice/100, 2, '.'),
+            'unit-price' => number_format($unitPrice/100, 2, '.', ','),
         ])->reject(function ($value) {
             return empty($value);
         });

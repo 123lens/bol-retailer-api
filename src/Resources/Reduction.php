@@ -1,8 +1,6 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Resources;
 
-use Illuminate\Support\Collection;
-
 class Reduction extends BaseResource
 {
     public $maximumPrice;

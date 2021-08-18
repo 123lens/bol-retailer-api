@@ -1,17 +1,9 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
 
-use Budgetlens\BolRetailerApi\Client;
-use Budgetlens\BolRetailerApi\Resources\Inbound;
-use Budgetlens\BolRetailerApi\Resources\InboundPackinglist;
-use Budgetlens\BolRetailerApi\Resources\InboundProductLabels;
-use Budgetlens\BolRetailerApi\Resources\InboundShippingLabel;
-use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
-use Budgetlens\BolRetailerApi\Resources\Timeslot;
-use Budgetlens\BolRetailerApi\Resources\Transporter;
+use Budgetlens\BolRetailerApi\Resources\Commission;
+use Budgetlens\BolRetailerApi\Resources\Reduction;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
-use Budgetlens\BolRetailerApi\Types\LabelFormat;
-use Cassandra\Date;
 use Illuminate\Support\Collection;
 
 class CommissionsTest extends TestCase
@@ -19,7 +11,7 @@ class CommissionsTest extends TestCase
     /** @test */
     public function getBulkCommissions()
     {
-//        $this->useMock('200-get-inbounds.json');
+        $this->useMock('200-get-all-commissions-bulk.json');
 
         $items = [
             [
@@ -47,132 +39,64 @@ class CommissionsTest extends TestCase
 
         $commissions = $this->client->commission->list($items);
 
-        $this->assertInstanceOf(Collection::class, $inbounds);
-        $this->assertCount(1, $inbounds);
-        $this->assertInstanceOf(Inbound::class, $inbounds->first());
-        $this->assertNotNull($inbounds->first()->inboundId);
-        $this->assertSame(5850051250, $inbounds->first()->inboundId);
-        $this->assertSame('ZENDINGLVB1GVR', $inbounds->first()->reference);
-        $this->assertInstanceOf(\DateTime::class, $inbounds->first()->creationDateTime);
-        $this->assertInstanceOf(Timeslot::class, $inbounds->first()->timeSlot);
+        $this->assertInstanceOf(Collection::class, $commissions);
+        $this->assertCount(5, $commissions);
+        $this->assertInstanceOf(Commission::class, $commissions->first());
+        $this->assertSame('8712626055150', $commissions->first()->ean);
+        $this->assertSame('NEW', $commissions->first()->condition);
+        $this->assertSame(34.99, $commissions->first()->unitPrice);
+        $this->assertSame(0.99, $commissions->first()->fixedAmount);
+        $this->assertSame(15, $commissions->first()->percentage);
+        $this->assertSame(6.24, $commissions->first()->totalCost);
+
+        $this->assertInstanceOf(Collection::class, $commissions->last()->reductions);
+        $this->assertInstanceOf(Reduction::class, $commissions->last()->reductions->first());
+        $this->assertSame(25.99, $commissions->last()->reductions->first()->maximumPrice);
+        $this->assertSame(0.92, $commissions->last()->reductions->first()->costReduction);
+        $this->assertInstanceOf(\DateTime::class, $commissions->last()->reductions->first()->startDate);
+        $this->assertInstanceOf(\DateTime::class, $commissions->last()->reductions->first()->endDate);
     }
 
     /** @test */
-    public function getInboundById()
+    public function getCommissionByEan()
     {
-        $this->useMock('200-get-inbound-by-id.json');
-        $id = '5850051250';
+        $this->useMock('200-get-commission-by-eancode-8712626055143.json');
 
-        $inbound = $this->client->inbounds->get($id);
-        $this->assertInstanceOf(Inbound::class, $inbound);
-        $this->assertNotNull($inbound->inboundId);
-        $this->assertSame(5850051250, $inbound->inboundId);
-        $this->assertSame('ZENDINGLVB1GVR', $inbound->reference);
-        $this->assertInstanceOf(\DateTime::class, $inbound->creationDateTime);
-        $this->assertInstanceOf(Timeslot::class, $inbound->timeSlot);
+        $ean = '8712626055143';
+        $unitPrice = 24.50;
+        $commission = $this->client->commission->get($ean, $unitPrice);
+
+        $this->assertInstanceOf(Commission::class, $commission);
+        $this->assertSame('8712626055143', $commission->ean);
+        $this->assertSame('NEW', $commission->condition);
+        $this->assertSame(0.24, $commission->unitPrice);
+        $this->assertSame(0.99, $commission->fixedAmount);
+        $this->assertSame(15, $commission->percentage);
+        $this->assertSame(4.67, $commission->totalCost);
     }
 
     /** @test */
-    public function createInbound()
+    public function getCommissionAndReductionByEan()
     {
-        $this->useMock('200-create-inbound.json');
+        $this->useMock('200-get-commission-by-eancode-8718526069334.json');
 
-        $inbound = new Inbound([
-            'reference' => 'unit-test',
-            'timeSlot' => new Timeslot([
-                'startDateTime' => new \DateTime('2018-04-05 12:00:00'),
-                'endDateTime' => new \DateTime('2018-04-05 17:00:00')
-            ]),
-            'inboundTransporter' => new Transporter([
-                'name' => 'PostNL',
-                'code' => 'PostNL'
-            ]),
-            'labellingService' => false,
-            'products' => [
-                ['ean' => '8718526069331', 'announcedQuantity' => 1],
-                ['ean' => '8718526069332', 'announcedQuantity' => 2],
-                ['ean' => '8718526069333', 'announcedQuantity' => 3],
-                ['ean' => '8718526069334', 'announcedQuantity' => 4]
-            ]
-        ]);
+        $ean = '8718526069334';
+        $unitPrice = 25.00;
+        $commission = $this->client->commission->get($ean, $unitPrice);
+        $this->assertInstanceOf(Commission::class, $commission);
+        $this->assertSame($ean, $commission->ean);
+        $this->assertSame('NEW', $commission->condition);
+        $this->assertSame(0.25, $commission->unitPrice);
+        $this->assertSame(0.99, $commission->fixedAmount);
+        $this->assertSame(15, $commission->percentage);
+        $this->assertSame(3.82, $commission->totalCost);
+        $this->assertSame(4.74, $commission->totalCostWithoutReduction);
 
-        $status = $this->client->inbounds->create($inbound);
-
-        $this->assertInstanceOf(ProcessStatus::class, $status);
-        $this->assertSame(1, $status->id);
-        $this->assertSame('CREATE_INBOUND', $status->eventType);
-        $this->assertSame('PENDING', $status->status);
+        $this->assertInstanceOf(Collection::class, $commission->reductions);
+        $this->assertInstanceOf(Reduction::class, $commission->reductions->first());
+        $this->assertSame(25.99, $commission->reductions->first()->maximumPrice);
+        $this->assertSame(0.92, $commission->reductions->first()->costReduction);
+        $this->assertInstanceOf(\DateTime::class, $commission->reductions->first()->startDate);
+        $this->assertInstanceOf(\DateTime::class, $commission->reductions->first()->endDate);
     }
-
-    /** @test */
-    public function getPackingList()
-    {
-        $id = '5850051250';
-
-        $inbound = $this->client->inbounds->getPackingList($id);
-
-        $this->assertInstanceOf(InboundPackinglist::class, $inbound);
-        $this->assertSame($id, $inbound->id);
-    }
-
-    /** @test */
-    public function getShippingLabel()
-    {
-        $id = '5850051250';
-
-        $inbound = $this->client->inbounds->getShippingLabel($id);
-        $this->assertInstanceOf(InboundShippingLabel::class, $inbound);
-        $this->assertSame($id, $inbound->id);
-    }
-
-    /** @test */
-    public function getProductLabels()
-    {
-        $products = [
-            ['ean' => '8717185945126', 'quantity' => 1],
-            ['ean' => '8717185944747', 'quantity' => 2]
-        ];
-
-        $labels = $this->client->inbounds->getProductLabels($products, LabelFormat::ZEBRA_Z_PERFORM_1000T);
-
-        $this->assertInstanceOf(InboundProductLabels::class, $labels);
-    }
-    /** @test */
-    public function invalidStateThrowsAnException()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid state');
-        $this->client->inbounds->list(null, null, null, null, 'invalid');
-    }
-
-    /** @test */
-    public function getDeliveryWindows()
-    {
-        $this->useMock('200-get-delivery-windows.json');
-
-        $deliveryWindows = $this->client->inbounds->getDeliveryWindows(new \DateTime('2018-05-31'));
-        $this->assertInstanceOf(Collection::class, $deliveryWindows);
-        $this->assertCount(24, $deliveryWindows);
-        $this->assertInstanceOf(Timeslot::class, $deliveryWindows->first());
-        $this->assertInstanceOf(\DateTime::class, $deliveryWindows->first()->startDateTime);
-        $this->assertInstanceOf(\DateTime::class, $deliveryWindows->first()->endDateTime);
-        $this->assertNotNull($deliveryWindows->first()->startDateTime);
-        $this->assertNotNull($deliveryWindows->first()->endDateTime);
-    }
-
-    /** @test */
-    public function getTransporters()
-    {
-        $this->useMock('200-get-inbound-transporters.json');
-
-        $transporters = $this->client->inbounds->getTransporters();
-        $this->assertInstanceOf(Collection::class, $transporters);
-        $this->assertCount(33, $transporters);
-        $this->assertInstanceOf(Transporter::class, $transporters->first());
-        $this->assertNotNull($transporters->first()->name);
-        $this->assertNotNull($transporters->first()->code);
-    }
-
-
-
 }
