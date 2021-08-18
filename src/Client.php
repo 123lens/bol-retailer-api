@@ -4,6 +4,7 @@ namespace Budgetlens\BolRetailerApi;
 use Budgetlens\BolRetailerApi\Contracts\Config;
 use Budgetlens\BolRetailerApi\Endpoints\Commissions;
 use Budgetlens\BolRetailerApi\Endpoints\Inbounds;
+use Budgetlens\BolRetailerApi\Endpoints\Insights;
 use Budgetlens\BolRetailerApi\Endpoints\Inventory;
 use Budgetlens\BolRetailerApi\Endpoints\Invoices;
 use Budgetlens\BolRetailerApi\Endpoints\Offers;
@@ -36,6 +37,9 @@ class Client
 
     /** @var \Budgetlens\BolRetailerApi\Endpoints\Commissions */
     public $commission;
+
+    /** @var \Budgetlens\BolRetailerApi\Endpoints\Insights */
+    public $insights;
 
     /** @var \Budgetlens\BolRetailerApi\Endpoints\Orders */
     public $orders;
@@ -83,6 +87,7 @@ class Client
     public function initializeEndpoints(): void
     {
         $this->commission = new Commissions($this);
+        $this->insights = new Insights($this);
         $this->orders = new Orders($this);
         $this->offers = new Offers($this);
         $this->status = new Status($this);

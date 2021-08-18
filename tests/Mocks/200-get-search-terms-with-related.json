@@ -1,0 +1,95 @@
+{
+  "searchTerms":{
+    "searchTerm":"Potter",
+    "type":"count",
+    "total":19,
+    "countries":[
+      {
+        "countryCode":"NL",
+        "value":15
+      },
+      {
+        "countryCode":"BE",
+        "value":4
+      }
+    ],
+    "periods":[
+      {
+        "period":{
+          "week":"32",
+          "year":"2021"
+        },
+        "total":16,
+        "countries":[
+          {
+            "countryCode":"NL",
+            "value":12
+          },
+          {
+            "countryCode":"BE",
+            "value":4
+          }
+        ]
+      },
+      {
+        "period":{
+          "week":"33",
+          "year":"2021"
+        },
+        "total":3,
+        "countries":[
+          {
+            "countryCode":"NL",
+            "value":3
+          },
+          {
+            "countryCode":"BE",
+            "value":0
+          }
+        ]
+      }
+    ],
+    "relatedSearchTerms":[
+      {
+        "total":99,
+        "searchTerm":"plotter"
+      },
+      {
+        "total":13,
+        "searchTerm":"pottery pots"
+      },
+      {
+        "total":13,
+        "searchTerm":"pottery"
+      },
+      {
+        "total":7,
+        "searchTerm":"pottery wheel"
+      },
+      {
+        "total":5,
+        "searchTerm":"potter lego"
+      },
+      {
+        "total":4,
+        "searchTerm":"potterdutch bestek"
+      },
+      {
+        "total":3,
+        "searchTerm":"potterbakker klei"
+      },
+      {
+        "total":3,
+        "searchTerm":"potters clay"
+      },
+      {
+        "total":3,
+        "searchTerm":"potter vuurbeker"
+      },
+      {
+        "total":3,
+        "searchTerm":"pottermore"
+      }
+    ]
+  }
+}

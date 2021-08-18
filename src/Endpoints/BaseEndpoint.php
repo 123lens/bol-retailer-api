@@ -5,6 +5,7 @@ use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
 use Budgetlens\BolRetailerApi\Client;
 use Budgetlens\BolRetailerApi\Exceptions\RateLimitException;
 use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
+use Budgetlens\BolRetailerApi\Support\Uri;
 
 abstract class BaseEndpoint
 {
@@ -38,7 +39,11 @@ abstract class BaseEndpoint
             return '';
         }
 
-        return '?'.http_build_query($filters);
+        $query = Uri::queryString($filters);
+
+        return "?{$query}";
+//
+//        return '?'.http_build_query($filters);
     }
 
     /**
