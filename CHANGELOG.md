@@ -3,6 +3,7 @@
 All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
+- Commissions endpoint
 
 ## Latest Releases 
 

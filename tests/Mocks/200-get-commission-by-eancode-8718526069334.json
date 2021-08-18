@@ -1,0 +1,15 @@
+{
+  "ean" : "8718526069334",
+  "condition" : "NEW",
+  "unitPrice" : 0.25,
+  "fixedAmount" : 0.99,
+  "percentage" : 15,
+  "totalCost" : 3.82,
+  "totalCostWithoutReduction" : 4.74,
+  "reductions" : [ {
+    "maximumPrice" : 25.99,
+    "costReduction" : 0.92,
+    "startDate" : "2018-04-25",
+    "endDate" : "2018-05-15"
+  } ]
+}
