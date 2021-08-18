@@ -27,7 +27,7 @@ class Inventory extends BaseEndpoint
         $parameters = collect([
             'quantity' => $quantity,
             'stock' => $stock,
-            'state' => $stock,
+            'state' => $state,
             'query' => $query,
             'page' => $page
         ])->reject(function ($value) {
