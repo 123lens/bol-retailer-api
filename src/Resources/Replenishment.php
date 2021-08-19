@@ -24,7 +24,6 @@ class Replenishment extends BaseResource
 
     public function __construct($attributes = [])
     {
-        $this->labelingByBol = false;
         $this->lines = [];
         $this->invalidLines = [];
         $this->loadCarriers = [];

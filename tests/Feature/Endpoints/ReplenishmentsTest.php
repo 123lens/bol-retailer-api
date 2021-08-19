@@ -172,7 +172,7 @@ class ReplenishmentsTest extends TestCase
     /** @test */
     public function getPickupTimeSlots()
     {
-//        $this->useMock('200-create-replenishment-pickup.json');
+        $this->useMock('200-get-replenishments-pickup-timeslots.json');
 
         $address = new Address([
             'streetName' => 'Utrechtseweg',
@@ -193,74 +193,64 @@ class ReplenishmentsTest extends TestCase
     }
 
     /** @test */
-    public function getPackingList()
-    {
-        $id = '5850051250';
-
-        $inbound = $this->client->inbounds->getPackingList($id);
-
-        $this->assertInstanceOf(InboundPackinglist::class, $inbound);
-        $this->assertSame($id, $inbound->id);
-    }
-
-    /** @test */
-    public function getShippingLabel()
-    {
-        $id = '5850051250';
-
-        $inbound = $this->client->inbounds->getShippingLabel($id);
-        $this->assertInstanceOf(InboundShippingLabel::class, $inbound);
-        $this->assertSame($id, $inbound->id);
-    }
-
-    /** @test */
     public function getProductLabels()
     {
         $products = [
-            ['ean' => '8717185945126', 'quantity' => 1],
-            ['ean' => '8717185944747', 'quantity' => 2]
+            ['ean' => '0846127026185', 'quantity' => 5],
+            ['ean' => '8716393000627', 'quantity' => 2]
         ];
 
-        $labels = $this->client->inbounds->getProductLabels($products, LabelFormat::ZEBRA_Z_PERFORM_1000T);
+        $labels = $this->client->replenishments->productLabels($products, LabelFormat::AVERY_J8159);
 
-        $this->assertInstanceOf(InboundProductLabels::class, $labels);
+        $this->assertInstanceOf(Replenishment\ProductLabels::class, $labels);
     }
+
+    /** @test */
+    public function updateReplenishment()
+    {
+        $this->useMock('200-update-replenishment.json');
+
+        $replenishment = new Replenishment([
+            'replenishmentId' => '2312188192',
+            'deliveryInformation' => new Replenishment\DeliveryInformation([
+                'expectedDeliveryDate' => '2024-01-29'
+            ])
+        ]);
+        $status = $this->client->replenishments->update($replenishment);
+        $this->assertInstanceOf(ProcessStatus::class, $status);
+        $this->assertSame('1', $status->processStatusId);
+        $this->assertSame('UPDATE_REPLENISHMENT', $status->eventType);
+        $this->assertSame('PENDING', $status->status);
+        $this->assertInstanceOf(Collection::class, $status->links);
+        $this->assertInstanceOf(ProcessStatus\Link::class, $status->links->first());
+    }
+
+    /** @test */
+    public function getLoadCarrierLabels()
+    {
+        $this->markTestSkipped('Test data provided by bol returns a replenishment not found...');
+//        $this->useMock('200-update-replenishment.json');
+
+        $id = '4220489554';
+        $labelType = 'TRANSPORT';
+        $label = $this->client->replenishments->loadCarrierLabels($id, $labelType);
+    }
+
+    /** @test */
+    public function getPicklist()
+    {
+        $id = '2312208179';
+
+        $response = $this->client->replenishments->picklist($id);
+        $this->assertInstanceOf(Replenishment\Picklist::class, $response);
+        $this->assertSame($id, $response->id);
+    }
+
     /** @test */
     public function invalidStateThrowsAnException()
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid state');
-        $this->client->inbounds->list(null, null, null, null, 'invalid');
+        $this->client->replenishments->list(null, null, null, null, 'invalid');
     }
-
-    /** @test */
-    public function getDeliveryWindows()
-    {
-        $this->useMock('200-get-delivery-windows.json');
-
-        $deliveryWindows = $this->client->inbounds->getDeliveryWindows(new \DateTime('2018-05-31'));
-        $this->assertInstanceOf(Collection::class, $deliveryWindows);
-        $this->assertCount(24, $deliveryWindows);
-        $this->assertInstanceOf(Timeslot::class, $deliveryWindows->first());
-        $this->assertInstanceOf(\DateTime::class, $deliveryWindows->first()->startDateTime);
-        $this->assertInstanceOf(\DateTime::class, $deliveryWindows->first()->endDateTime);
-        $this->assertNotNull($deliveryWindows->first()->startDateTime);
-        $this->assertNotNull($deliveryWindows->first()->endDateTime);
-    }
-
-    /** @test */
-    public function getTransporters()
-    {
-        $this->useMock('200-get-inbound-transporters.json');
-
-        $transporters = $this->client->inbounds->getTransporters();
-        $this->assertInstanceOf(Collection::class, $transporters);
-        $this->assertCount(33, $transporters);
-        $this->assertInstanceOf(Transporter::class, $transporters->first());
-        $this->assertNotNull($transporters->first()->name);
-        $this->assertNotNull($transporters->first()->code);
-    }
-
-
-
 }

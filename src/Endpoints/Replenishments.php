@@ -14,6 +14,8 @@ use Budgetlens\BolRetailerApi\Resources\Label;
 use Budgetlens\BolRetailerApi\Resources\Order as OrderResource;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\Replenishment;
+use Budgetlens\BolRetailerApi\Resources\Replenishment\ProductLabels;
+use Budgetlens\BolRetailerApi\Resources\Replenishment\Picklist;
 use Budgetlens\BolRetailerApi\Resources\Timeslot;
 use Budgetlens\BolRetailerApi\Resources\Transporter;
 use Budgetlens\BolRetailerApi\Types\InboundState;
@@ -129,6 +131,13 @@ class Replenishments extends BaseEndpoint
         return new ProcessStatus(collect($response));
     }
 
+    /**
+     * Retrieve available pickup timeslots
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/post-pickup-time-slots
+     * @param Address $address
+     * @param int $numberOfLoadCarriers
+     * @return Collection
+     */
     public function pickupTimeslots(Address $address, int $numberOfLoadCarriers)
     {
         $payload = collect([
@@ -152,23 +161,106 @@ class Replenishments extends BaseEndpoint
     }
 
     /**
-     * Get Inbound Packing List
-     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get%20packing%20list
-     * @param string $inboundId
-     * @return InboundPackinglist
+     * Get Product Labels
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/post-product-labels
+     * @param array $products
+     * @param string $format
+     * @return ProductLabels
      */
-    public function getPackingList(string $inboundId): InboundPackinglist
+    public function productLabels(
+        array $products,
+        string $format = LabelFormat::ZEBRA_Z_PERFORM_1000T
+    ): ProductLabels {
+        if (!in_array($format, $this->availableProductLabelFormat)) {
+            throw new \InvalidArgumentException("Invalid format");
+        }
+
+        $payload = collect([
+            'products' => $products,
+            'labelFormat' => $format
+        ])->reject(function ($item) {
+            return is_array($item) && !count($item);
+        })->toJson();
+
+        $response = $this->performApiCall(
+            'POST',
+            "replenishments/product-labels",
+            $payload,
+            [
+                'Content-Type' => 'application/vnd.retailer.v5+json',
+                'Accept' => 'application/vnd.retailer.v5+pdf'
+            ]
+        );
+
+        return new ProductLabels([
+            'id' => 'product-labels',
+            'contents' => $response
+        ]);
+    }
+
+    /**
+     * Update Replenishment
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/put-replenishment
+     * @param Replenishment $inbound
+     * @return ProcessStatus
+     */
+    public function update(Replenishment $replenishment): ProcessStatus
+    {
+        $payload = collect($replenishment->toArray())
+            ->forget('replenishmentId')
+            ->toJson();
+
+        $response = $this->performApiCall(
+            'PUT',
+            "replenishments/{$replenishment->replenishmentId}",
+            $payload
+        );
+
+        return new ProcessStatus(collect($response));
+    }
+
+
+    /**
+     * Update Replenishment
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/put-replenishment
+     * @param Replenishment $inbound
+     * @return ProcessStatus
+     */
+    public function loadCarrierLabels(string $replenishmentId, string $labelType = 'WAREHOUSE')
     {
         $response = $this->performApiCall(
             'GET',
-            "inbounds/{$inboundId}/packinglist",
+            "replenishments/{$replenishmentId}/load-carrier-labels" . $this->buildQueryString([
+                'label-type' => $labelType
+            ]),
             null,
             [
-                'Accept' => 'application/vnd.retailer.v4+pdf'
+                'Accept' => 'application/vnd.retailer.v5+pdf'
             ]
         );
-        return new InboundPackinglist([
-            'id' => $inboundId,
+//        return new ProcessStatus(collect($response));
+    }
+
+
+    /**
+     * Get Picklist
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-pick-list
+     * @param string $replenishmentId
+     * @return Picklist
+     */
+    public function picklist(string $replenishmentId): Picklist
+    {
+        $response = $this->performApiCall(
+            'GET',
+            "replenishments/{$replenishmentId}/pick-list",
+            null,
+            [
+                'Accept' => 'application/vnd.retailer.v5+pdf'
+            ]
+        );
+
+        return new Picklist([
+            'id' => $replenishmentId,
             'contents' => $response
         ]);
     }
@@ -191,43 +283,6 @@ class Replenishments extends BaseEndpoint
         );
         return new InboundShippingLabel([
             'id' => $inboundId,
-            'contents' => $response
-        ]);
-    }
-
-    /**
-     * Get Product Labels
-     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get-product-labels
-     * @param array $productLabels
-     * @param string $format
-     * @return InboundProductLabels
-     */
-    public function getProductLabels(
-        array $productLabels,
-        string $format = LabelFormat::ZEBRA_Z_PERFORM_1000T
-    ): InboundProductLabels {
-        if (!in_array($format, $this->availableProductLabelFormat)) {
-            throw new \InvalidArgumentException("Invalid format");
-        }
-
-        $payload = collect([
-            'productLabels' => $productLabels,
-            'format' => $format
-        ])->reject(function ($item) {
-            return is_array($item) && !count($item);
-        })->all();
-        $response = $this->performApiCall(
-            'POST',
-            "inbounds/productlabels",
-            json_encode($payload),
-            [
-                'Content-Type' => 'application/vnd.retailer.v4+json',
-                'Accept' => 'application/vnd.retailer.v4+pdf'
-            ]
-        );
-
-        return new InboundProductLabels([
-            'id' => 'product-labels',
             'contents' => $response
         ]);
     }
