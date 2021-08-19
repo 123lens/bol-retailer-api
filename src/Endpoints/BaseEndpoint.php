@@ -79,7 +79,7 @@ abstract class BaseEndpoint
         }
 
         $body = $response->getBody()->getContents();
-
+//        die($body);
         if (empty($body)) {
             if ($response->getStatusCode() === Client::HTTP_STATUS_NO_CONTENT) {
                 return;

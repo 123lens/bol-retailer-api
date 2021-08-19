@@ -1,0 +1,12 @@
+{
+  "processStatusId" : "1",
+  "eventType" : "CREATE_REPLENISHMENT",
+  "description" : "Create replenishment with reference 'UNITTEST001'.",
+  "status" : "PENDING",
+  "createTimestamp" : "2021-08-19T12:07:09+02:00",
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://api.bol.com/retailer-demo/process-status/1",
+    "method" : "GET"
+  } ]
+}
