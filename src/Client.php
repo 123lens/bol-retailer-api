@@ -8,6 +8,7 @@ use Budgetlens\BolRetailerApi\Endpoints\Insights;
 use Budgetlens\BolRetailerApi\Endpoints\Inventory;
 use Budgetlens\BolRetailerApi\Endpoints\Invoices;
 use Budgetlens\BolRetailerApi\Endpoints\Offers;
+use Budgetlens\BolRetailerApi\Endpoints\Replenishments;
 use Budgetlens\BolRetailerApi\Endpoints\Shipments;
 use Budgetlens\BolRetailerApi\Endpoints\Shipping;
 use Budgetlens\BolRetailerApi\Endpoints\Status;
@@ -41,14 +42,25 @@ class Client
     /** @var \Budgetlens\BolRetailerApi\Endpoints\Insights */
     public $insights;
 
-    /** @var \Budgetlens\BolRetailerApi\Endpoints\Orders */
-    public $orders;
+    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Inventory */
+    public $inventory;
+
+    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Invoices */
+    public $invoices;
 
     /** @var \Budgetlens\BolRetailerApi\Endpoints\Offers */
     public $offers;
 
+    /** @var \Budgetlens\BolRetailerApi\Endpoints\Orders */
+    public $orders;
+
     /** @var  \Budgetlens\BolRetailerApi\Endpoints\Status */
     public $status;
+
+    // product-content
+
+    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Replenishments */
+    public $replenishments;
 
     /** @var  \Budgetlens\BolRetailerApi\Endpoints\Shipping */
     public $shipping;
@@ -56,11 +68,6 @@ class Client
     /** @var  \Budgetlens\BolRetailerApi\Endpoints\Shipments */
     public $shipments;
 
-    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Inventory */
-    public $inventory;
-
-    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Invoices */
-    public $invoices;
 
     /** @var  \Budgetlens\BolRetailerApi\Endpoints\Inbounds */
     public $inbounds;
@@ -91,6 +98,7 @@ class Client
         $this->orders = new Orders($this);
         $this->offers = new Offers($this);
         $this->status = new Status($this);
+        $this->replenishments = new Replenishments($this);
         $this->shipping = new Shipping($this);
         $this->shipments = new Shipments($this);
         $this->inventory = new Inventory($this);

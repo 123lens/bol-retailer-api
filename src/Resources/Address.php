@@ -19,4 +19,5 @@ class Address extends BaseResource
     public $vatNumber;
     public $kvkNumber;
     public $orderReference;
+    public $attentionOf;
 }

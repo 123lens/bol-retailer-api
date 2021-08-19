@@ -1,11 +1,13 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Resources;
 
+use Budgetlens\BolRetailerApi\Resources\ProcessStatus\Link;
 use \Budgetlens\BolRetailerApi\Types\ProcessStatus as ProcessStatusType;
+use Illuminate\Support\Collection;
 
 class ProcessStatus extends BaseResource
 {
-    public $id;
+    public $processStatusId;
     public $entityId;
     public $eventType;
     public $description;
@@ -33,6 +35,22 @@ class ProcessStatus extends BaseResource
         return $this;
     }
 
+    public function setLinksAttribute($value): self
+    {
+        $items = new Collection();
+
+        collect($value)->each(function ($item) use ($items) {
+            if (!$item instanceof Link) {
+                $item = new Link($item);
+            }
+            $items->push($item);
+        });
+
+        $this->links = $items;
+
+        return $this;
+    }
+
     /**
      * Set Defaults
      *
@@ -40,7 +58,7 @@ class ProcessStatus extends BaseResource
      */
     public function setDefaults(): self
     {
-        $this->status = \Budgetlens\BolRetailerApi\Types\ProcessStatus::DEFAULT;
+        $this->status = ProcessStatusType::DEFAULT;
 
         return $this;
     }
