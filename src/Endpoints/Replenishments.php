@@ -1,24 +1,12 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
-use Budgetlens\BolRetailerApi\Exceptions\InvalidFormatException;
 use Budgetlens\BolRetailerApi\Resources\Address;
-use Budgetlens\BolRetailerApi\Resources\Inbound;
-use Budgetlens\BolRetailerApi\Resources\InboundPackinglist;
-use Budgetlens\BolRetailerApi\Resources\InboundProductLabels;
-use Budgetlens\BolRetailerApi\Resources\InboundShippingLabel;
-use Budgetlens\BolRetailerApi\Resources\Invoice\InvoicePDF;
-use Budgetlens\BolRetailerApi\Resources\Invoice\InvoiceXML;
-use Budgetlens\BolRetailerApi\Resources\Invoice as InvoiceResource;
-use Budgetlens\BolRetailerApi\Resources\Label;
-use Budgetlens\BolRetailerApi\Resources\Order as OrderResource;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\Replenishment;
 use Budgetlens\BolRetailerApi\Resources\Replenishment\ProductLabels;
 use Budgetlens\BolRetailerApi\Resources\Replenishment\Picklist;
-use Budgetlens\BolRetailerApi\Resources\Timeslot;
-use Budgetlens\BolRetailerApi\Resources\Transporter;
-use Budgetlens\BolRetailerApi\Types\InboundState;
+use Budgetlens\BolRetailerApi\Resources\Replenishment\CarrierLabels;
 use Budgetlens\BolRetailerApi\Types\LabelFormat;
 use Budgetlens\BolRetailerApi\Types\ReplenishState;
 use Illuminate\Support\Collection;
@@ -56,12 +44,12 @@ class Replenishments extends BaseEndpoint
      * @return Collection
      */
     public function list(
-        string $reference = null,
-        string $eancode = null,
+        string    $reference = null,
+        string    $eancode = null,
         \DateTime $startDate = null,
         \DateTime $endDate = null,
-        string $state = null,
-        int $page = 1
+        string    $state = null,
+        int       $page = 1
     ): Collection {
         if (!is_null($state) &&
             !in_array($state, $this->availableStates)
@@ -168,7 +156,7 @@ class Replenishments extends BaseEndpoint
      * @return ProductLabels
      */
     public function productLabels(
-        array $products,
+        array  $products,
         string $format = LabelFormat::ZEBRA_Z_PERFORM_1000T
     ): ProductLabels {
         if (!in_array($format, $this->availableProductLabelFormat)) {
@@ -219,14 +207,14 @@ class Replenishments extends BaseEndpoint
         return new ProcessStatus(collect($response));
     }
 
-
     /**
      * Update Replenishment
      * @see https://api.bol.com/retailer/public/redoc/v5#operation/put-replenishment
-     * @param Replenishment $inbound
-     * @return ProcessStatus
+     * @param string $replenishmentId
+     * @param string $labelType
+     * @return CarrierLabels
      */
-    public function loadCarrierLabels(string $replenishmentId, string $labelType = 'WAREHOUSE')
+    public function loadCarrierLabels(string $replenishmentId, string $labelType = 'WAREHOUSE'): CarrierLabels
     {
         $response = $this->performApiCall(
             'GET',
@@ -238,9 +226,12 @@ class Replenishments extends BaseEndpoint
                 'Accept' => 'application/vnd.retailer.v5+pdf'
             ]
         );
-//        return new ProcessStatus(collect($response));
-    }
 
+        return new CarrierLabels([
+            'id' => $replenishmentId,
+            'contents' => $response
+        ]);
+    }
 
     /**
      * Get Picklist
@@ -263,82 +254,5 @@ class Replenishments extends BaseEndpoint
             'id' => $replenishmentId,
             'contents' => $response
         ]);
-    }
-
-    /**
-     * Get Inbound Shipping Label
-     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get-inbound-shipping-label
-     * @param string $inboundId
-     * @return InboundShippingLabel
-     */
-    public function getShippingLabel(string $inboundId): InboundShippingLabel
-    {
-        $response = $this->performApiCall(
-            'GET',
-            "inbounds/{$inboundId}/shippinglabel",
-            null,
-            [
-                'Accept' => 'application/vnd.retailer.v4+pdf'
-            ]
-        );
-        return new InboundShippingLabel([
-            'id' => $inboundId,
-            'contents' => $response
-        ]);
-    }
-
-    /**
-     * Get Delivery Windows
-     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get-delivery-windows
-     * @param \DateTime|null $deliveryDate
-     * @param int $itemsToSend
-     * @return Collection
-     */
-    public function getDeliveryWindows(\DateTime $deliveryDate = null, int $itemsToSend = 1): Collection
-    {
-        $parameters = collect([
-            'delivery-date' => $deliveryDate,
-            'items-to-send' => $itemsToSend
-        ])->reject(function ($value) {
-            return empty($value);
-        })->map(function ($value) {
-            return ($value instanceof \DateTime)
-                ? $value->format('Y-m-d')
-                : $value;
-        });
-
-        $response = $this->performApiCall(
-            'GET',
-            "inbounds/delivery-windows" . $this->buildQueryString($parameters->all())
-        );
-
-        $collection = new Collection();
-
-        collect($response->timeSlots)->each(function ($item) use ($collection) {
-            $collection->push(new Timeslot($item));
-        });
-
-        return $collection;
-    }
-
-    /**
-     * Get Transporters
-     * @see https://api.bol.com/retailer/public/redoc/v4#operation/get-inbound-transporters
-     * @return Collection
-     */
-    public function getTransporters(): Collection
-    {
-        $response = $this->performApiCall(
-            'GET',
-            "inbounds/inbound-transporters"
-        );
-
-        $collection = new Collection();
-
-        collect($response->transporters)->each(function ($item) use ($collection) {
-            $collection->push(new Transporter($item));
-        });
-
-        return $collection;
     }
 }
