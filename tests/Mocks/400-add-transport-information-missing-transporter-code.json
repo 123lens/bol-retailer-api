@@ -1,0 +1,12 @@
+{
+  "type" : "https://api.bol.com/problems",
+  "title" : "Error validating request. Consult the bol.com API documentation for more information.",
+  "status" : 400,
+  "detail" : "Bad request",
+  "host" : "Instance-101",
+  "instance" : "https://api.bol.com/retailer-demo/transports/358612589",
+  "violations" : [ {
+    "name" : "transporterCode",
+    "reason" : "Request contains invalid value(s): '', allowed values: TNT, DHL, UPS, TNT-EXTRA, COURIER, DPD-BE, DPD-NL, BPOST_BE, BPOST_BRIEF, BRIEFPOST, DHLFORYOU, DYL, FEDEX_BE, FEDEX_NL, GLS, OTHER, TNT_BRIEF, TSN, FIEGE, DHL_DE, DHL-GLOBAL-MAIL, TRANSMISSION, TNT-EXPRESS, PARCEL-NL, LOGOIX, PACKS, PES."
+  } ]
+}

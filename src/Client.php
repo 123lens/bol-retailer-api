@@ -13,6 +13,7 @@ use Budgetlens\BolRetailerApi\Endpoints\Returns;
 use Budgetlens\BolRetailerApi\Endpoints\Shipments;
 use Budgetlens\BolRetailerApi\Endpoints\Shipping;
 use Budgetlens\BolRetailerApi\Endpoints\Status;
+use Budgetlens\BolRetailerApi\Endpoints\Transports;
 use Budgetlens\BolRetailerApi\Middleware\RefreshToken;
 use Composer\CaBundle\CaBundle;
 use GuzzleHttp\Client as HttpClient;
@@ -72,9 +73,11 @@ class Client
     /** @var  \Budgetlens\BolRetailerApi\Endpoints\Shipments */
     public $shipments;
 
-
     /** @var  \Budgetlens\BolRetailerApi\Endpoints\Inbounds */
     public $inbounds;
+
+    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Transports */
+    public $transports;
 
     /** @var \GuzzleHttp\Client */
     protected $httpClient;
@@ -109,6 +112,7 @@ class Client
         $this->inventory = new Inventory($this);
         $this->invoices = new Invoices($this);
         $this->inbounds = new Inbounds($this);
+        $this->transports = new Transports($this);
     }
 
 
