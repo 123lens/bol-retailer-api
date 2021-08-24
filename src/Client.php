@@ -9,6 +9,7 @@ use Budgetlens\BolRetailerApi\Endpoints\Inventory;
 use Budgetlens\BolRetailerApi\Endpoints\Invoices;
 use Budgetlens\BolRetailerApi\Endpoints\Offers;
 use Budgetlens\BolRetailerApi\Endpoints\Replenishments;
+use Budgetlens\BolRetailerApi\Endpoints\Returns;
 use Budgetlens\BolRetailerApi\Endpoints\Shipments;
 use Budgetlens\BolRetailerApi\Endpoints\Shipping;
 use Budgetlens\BolRetailerApi\Endpoints\Status;
@@ -62,6 +63,9 @@ class Client
     /** @var  \Budgetlens\BolRetailerApi\Endpoints\Replenishments */
     public $replenishments;
 
+    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Returns */
+    public $returns;
+
     /** @var  \Budgetlens\BolRetailerApi\Endpoints\Shipping */
     public $shipping;
 
@@ -99,6 +103,7 @@ class Client
         $this->offers = new Offers($this);
         $this->status = new Status($this);
         $this->replenishments = new Replenishments($this);
+        $this->returns = new Returns($this);
         $this->shipping = new Shipping($this);
         $this->shipments = new Shipments($this);
         $this->inventory = new Inventory($this);

@@ -1,0 +1,69 @@
+{
+  "returns":[
+    {
+      "returnId":"15897410",
+      "registrationDateTime":"2019-06-03T17:06:12+02:00",
+      "fulfilmentMethod":"FBR",
+      "returnItems":[
+        {
+          "rmaId":"60283607",
+          "orderId":"1044796550",
+          "ean":"0634154562079",
+          "expectedQuantity":1,
+          "returnReason":{
+            "mainReason":"Verkeerde maat of formaat",
+            "customerComments":"Verkeerde maat of formaat"
+          },
+          "handled":true
+        }
+      ]
+    },
+    {
+      "returnId":"15896813",
+      "registrationDateTime":"2019-05-09T13:04:22+02:00",
+      "fulfilmentMethod":"FBR",
+      "returnItems":[
+        {
+          "rmaId":"60282944",
+          "orderId":"1043965710",
+          "ean":"0811571016532",
+          "expectedQuantity":1,
+          "returnReason":{
+            "mainReason":"Verkeerd artikel ontvangen",
+            "customerComments":"Verkeerd artikel ontvangen"
+          },
+          "handled":true
+        },
+        {
+          "rmaId":"60282945",
+          "orderId":"1044194100",
+          "ean":"3138520283072",
+          "expectedQuantity":1,
+          "returnReason":{
+            "mainReason":"Artikel is defect/werkt niet",
+            "customerComments":"Artikel is defect/werkt niet"
+          },
+          "handled":true
+        }
+      ]
+    },
+    {
+      "returnId":"15892026",
+      "registrationDateTime":"2018-11-06T10:48:34+01:00",
+      "fulfilmentMethod":"FBR",
+      "returnItems":[
+        {
+          "rmaId":"60278123",
+          "orderId":"1020824520",
+          "ean":"5702015866736",
+          "expectedQuantity":1,
+          "returnReason":{
+            "mainReason":"Geen reden",
+            "customerComments":"Geen reden"
+          },
+          "handled":true
+        }
+      ]
+    }
+  ]
+}

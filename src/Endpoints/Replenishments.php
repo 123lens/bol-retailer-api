@@ -59,7 +59,7 @@ class Replenishments extends BaseEndpoint
 
         $parameters = collect([
             'reference' => $reference,
-            'eanc' => $eancode,
+            'ean' => $eancode,
             'start-date' => $startDate,
             'end-date' => $endDate,
             'state' => $state,

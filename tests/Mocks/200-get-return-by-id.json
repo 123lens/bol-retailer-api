@@ -1,0 +1,31 @@
+{
+  "returnId":"15892026",
+  "registrationDateTime":"2018-11-06T10:48:34+01:00",
+  "fulfilmentMethod":"FBR",
+  "returnItems":[
+    {
+      "rmaId":"60278123",
+      "orderId":"1020824520",
+      "ean":"5702015866736",
+      "title":"LEGO DUPLO Cars Piston Cup Race - 10857",
+      "expectedQuantity":1,
+      "returnReason":{
+        "mainReason":"Geen reden"
+      },
+      "handled":true,
+      "processingResults":[
+        {
+          "quantity":1,
+          "processingResult":"ACCEPTED",
+          "handlingResult":"RETURN_RECEIVED",
+          "processingDateTime":"2018-11-06T10:48:38+01:00"
+        }
+      ],
+      "customerDetails":{
+        "zipCode":"1234BV",
+        "countryCode":"NL",
+        "email":"2wb3y4vqq667avck657zbhx2uevm7a@verkopen.test2.bol.com"
+      }
+    }
+  ]
+}
