@@ -1,5 +1,10 @@
 <?php
-namespace Budgetlens\BolRetailerApi\Resources;
+namespace Budgetlens\BolRetailerApi\Resources\Shipment;
+
+use Budgetlens\BolRetailerApi\Resources\BaseResource;
+use Budgetlens\BolRetailerApi\Resources\Fulfilment;
+use Budgetlens\BolRetailerApi\Resources\Offer;
+use Budgetlens\BolRetailerApi\Resources\Product;
 
 class ShipmentItem extends BaseResource
 {

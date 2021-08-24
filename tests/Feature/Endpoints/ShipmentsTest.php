@@ -6,7 +6,7 @@ use Budgetlens\BolRetailerApi\Resources\Fulfilment;
 use Budgetlens\BolRetailerApi\Resources\Offer;
 use Budgetlens\BolRetailerApi\Resources\Order;
 use Budgetlens\BolRetailerApi\Resources\Shipment;
-use Budgetlens\BolRetailerApi\Resources\ShipmentItem;
+use Budgetlens\BolRetailerApi\Resources\Shipment\ShipmentItem;
 use Budgetlens\BolRetailerApi\Resources\Transport;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
 use Illuminate\Support\Collection;
