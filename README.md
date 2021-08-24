@@ -1,5 +1,7 @@
 # Bol.com Retailer API client
 
+
+![Bol API Retailer Version][ico-bol-retailer-version]
 ![PHP version][ico-php-version]
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
@@ -29,14 +31,178 @@ composer require budgetlens/bol-retailer-api
 Initialize the Api client using the client ID / secret defined in an .env file. 
 
 ``` php
-$bol = new \Budgetlens\BolRetailerApi\Client();
+$client = new \Budgetlens\BolRetailerApi\Client();
 ```
 Or Use your own config.
 ``` php
-$bol = new \Budgetlens\BolRetailerApi\Client(new CustomApiConfig());
+$client = new \Budgetlens\BolRetailerApi\Client(new CustomApiConfig());
 ```
 
 # Examples
+*for more examples see "tests folder"*
+
+## Commmissions
+
+### Get all commissions and reductions by EAN in bulk
+```php
+$items = [
+    [
+        "ean" => "8712626055150",
+        "condition" => "NEW",
+        "unitPrice" => "34.99"
+    ], [
+        "ean" => "8804269223123",
+        "condition" => "NEW",
+        "unitPrice" => "699.95"
+    ], [
+        "ean" => "8712626055143",
+        "condition" => "GOOD",
+        "unitPrice" => "24.50"
+    ], [
+        "ean" => "0604020064587",
+        "condition" => "NEW",
+        "unitPrice" => "24.95"
+    ], [
+        "ean" => "8718526069334",
+        "condition" => "NEW",
+        "unitPrice" => "25.00"
+    ]
+];
+
+$commissions = $client->commission->list($items);
+print_r($commissions);
+```
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => Budgetlens\BolRetailerApi\Resources\Commission Object
+                (
+                    [ean] => 8712626055150
+                    [condition] => NEW
+                    [unitPrice] => 34.99
+                    [fixedAmount] => 0.99
+                    [percentage] => 15
+                    [totalCost] => 6.24
+                    [totalCostWithoutReduction] => 
+                    [reductions] => Array
+                        (
+                        )
+
+                )
+
+            [1] => Budgetlens\BolRetailerApi\Resources\Commission Object
+                (
+                    [ean] => 8804269223123
+                    [condition] => NEW
+                    [unitPrice] => 699.95
+                    [fixedAmount] => 0.99
+                    [percentage] => 16
+                    [totalCost] => 112.99
+                    [totalCostWithoutReduction] => 
+                    [reductions] => Array
+                        (
+                        )
+
+                )
+
+            [2] => Budgetlens\BolRetailerApi\Resources\Commission Object
+                (
+                    [ean] => 8712626055143
+                    [condition] => GOOD
+                    [unitPrice] => 24.5
+                    [fixedAmount] => 0.99
+                    [percentage] => 15
+                    [totalCost] => 4.67
+                    [totalCostWithoutReduction] => 
+                    [reductions] => Array
+                        (
+                        )
+
+                )
+
+            [3] => Budgetlens\BolRetailerApi\Resources\Commission Object
+                (
+                    [ean] => 0604020064587
+                    [condition] => NEW
+                    [unitPrice] => 24.95
+                    [fixedAmount] => 0.99
+                    [percentage] => 15
+                    [totalCost] => 4.73
+                    [totalCostWithoutReduction] => 
+                    [reductions] => Array
+                        (
+                        )
+
+                )
+
+            [4] => Budgetlens\BolRetailerApi\Resources\Commission Object
+                (
+                    [ean] => 8718526069334
+                    [condition] => NEW
+                    [unitPrice] => 25
+                    [fixedAmount] => 0.99
+                    [percentage] => 15
+                    [totalCost] => 3.82
+                    [totalCostWithoutReduction] => 4.74
+                    [reductions] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\Reduction Object
+                                        (
+                                            [maximumPrice] => 25.99
+                                            [costReduction] => 0.92
+                                            [startDate] => DateTime Object
+                                                (
+                                                    [date] => 2018-04-25 00:00:00.000000
+                                                    [timezone_type] => 3
+                                                    [timezone] => UTC
+                                                )
+
+                                            [endDate] => DateTime Object
+                                                (
+                                                    [date] => 2018-05-15 00:00:00.000000
+                                                    [timezone_type] => 3
+                                                    [timezone] => UTC
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+)
+```
+### Get all commissions and reductions by EAN per single EAN
+```php
+$ean = '8712626055143';
+$unitPrice = 24.50;
+$commission = $client->commission->get($ean, $unitPrice);
+print_r($commission);
+```
+```php
+Budgetlens\BolRetailerApi\Resources\Commission Object
+(
+    [ean] => 8712626055143
+    [condition] => NEW
+    [unitPrice] => 0.24
+    [fixedAmount] => 0.99
+    [percentage] => 15
+    [totalCost] => 4.67
+    [totalCostWithoutReduction] => 
+    [reductions] => Array
+        (
+        )
+
+)
+```
 
 ## Orders
 
@@ -57,6 +223,7 @@ $orders = $client->orders->getOpenOrders('FBR', 2);
 ```php
 $order = $client->orders->get($orderId);
 ```
+
 
 ### Ship Order Item With Transporter information
 ```php
@@ -453,6 +620,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
+[ico-bol-retailer-version]: https://img.shields.io/badge/Retailer%20API%20Version-V5-blue
 [ico-php-version]: https://img.shields.io/packagist/php-v/budgetlens/bol-retailer-api?style=flat-square
 [ico-version]: https://img.shields.io/packagist/v/budgetlens/bol-retailer-api.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
@@ -461,6 +629,6 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-code-style]: https://styleci.io/repos/xxxx/shield?branch=main
 
 [link-packagist]: https://packagist.org/packages/budgetlens/bol-retailer-api
-[link-tests]: https://github.com/123lens/bol-retailer-api/actions?query=workflow%3Atests
+[link-tests]: https://github.com/123lens/bol-retailer-api/actions/workflows/tests.yml?query=workflow%3Atests
 [link-downloads]: https://packagist.org/packages/budgetlens/bol-retailer-api
 [link-code-style]: https://styleci.io/repos/xxxx
