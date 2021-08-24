@@ -7,7 +7,7 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 - Insights Endpoint
 - Replenishment Endpoint
 - Returns endpoint
-
+- added transports endpoint
 ## Latest Releases 
 
 ### [v2.2.0] - 2020-11-11
