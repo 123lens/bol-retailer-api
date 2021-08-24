@@ -1,7 +1,9 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
+use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\Returns as ReturnsResource;
+use Budgetlens\BolRetailerApi\Types\ReturnResultTypes;
 use Illuminate\Support\Collection;
 
 class Returns extends BaseEndpoint
@@ -64,12 +66,21 @@ class Returns extends BaseEndpoint
      * @param Replenishment $inbound
      * @return ProcessStatus
      */
-    public function create(Replenishment $replenishment): ProcessStatus
-    {
+    public function create(
+        string $orderItemId,
+        int $quantity = 1,
+        string $handlingResult = ReturnResultTypes::RETURN_RECEIVED
+    ): ProcessStatus {
+        $payload = collect([
+            'orderItemId' => $orderItemId,
+            'quantityReturned' => $quantity,
+            'handlingResult' => $handlingResult
+        ]);
+
         $response = $this->performApiCall(
             'POST',
-            'replenishments',
-            $replenishment->toJson()
+            'returns',
+            $payload->toJson()
         );
 
         return new ProcessStatus(collect($response));

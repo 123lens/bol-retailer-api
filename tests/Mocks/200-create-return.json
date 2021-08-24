@@ -1,0 +1,12 @@
+{
+  "processStatusId" : "1",
+  "eventType" : "CREATE_RETURN_ITEM",
+  "description" : "Create return for order item 1044796550.",
+  "status" : "PENDING",
+  "createTimestamp" : "2021-08-24T10:20:09+02:00",
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://api.bol.com/retailer-demo/process-status/1",
+    "method" : "GET"
+  } ]
+}

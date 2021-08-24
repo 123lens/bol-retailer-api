@@ -15,6 +15,7 @@ use Budgetlens\BolRetailerApi\Resources\Transporter;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
 use Budgetlens\BolRetailerApi\Types\LabelFormat;
 use Budgetlens\BolRetailerApi\Types\ReplenishState;
+use Budgetlens\BolRetailerApi\Types\ReturnResultTypes;
 use Budgetlens\BolRetailerApi\Types\TransportState;
 use Cassandra\Date;
 use Illuminate\Support\Collection;
@@ -161,11 +162,9 @@ class ReturnsTest extends TestCase
     public function getReturnById()
     {
         $id = 15892026;
-
         $this->useMock('200-get-return-by-id.json');
 
         $return = $this->client->returns->get($id);
-
         $this->assertInstanceOf(Returns::class, $return);
         $this->assertNotNull($return->returnId);
         $this->assertSame('15892026', $return->returnId);
@@ -189,37 +188,62 @@ class ReturnsTest extends TestCase
         $this->assertInstanceOf(\DateTime::class, $return->returnItems->first()->processingResults->first()->processingDateTime);
     }
 
+    /** @test */
+    public function getReturnByIdWithMultipleReturns()
+    {
+        $id = 15897410;
+        $this->useMock('200-get-return-by-id-multiple-return-items.json');
+
+        $return = $this->client->returns->get($id);
+        $this->assertInstanceOf(Returns::class, $return);
+        $this->assertNotNull($return->returnId);
+        $this->assertSame('15897410', $return->returnId);
+        $this->assertInstanceOf(\DateTime::class, $return->registrationDateTime);
+        $this->assertSame('FBR', $return->fulfilmentMethod);
+        $this->assertInstanceOf(Collection::class, $return->returnItems);
+        $this->assertCount(2, $return->returnItems);
+        // first return
+        $this->assertInstanceOf(Returns\Item::class, $return->returnItems->first());
+        $this->assertSame('60283607', $return->returnItems->first()->rmaId);
+        $this->assertSame('1044796550', $return->returnItems->first()->orderId);
+        $this->assertSame('0634154562079', $return->returnItems->first()->ean);
+        $this->assertSame(1, $return->returnItems->first()->expectedQuantity);
+        $this->assertInstanceOf(Returns\ReturnReason::class, $return->returnItems->first()->returnReason);
+        $this->assertSame('Verkeerde maat of formaat', $return->returnItems->first()->returnReason->mainReason);
+        $this->assertSame('Verkeerde maat of afmeting > Te klein', $return->returnItems->first()->returnReason->customerComments);
+        $this->assertSame(true, $return->returnItems->first()->handled);
+        $this->assertInstanceOf(Collection::class, $return->returnItems->first()->processingResults);
+        $this->assertCount(1, $return->returnItems->first()->processingResults);
+        $this->assertSame(1, $return->returnItems->first()->processingResults->first()->quantity);
+        $this->assertSame('ACCEPTED', $return->returnItems->first()->processingResults->first()->processingResult);
+        $this->assertSame('RETURN_RECEIVED', $return->returnItems->first()->processingResults->first()->handlingResult);
+        $this->assertInstanceOf(\DateTime::class, $return->returnItems->first()->processingResults->first()->processingDateTime);
+        // 2nd return
+        $this->assertInstanceOf(Returns\Item::class, $return->returnItems->last());
+        $this->assertSame('60283608', $return->returnItems->last()->rmaId);
+        $this->assertSame('1044796550', $return->returnItems->last()->orderId);
+        $this->assertSame('0634154562956', $return->returnItems->last()->ean);
+        $this->assertSame(1, $return->returnItems->last()->expectedQuantity);
+        $this->assertInstanceOf(Returns\ReturnReason::class, $return->returnItems->last()->returnReason);
+        $this->assertSame('Anders, namelijk:', $return->returnItems->last()->returnReason->mainReason);
+        $this->assertSame('Ik heb me bedacht', $return->returnItems->last()->returnReason->customerComments);
+        $this->assertSame(false, $return->returnItems->last()->handled);
+        $this->assertNull($return->returnItems->last()->processingResults);
+    }
 
     /** @test */
-    public function createReplenishment()
+    public function createReturn()
     {
-        $this->useMock('200-create-replenishment.json');
+        $this->useMock('200-create-return.json');
 
-        $replenishment = new Replenishment([
-            'reference' => 'unittest001',
-            'deliveryInformation' => new Replenishment\DeliveryInformation([
-                'expectedDeliveryDate' => '2024-02-01',
-                'transporterCode' => 'POSTNL'
-            ]),
-            'labelingByBol' => true,
-            'numberOfLoadCarriers' => 2,
-            'lines' => [
-                [
-                    'ean' => '0846127026185',
-                    'quantity' => 5
-                ],
-                [
-                    'ean' => '8716393000627',
-                    'quantity' => 2
-                ]
-            ]
-        ]);
+        $orderItemId = '1044796550';
+        $quantity = 1;
+        $state = ReturnResultTypes::RETURN_RECEIVED;
 
-
-        $status = $this->client->replenishments->create($replenishment);
+        $status = $this->client->returns->create($orderItemId, $quantity, $state);
         $this->assertInstanceOf(ProcessStatus::class, $status);
         $this->assertSame('1', $status->processStatusId);
-        $this->assertSame('CREATE_REPLENISHMENT', $status->eventType);
+        $this->assertSame('CREATE_RETURN_ITEM', $status->eventType);
         $this->assertSame('PENDING', $status->status);
         $this->assertInstanceOf(Collection::class, $status->links);
         $this->assertInstanceOf(ProcessStatus\Link::class, $status->links->first());
