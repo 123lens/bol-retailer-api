@@ -1,0 +1,12 @@
+{
+  "type" : "https://api.bol.com/problems",
+  "title" : "Error validating request. Consult the bol.com API documentation for more information.",
+  "status" : 400,
+  "detail" : "Bad request",
+  "host" : "Instance-112",
+  "instance" : "https://api.bol.com/retailer/returns?fulfilment-method=FBX&handled=0&page=1",
+  "violations" : [ {
+    "name" : "fulfilment-method",
+    "reason" : "Request contains invalid value(s): 'FBX', allowed values: FBR, FBB."
+  } ]
+}

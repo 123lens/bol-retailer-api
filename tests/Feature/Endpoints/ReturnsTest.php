@@ -2,6 +2,8 @@
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
 
 use Budgetlens\BolRetailerApi\Client;
+use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
+use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
 use Budgetlens\BolRetailerApi\Resources\Address;
 use Budgetlens\BolRetailerApi\Resources\Inbound;
 use Budgetlens\BolRetailerApi\Resources\InboundPackinglist;
@@ -232,6 +234,99 @@ class ReturnsTest extends TestCase
     }
 
     /** @test */
+    public function getReturnByIdWithMultipleReturnsWithCustomerDetails()
+    {
+        $id = 15896813;
+        $this->useMock('200-get-return-by-id-multiple-return-items-with-customer-details.json');
+
+        $return = $this->client->returns->get($id);
+        $this->assertInstanceOf(Returns::class, $return);
+        $this->assertNotNull($return->returnId);
+        $this->assertSame('15896813', $return->returnId);
+        $this->assertInstanceOf(\DateTime::class, $return->registrationDateTime);
+        $this->assertSame('FBR', $return->fulfilmentMethod);
+        $this->assertInstanceOf(Collection::class, $return->returnItems);
+        $this->assertCount(2, $return->returnItems);
+        // first return
+        $this->assertInstanceOf(Returns\Item::class, $return->returnItems->first());
+        $this->assertSame('60282945', $return->returnItems->first()->rmaId);
+        $this->assertSame('1044194100', $return->returnItems->first()->orderId);
+        $this->assertSame('3138520283072', $return->returnItems->first()->ean);
+        $this->assertSame('Campingaz Cv470 Plus - Easy clic', $return->returnItems->first()->title);
+        $this->assertSame(1, $return->returnItems->first()->expectedQuantity);
+        $this->assertInstanceOf(Returns\ReturnReason::class, $return->returnItems->first()->returnReason);
+        $this->assertSame('Artikel is defect/werkt niet', $return->returnItems->first()->returnReason->mainReason);
+        $this->assertSame('Andere verwachting', $return->returnItems->first()->returnReason->customerComments);
+        $this->assertSame(true, $return->returnItems->first()->handled);
+        $this->assertSame('3SBLCR954606709', $return->returnItems->first()->trackAndTrace);
+        $this->assertSame('PostNL', $return->returnItems->first()->transporterName);
+        $this->assertInstanceOf(Collection::class, $return->returnItems->first()->processingResults);
+        $this->assertCount(1, $return->returnItems->first()->processingResults);
+        $this->assertSame(1, $return->returnItems->first()->processingResults->first()->quantity);
+        $this->assertSame('CANCELLED', $return->returnItems->first()->processingResults->first()->processingResult);
+        $this->assertSame('EXPIRED', $return->returnItems->first()->processingResults->first()->handlingResult);
+        $this->assertInstanceOf(\DateTime::class, $return->returnItems->first()->processingResults->first()->processingDateTime);
+        $this->assertInstanceOf(Address::class, $return->returnItems->first()->customerDetails);
+        $this->assertSame('Luke', $return->returnItems->first()->customerDetails->firstName);
+        $this->assertSame('Skywalker', $return->returnItems->first()->customerDetails->surname);
+        $this->assertSame('Acmestraat', $return->returnItems->first()->customerDetails->streetName);
+        $this->assertSame('1', $return->returnItems->first()->customerDetails->houseNumber);
+        $this->assertSame('1234AB', $return->returnItems->first()->customerDetails->zipCode);
+        $this->assertSame('Acme City', $return->returnItems->first()->customerDetails->city);
+        $this->assertSame('NL', $return->returnItems->first()->customerDetails->countryCode);
+        $this->assertSame('2wb3y4vqq667avck657zbhx2uevm7a@verkopen.test2.bol.com', $return->returnItems->first()->customerDetails->email);
+        $this->assertSame('Company Corp', $return->returnItems->first()->customerDetails->company);
+        // 2nd return
+        $this->assertInstanceOf(Returns\Item::class, $return->returnItems->last());
+        $this->assertSame('60282944', $return->returnItems->last()->rmaId);
+        $this->assertSame('1043965710', $return->returnItems->last()->orderId);
+        $this->assertSame('0811571016532', $return->returnItems->last()->ean);
+        $this->assertSame('Google Chromecast 2', $return->returnItems->last()->title);
+        $this->assertSame(1, $return->returnItems->last()->expectedQuantity);
+        $this->assertInstanceOf(Returns\ReturnReason::class, $return->returnItems->last()->returnReason);
+        $this->assertSame('Verkeerd artikel ontvangen', $return->returnItems->last()->returnReason->mainReason);
+        $this->assertSame(true, $return->returnItems->last()->handled);
+        $this->assertInstanceOf(Collection::class, $return->returnItems->last()->processingResults);
+        $this->assertCount(1, $return->returnItems->last()->processingResults);
+        $this->assertSame(1, $return->returnItems->last()->processingResults->last()->quantity);
+        $this->assertSame('ACCEPTED', $return->returnItems->last()->processingResults->first()->processingResult);
+        $this->assertSame('RETURN_RECEIVED', $return->returnItems->last()->processingResults->first()->handlingResult);
+        $this->assertInstanceOf(\DateTime::class, $return->returnItems->last()->processingResults->first()->processingDateTime);
+        $this->assertInstanceOf(Address::class, $return->returnItems->last()->customerDetails);
+        $this->assertSame('1234AB', $return->returnItems->last()->customerDetails->zipCode);
+        $this->assertSame('NL', $return->returnItems->last()->customerDetails->countryCode);
+        $this->assertSame('2wb3y4vqq667avck657zbhx2uevm7a@verkopen.test2.bol.com', $return->returnItems->last()->customerDetails->email);
+    }
+
+    /** @test */
+    public function unknownReturnThrowsException()
+    {
+        $this->useMock('404-return-not-found.json', 404);
+        $this->expectException(BolRetailerException::class);
+        $this->expectExceptionMessage('Error executing API call : Return for return id 158968131111 not found. : Not Found (404)');
+
+        $this->client->returns->get('9999999999');
+    }
+
+    /** @test */
+    public function canNotListInvalidFulfilmentMethod()
+    {
+        $this->useMock('400-returns-invalid-fulfilment-method-validation-exception.json', 400);
+
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Validation Failed, See violations');
+        try {
+            $this->client->returns->list('FBX', false);
+        } catch (ValidationException $e) {
+            $violations = $e->getViolations();
+            $this->assertSame("fulfilment-method", $violations->first()->name);
+            $this->assertSame("Request contains invalid value(s): 'FBX', allowed values: FBR, FBB.", $violations->first()->reason);
+            throw $e;
+        }
+    }
+
+
+    /** @test */
     public function createReturn()
     {
         $this->useMock('200-create-return.json');
@@ -247,6 +342,28 @@ class ReturnsTest extends TestCase
         $this->assertSame('PENDING', $status->status);
         $this->assertInstanceOf(Collection::class, $status->links);
         $this->assertInstanceOf(ProcessStatus\Link::class, $status->links->first());
+    }
+
+    /** @test */
+    public function canNotCreateReturnMissingState()
+    {
+        $this->useMock('400-create-return-missing-handling-result-validation-exception.json', 400);
+
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Validation Failed, See violations');
+
+        $orderItemId = '1044796550';
+        $quantity = 1;
+        $state = '';
+
+        try {
+            $this->client->returns->create($orderItemId, $quantity, $state);
+        } catch (ValidationException $e) {
+            $violations = $e->getViolations();
+            $this->assertSame("handlingResult", $violations->last()->name);
+            $this->assertSame("Request contains invalid value(s): '', allowed values: RETURN_RECEIVED, EXCHANGE_PRODUCT, RETURN_DOES_NOT_MEET_CONDITIONS, REPAIR_PRODUCT, CUSTOMER_KEEPS_PRODUCT_PAID.", $violations->last()->reason);
+            throw $e;
+        }
     }
 
     /** @test */
@@ -268,82 +385,48 @@ class ReturnsTest extends TestCase
         $this->assertInstanceOf(ProcessStatus\Link::class, $status->links->first());
     }
 
+
     /** @test */
-    public function getPickupTimeSlots()
+    public function canNotHandleReturnMissingState()
     {
-        $this->useMock('200-get-replenishments-pickup-timeslots.json');
+        $this->useMock('400-handle-return-missing-handling-result-validation-exception.json', 400);
 
-        $address = new Address([
-            'streetName' => 'Utrechtseweg',
-            'houseNumber' => 99,
-            'houseNumberExtension' => 'A',
-            'zipCode' => '3702 AA',
-            'city' => 'Zeist',
-            'countryCode' => 'NL',
-        ]);
-        $numberOfLoadCarriers = 2;
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Validation Failed, See violations');
 
-        $timeslots = $this->client->replenishments->pickupTimeslots($address, $numberOfLoadCarriers);
-        $this->assertInstanceOf(Collection::class, $timeslots);
-        $this->assertCount(7, $timeslots);
-        $this->assertInstanceOf(Replenishment\PickupTimeslot::class, $timeslots->first());
-        $this->assertInstanceOf(\DateTime::class, $timeslots->first()->fromDateTime);
-        $this->assertInstanceOf(\DateTime::class, $timeslots->first()->untilDateTime);
+        $rmaId = '86129741';
+        $state = '';
+        $quantity = 1;
+
+        try {
+            $this->client->returns->handle($rmaId, $quantity, $state);
+        } catch (ValidationException $e) {
+            $violations = $e->getViolations();
+            $this->assertSame("handlingResult", $violations->first()->name);
+            $this->assertSame("Request contains invalid value(s): '', allowed values: RETURN_RECEIVED, EXCHANGE_PRODUCT, RETURN_DOES_NOT_MEET_CONDITIONS, REPAIR_PRODUCT, CUSTOMER_KEEPS_PRODUCT_PAID, STILL_APPROVED.", $violations->first()->reason);
+            throw $e;
+        }
     }
 
     /** @test */
-    public function getProductLabels()
+    public function handleReturnItemExchange()
     {
-        $products = [
-            ['ean' => '0846127026185', 'quantity' => 5],
-            ['ean' => '8716393000627', 'quantity' => 2]
-        ];
+        $this->useMock('200-handle-return-item-exchange.json');
 
-        $labels = $this->client->replenishments->productLabels($products, LabelFormat::AVERY_J8159);
+        $rmaId = '86129741';
+        $state = ReturnResultTypes::EXCHANGE_PRODUCT;
+        $quantity = 1;
 
-        $this->assertInstanceOf(Replenishment\ProductLabels::class, $labels);
-    }
-
-    /** @test */
-    public function updateReplenishment()
-    {
-        $this->useMock('200-update-replenishment.json');
-
-        $replenishment = new Replenishment([
-            'replenishmentId' => '2312188192',
-            'deliveryInformation' => new Replenishment\DeliveryInformation([
-                'expectedDeliveryDate' => '2024-01-29'
-            ])
-        ]);
-        $status = $this->client->replenishments->update($replenishment);
+        $status = $this->client->returns->handle($rmaId, $quantity, $state);
         $this->assertInstanceOf(ProcessStatus::class, $status);
         $this->assertSame('1', $status->processStatusId);
-        $this->assertSame('UPDATE_REPLENISHMENT', $status->eventType);
+        $this->assertSame('86129741', $status->entityId);
+        $this->assertSame('HANDLE_RETURN_ITEM', $status->eventType);
         $this->assertSame('PENDING', $status->status);
         $this->assertInstanceOf(Collection::class, $status->links);
         $this->assertInstanceOf(ProcessStatus\Link::class, $status->links->first());
     }
 
-    /** @test */
-    public function getLoadCarrierLabels()
-    {
-        $this->markTestSkipped('Test data provided by bol returns a replenishment not found...');
-//        $this->useMock('200-update-replenishment.json');
-
-        $id = '4220489554';
-        $labelType = 'TRANSPORT';
-        $label = $this->client->replenishments->loadCarrierLabels($id, $labelType);
-    }
-
-    /** @test */
-    public function getPicklist()
-    {
-        $id = '2312208179';
-
-        $response = $this->client->replenishments->picklist($id);
-        $this->assertInstanceOf(Replenishment\Picklist::class, $response);
-        $this->assertSame($id, $response->id);
-    }
 
     /** @test */
     public function invalidStateThrowsAnException()

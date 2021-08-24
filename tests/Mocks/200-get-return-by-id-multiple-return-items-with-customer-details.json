@@ -1,0 +1,67 @@
+{
+  "returnId":"15896813",
+  "registrationDateTime":"2019-05-09T13:04:22+02:00",
+  "fulfilmentMethod":"FBR",
+  "returnItems":[
+    {
+      "rmaId":"60282945",
+      "orderId":"1044194100",
+      "ean":"3138520283072",
+      "title":"Campingaz Cv470 Plus - Easy clic",
+      "expectedQuantity":1,
+      "returnReason":{
+        "mainReason":"Artikel is defect/werkt niet",
+        "customerComments":"Andere verwachting"
+      },
+      "trackAndTrace":"3SBLCR954606709",
+      "transporterName":"PostNL",
+      "handled":true,
+      "processingResults":[
+        {
+          "quantity":1,
+          "processingResult":"CANCELLED",
+          "handlingResult":"EXPIRED",
+          "processingDateTime":"2019-05-30T13:06:03+02:00"
+        }
+      ],
+      "customerDetails":{
+        "salutationCode":"01",
+        "firstName":"Luke",
+        "surname":"Skywalker",
+        "streetName":"Acmestraat",
+        "houseNumber":"1",
+        "zipCode":"1234AB",
+        "city":"Acme City",
+        "countryCode":"NL",
+        "email":"2wb3y4vqq667avck657zbhx2uevm7a@verkopen.test2.bol.com",
+        "company":"Company Corp"
+      }
+    },
+    {
+      "rmaId":"60282944",
+      "orderId":"1043965710",
+      "ean":"0811571016532",
+      "title":"Google Chromecast 2",
+      "expectedQuantity":1,
+      "returnReason":{
+        "mainReason":"Verkeerd artikel ontvangen"
+      },
+      "trackAndTrace":"12ABCD345678900",
+      "transporterName":"PostNL",
+      "handled":true,
+      "processingResults":[
+        {
+          "quantity":1,
+          "processingResult":"ACCEPTED",
+          "handlingResult":"RETURN_RECEIVED",
+          "processingDateTime":"2019-05-09T13:05:09+02:00"
+        }
+      ],
+      "customerDetails":{
+        "zipCode":"1234AB",
+        "countryCode":"NL",
+        "email":"2wb3y4vqq667avck657zbhx2uevm7a@verkopen.test2.bol.com"
+      }
+    }
+  ]
+}
