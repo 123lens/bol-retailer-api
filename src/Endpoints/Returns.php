@@ -61,9 +61,11 @@ class Returns extends BaseEndpoint
     }
 
     /**
-     * Create Replenishment
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/post-replenishment
-     * @param Replenishment $inbound
+     * Create Return
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/create-return
+     * @param string $orderItemId
+     * @param int $quantity
+     * @param string $handlingResult
      * @return ProcessStatus
      */
     public function create(
@@ -80,6 +82,33 @@ class Returns extends BaseEndpoint
         $response = $this->performApiCall(
             'POST',
             'returns',
+            $payload->toJson()
+        );
+
+        return new ProcessStatus(collect($response));
+    }
+
+    /**
+     * Handle Return
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/handle-return
+     * @param string $rmaId
+     * @param int $quantity
+     * @param string $handlingResult
+     * @return ProcessStatus
+     */
+    public function handle(
+        string $rmaId,
+        int $quantity = 1,
+        string $handlingResult = ReturnResultTypes::RETURN_RECEIVED
+    ): ProcessStatus {
+        $payload = collect([
+            'quantityReturned' => $quantity,
+            'handlingResult' => $handlingResult
+        ]);
+
+        $response = $this->performApiCall(
+            'PUT',
+            "returns/{$rmaId}",
             $payload->toJson()
         );
 

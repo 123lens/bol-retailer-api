@@ -250,40 +250,19 @@ class ReturnsTest extends TestCase
     }
 
     /** @test */
-    public function createPickupReplenishment()
+    public function handleReturnItemReceived()
     {
-        $this->useMock('200-create-replenishment-pickup.json');
+        $this->useMock('200-handle-return-item-received.json');
 
-        $replenishment = new Replenishment([
-            'reference' => 'unittest002',
-            'pickupAppointment' => new Replenishment\PickupAppointment([
-                'address' => new Address([
-                    'streetName' => 'Utrechtseweg',
-                    'houseNumber' => 99,
-                    'zipCode' => '3702 AA',
-                    'city' => 'Zeist',
-                    'countryCode' => 'NL',
-                    'attentionOf' => 'Station'
-                ]),
-                'pickupTimeSlot' => new Replenishment\PickupTimeslot([
-                    'fromDateTime' => '2024-01-21 09:30:00',
-                    'untilDateTime' => '2024-01-21 11:30:00'
-                ]),
-                'commentToTransporter' => 'Custom reference'
-            ]),
-            'labelingByBol' => true,
-            'numberOfLoadCarriers' => 1,
-            'lines' => [
-                [
-                    'ean' => '0846127026185',
-                    'quantity' => 1
-                ]
-            ]
-        ]);
-        $status = $this->client->replenishments->create($replenishment);
+        $rmaId = '86123452';
+        $state = ReturnResultTypes::RETURN_RECEIVED;
+        $quantity = 3;
+
+        $status = $this->client->returns->handle($rmaId, $quantity, $state);
         $this->assertInstanceOf(ProcessStatus::class, $status);
         $this->assertSame('1', $status->processStatusId);
-        $this->assertSame('CREATE_REPLENISHMENT', $status->eventType);
+        $this->assertSame('86123452', $status->entityId);
+        $this->assertSame('HANDLE_RETURN_ITEM', $status->eventType);
         $this->assertSame('PENDING', $status->status);
         $this->assertInstanceOf(Collection::class, $status->links);
         $this->assertInstanceOf(ProcessStatus\Link::class, $status->links->first());
