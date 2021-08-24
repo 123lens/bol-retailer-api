@@ -1,6 +1,7 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Resources;
 
+use Budgetlens\BolRetailerApi\Resources\Shipment\ShipmentItem;
 use Illuminate\Support\Collection;
 
 class Shipment extends BaseResource
@@ -15,6 +16,12 @@ class Shipment extends BaseResource
     public $shipmentItems;
     public $transport;
 
+    public function setPickUpPointAttribute($value): self
+    {
+        $this->pickUpPoint = (bool) $value;
+
+        return $this;
+    }
     /**
      * Set Shipment Details Attribute
      * @param $value
