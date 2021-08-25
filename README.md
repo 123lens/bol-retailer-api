@@ -38,30 +38,6 @@ $bol = new \Budgetlens\BolRetailerApi\Client(new CustomApiConfig());
 
 # Examples
 
-
-### Create Inbound
-```diff
-- $inbound = new Inbound([
--    'reference' => 'my-reference',
--    'timeSlot' => new Timeslot([
--        'startDateTime' => new \DateTime('2018-04-05 12:00:00'),
--        'endDateTime' => new \DateTime('2018-04-05 17:00:00')
--    ]),
--    'inboundTransporter' => new Transporter([
--        'name' => 'PostNL',
--        'code' => 'PostNL'
--    ]),
--    'labellingService' => false,
--    'products' => [
--        ['ean' => '8718526069331', 'announcedQuantity' => 1],
--        ['ean' => '8718526069332', 'announcedQuantity' => 2],
--        ['ean' => '8718526069333', 'announcedQuantity' => 3],
--        ['ean' => '8718526069334', 'announcedQuantity' => 4]
--    ]
-- ]);
-- $status = $client->inbounds->create($inbound);
-```
-
 ## Orders
 
 ### List Orders
