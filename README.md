@@ -2453,6 +2453,472 @@ Budgetlens\BolRetailerApi\Resources\Replenishment\Picklist Object
 )
 ```
 
+--- 
+
+## Returns
+
+### Get All unhandled FBB Returns
+
+```php
+$returns = $client->returns->list('FBB', false);
+print_r($returns);
+```
+
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => Budgetlens\BolRetailerApi\Resources\Returns Object
+                (
+                    [returnId] => 6
+                    [registrationDateTime] => DateTime Object
+                        (
+                            [date] => 2018-04-27 19:55:12.000000
+                            [timezone_type] => 1
+                            [timezone] => +02:00
+                        )
+
+                    [fulfilmentMethod] => FBB
+                    [returnItems] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\Returns\Item Object
+                                        (
+                                            [rmaId] => 86127131
+                                            [orderId] => 7616247328
+                                            [ean] => 8718526069334
+                                            [title] => 
+                                            [expectedQuantity] => 1
+                                            [returnReason] => Budgetlens\BolRetailerApi\Resources\Returns\ReturnReason Object
+                                                (
+                                                    [mainReason] => Verkeerd besteld
+                                                    [detailedReason] => 
+                                                    [customerComments] => Ik wilde eigenlijk een groter formaat
+                                                )
+
+                                            [trackAndTrace] => 
+                                            [transporterName] => 
+                                            [handled] => 
+                                            [processingResults] => 
+                                            [customerDetails] => 
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+)
+```
+
+### Get All Handled Returns
+```php
+$returns = $client->returns->list(null, true);
+print_r($returns);
+```
+
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => Budgetlens\BolRetailerApi\Resources\Returns Object
+                (
+                    [returnId] => 15897410
+                    [registrationDateTime] => DateTime Object
+                        (
+                            [date] => 2019-06-03 17:06:12.000000
+                            [timezone_type] => 1
+                            [timezone] => +02:00
+                        )
+
+                    [fulfilmentMethod] => FBR
+                    [returnItems] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\Returns\Item Object
+                                        (
+                                            [rmaId] => 60283607
+                                            [orderId] => 1044796550
+                                            [ean] => 0634154562079
+                                            [title] => 
+                                            [expectedQuantity] => 1
+                                            [returnReason] => Budgetlens\BolRetailerApi\Resources\Returns\ReturnReason Object
+                                                (
+                                                    [mainReason] => Verkeerde maat of formaat
+                                                    [detailedReason] => 
+                                                    [customerComments] => Verkeerde maat of formaat
+                                                )
+
+                                            [trackAndTrace] => 
+                                            [transporterName] => 
+                                            [handled] => 1
+                                            [processingResults] => 
+                                            [customerDetails] => 
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+            [1] => Budgetlens\BolRetailerApi\Resources\Returns Object
+                (
+                    [returnId] => 15896813
+                    [registrationDateTime] => DateTime Object
+                        (
+                            [date] => 2019-05-09 13:04:22.000000
+                            [timezone_type] => 1
+                            [timezone] => +02:00
+                        )
+
+                    [fulfilmentMethod] => FBR
+                    [returnItems] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\Returns\Item Object
+                                        (
+                                            [rmaId] => 60282944
+                                            [orderId] => 1043965710
+                                            [ean] => 0811571016532
+                                            [title] => 
+                                            [expectedQuantity] => 1
+                                            [returnReason] => Budgetlens\BolRetailerApi\Resources\Returns\ReturnReason Object
+                                                (
+                                                    [mainReason] => Verkeerd artikel ontvangen
+                                                    [detailedReason] => 
+                                                    [customerComments] => Verkeerd artikel ontvangen
+                                                )
+
+                                            [trackAndTrace] => 
+                                            [transporterName] => 
+                                            [handled] => 1
+                                            [processingResults] => 
+                                            [customerDetails] => 
+                                        )
+
+                                    [1] => Budgetlens\BolRetailerApi\Resources\Returns\Item Object
+                                        (
+                                            [rmaId] => 60282945
+                                            [orderId] => 1044194100
+                                            [ean] => 3138520283072
+                                            [title] => 
+                                            [expectedQuantity] => 1
+                                            [returnReason] => Budgetlens\BolRetailerApi\Resources\Returns\ReturnReason Object
+                                                (
+                                                    [mainReason] => Artikel is defect/werkt niet
+                                                    [detailedReason] => 
+                                                    [customerComments] => Artikel is defect/werkt niet
+                                                )
+
+                                            [trackAndTrace] => 
+                                            [transporterName] => 
+                                            [handled] => 1
+                                            [processingResults] => 
+                                            [customerDetails] => 
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+            [2] => Budgetlens\BolRetailerApi\Resources\Returns Object
+                (
+                    [returnId] => 15892026
+                    [registrationDateTime] => DateTime Object
+                        (
+                            [date] => 2018-11-06 10:48:34.000000
+                            [timezone_type] => 1
+                            [timezone] => +01:00
+                        )
+
+                    [fulfilmentMethod] => FBR
+                    [returnItems] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\Returns\Item Object
+                                        (
+                                            [rmaId] => 60278123
+                                            [orderId] => 1020824520
+                                            [ean] => 5702015866736
+                                            [title] => 
+                                            [expectedQuantity] => 1
+                                            [returnReason] => Budgetlens\BolRetailerApi\Resources\Returns\ReturnReason Object
+                                                (
+                                                    [mainReason] => Geen reden
+                                                    [detailedReason] => 
+                                                    [customerComments] => Geen reden
+                                                )
+
+                                            [trackAndTrace] => 
+                                            [transporterName] => 
+                                            [handled] => 1
+                                            [processingResults] => 
+                                            [customerDetails] => 
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+)
+```
+
+### Create return
+
+```php
+$orderItemId = '1044796550';
+$quantity = 1;
+$state = ReturnResultTypes::RETURN_RECEIVED;
+
+$status = $client->returns->create($orderItemId, $quantity, $state);
+print_r($status);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\ProcessStatus Object
+(
+    [processStatusId] => 1
+    [entityId] => 
+    [eventType] => CREATE_RETURN_ITEM
+    [description] => Create return for order item 1044796550.
+    [status] => PENDING
+    [errorMessage] => 
+    [createTimestamp] => 2021-08-24T10:20:09+02:00
+    [links] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\ProcessStatus\Link Object
+                        (
+                            [rel] => self
+                            [href] => https://api.bol.com/retailer-demo/process-status/1
+                            [method] => GET
+                        )
+
+                )
+
+        )
+
+)
+```
+
+### Get a return by return id
+
+```php
+$id = 15896813;
+$return = $client->returns->get($id);
+print_r($return);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\Returns Object
+(
+    [returnId] => 15896813
+    [registrationDateTime] => DateTime Object
+        (
+            [date] => 2019-05-09 13:04:22.000000
+            [timezone_type] => 1
+            [timezone] => +02:00
+        )
+
+    [fulfilmentMethod] => FBR
+    [returnItems] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\Returns\Item Object
+                        (
+                            [rmaId] => 60282945
+                            [orderId] => 1044194100
+                            [ean] => 3138520283072
+                            [title] => Campingaz Cv470 Plus - Easy clic
+                            [expectedQuantity] => 1
+                            [returnReason] => Budgetlens\BolRetailerApi\Resources\Returns\ReturnReason Object
+                                (
+                                    [mainReason] => Artikel is defect/werkt niet
+                                    [detailedReason] => 
+                                    [customerComments] => Andere verwachting
+                                )
+
+                            [trackAndTrace] => 3SBLCR954606709
+                            [transporterName] => PostNL
+                            [handled] => 1
+                            [processingResults] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Returns\ProcessingResult Object
+                                                (
+                                                    [quantity] => 1
+                                                    [processingResult] => CANCELLED
+                                                    [handlingResult] => EXPIRED
+                                                    [processingDateTime] => DateTime Object
+                                                        (
+                                                            [date] => 2019-05-30 13:06:03.000000
+                                                            [timezone_type] => 1
+                                                            [timezone] => +02:00
+                                                        )
+
+                                                )
+
+                                        )
+
+                                )
+
+                            [customerDetails] => Budgetlens\BolRetailerApi\Resources\Address Object
+                                (
+                                    [salutation] => 
+                                    [firstName] => Luke
+                                    [surname] => Skywalker
+                                    [streetName] => Acmestraat
+                                    [houseNumber] => 1
+                                    [houseNumberExtension] => 
+                                    [extraAddressInformation] => 
+                                    [zipCode] => 1234AB
+                                    [city] => Acme City
+                                    [countryCode] => NL
+                                    [email] => 2wb3y4vqq667avck657zbhx2uevm7a@verkopen.test2.bol.com
+                                    [language] => 
+                                    [company] => Company Corp
+                                    [vatNumber] => 
+                                    [kvkNumber] => 
+                                    [orderReference] => 
+                                    [attentionOf] => 
+                                )
+
+                        )
+
+                    [1] => Budgetlens\BolRetailerApi\Resources\Returns\Item Object
+                        (
+                            [rmaId] => 60282944
+                            [orderId] => 1043965710
+                            [ean] => 0811571016532
+                            [title] => Google Chromecast 2
+                            [expectedQuantity] => 1
+                            [returnReason] => Budgetlens\BolRetailerApi\Resources\Returns\ReturnReason Object
+                                (
+                                    [mainReason] => Verkeerd artikel ontvangen
+                                    [detailedReason] => 
+                                    [customerComments] => 
+                                )
+
+                            [trackAndTrace] => 12ABCD345678900
+                            [transporterName] => PostNL
+                            [handled] => 1
+                            [processingResults] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Returns\ProcessingResult Object
+                                                (
+                                                    [quantity] => 1
+                                                    [processingResult] => ACCEPTED
+                                                    [handlingResult] => RETURN_RECEIVED
+                                                    [processingDateTime] => DateTime Object
+                                                        (
+                                                            [date] => 2019-05-09 13:05:09.000000
+                                                            [timezone_type] => 1
+                                                            [timezone] => +02:00
+                                                        )
+
+                                                )
+
+                                        )
+
+                                )
+
+                            [customerDetails] => Budgetlens\BolRetailerApi\Resources\Address Object
+                                (
+                                    [salutation] => 
+                                    [firstName] => 
+                                    [surname] => 
+                                    [streetName] => 
+                                    [houseNumber] => 
+                                    [houseNumberExtension] => 
+                                    [extraAddressInformation] => 
+                                    [zipCode] => 1234AB
+                                    [city] => 
+                                    [countryCode] => NL
+                                    [email] => 2wb3y4vqq667avck657zbhx2uevm7a@verkopen.test2.bol.com
+                                    [language] => 
+                                    [company] => 
+                                    [vatNumber] => 
+                                    [kvkNumber] => 
+                                    [orderReference] => 
+                                    [attentionOf] => 
+                                )
+
+                        )
+
+                )
+
+        )
+
+)
+```
+
+### Handle a return
+
+```php
+$rmaId = '86123452';
+$state = ReturnResultTypes::RETURN_RECEIVED;
+$quantity = 3;
+
+$status = $client->returns->handle($rmaId, $quantity, $state);
+print_r($status);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\ProcessStatus Object
+(
+    [processStatusId] => 1
+    [entityId] => 86123452
+    [eventType] => HANDLE_RETURN_ITEM
+    [description] => Handle the return item with return number 86123452.
+    [status] => PENDING
+    [errorMessage] => 
+    [createTimestamp] => 2021-08-24T10:35:22+02:00
+    [links] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\ProcessStatus\Link Object
+                        (
+                            [rel] => self
+                            [href] => https://api.bol.com/retailer-demo/process-status/1
+                            [method] => GET
+                        )
+
+                )
+
+        )
+
+)
+```
+
+--- 
+
+
+
+
+
+
 
 
 ## Shipping Labels
