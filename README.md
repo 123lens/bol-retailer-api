@@ -3354,15 +3354,9 @@ Budgetlens\BolRetailerApi\Resources\Shipment Object
 )
 ```
 
-
-
+---
 
 ## Shipping Labels
-
-### Get Delivery Options
-```php
-$options = $client->shipping->getDeliveryOptions($orderResource);
-```
 
 ### Create Shipping Label
 ```php
@@ -3373,12 +3367,143 @@ $order = new Order([
         ]
     ]
 ]);
-$status = $client->shipping->createLabel($order, '$shippingLabelOfferId');
+$shippingLabelOfferId = '8f956bfc-fabe-45b4-b0e1-1b52a0896b74';
+$status = $client->shipping->createLabel($order, $shippingLabelOfferId);
+print_r($status);
 ```
 
-### Get Shipping Label
 ```php
-$label = $this->client->shipping->getLabel('$shippingLabelId');
+Budgetlens\BolRetailerApi\Resources\ProcessStatus Object
+(
+    [processStatusId] => 1
+    [entityId] => 
+    [eventType] => CREATE_SHIPPING_LABEL
+    [description] => Create shipping label with shipping label offer id 8f956bfc-fabe-45b4-b0e1-1b52a0896b74.
+    [status] => PENDING
+    [errorMessage] => 
+    [createTimestamp] => 2021-03-22T09:06:13+01:00
+    [links] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\ProcessStatus\Link Object
+                        (
+                            [rel] => self
+                            [href] => https://api.bol.com/retailer-demo/process-status/1
+                            [method] => GET
+                        )
+
+                )
+
+        )
+
+    [id] => 1
+)
+```
+
+### Get delivery options for a shippable configuration of a number of order items within an order.
+
+```php
+$order = new Order([
+    'orderItems' => [
+        [
+            'orderItemId' => 2095052647
+        ]
+    ]
+]);
+
+$options = $client->shipping->getDeliveryOptions($order);
+print_r($options);
+```
+
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => Budgetlens\BolRetailerApi\Resources\DeliveryOption Object
+                (
+                    [shippingLabelOfferId] => 32c4a88c-3c64-41ad-83a1-24450b341747
+                    [validUntilDate] => 2020-10-17
+                    [transporterCode] => TNT
+                    [labelType] => PARCEL
+                    [labelPrice] => Budgetlens\BolRetailerApi\Resources\LabelPrice Object
+                        (
+                            [totalPrice] => 441
+                        )
+
+                    [packageRestrictions] => Budgetlens\BolRetailerApi\Resources\PackageRestriction Object
+                        (
+                            [maxWeight] => 10 kg
+                            [maxDimensions] => 100 x 50 x 50 cm
+                        )
+
+                    [handoverDetails] => Budgetlens\BolRetailerApi\Resources\HandoverDetails Object
+                        (
+                            [meetsCustomerExpectation] => 1
+                            [latestHandoverDateTime] => DateTime Object
+                                (
+                                    [date] => 2020-10-03 18:00:00.000000
+                                    [timezone_type] => 1
+                                    [timezone] => +02:00
+                                )
+
+                            [collectionMethod] => DROP_OFF
+                        )
+
+                )
+
+            [1] => Budgetlens\BolRetailerApi\Resources\DeliveryOption Object
+                (
+                    [shippingLabelOfferId] => fb7f20c0-d847-4d62-9c57-7aba64fb9b52
+                    [validUntilDate] => 2020-10-08
+                    [transporterCode] => TNT_BRIEF
+                    [labelType] => MAILBOX_LIGHT
+                    [labelPrice] => Budgetlens\BolRetailerApi\Resources\LabelPrice Object
+                        (
+                            [totalPrice] => 288
+                        )
+
+                    [packageRestrictions] => Budgetlens\BolRetailerApi\Resources\PackageRestriction Object
+                        (
+                            [maxWeight] => 2 kg
+                            [maxDimensions] => 38 x 26,5 x 3,2 cm
+                        )
+
+                    [handoverDetails] => Budgetlens\BolRetailerApi\Resources\HandoverDetails Object
+                        (
+                            [meetsCustomerExpectation] => 1
+                            [latestHandoverDateTime] => DateTime Object
+                                (
+                                    [date] => 2020-09-24 18:30:00.000000
+                                    [timezone_type] => 1
+                                    [timezone] => +02:00
+                                )
+
+                            [collectionMethod] => DROP_OFF
+                        )
+
+                )
+
+        )
+
+)
+```
+
+### Get a shipping label
+```php
+$id = 'c628ba4f-f31a-4fac-a6a0-062326d0dbbd';
+$label = $client->shipping->getLabel($id);
+print_r($label);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\Label Object
+(
+    [id] => c628ba4f-f31a-4fac-a6a0-062326d0dbbd
+    [contents] => PDFCONTENT
+    [fileExt:protected] => pdf
+)
 ```
 
 ---
