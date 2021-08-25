@@ -1176,6 +1176,385 @@ Illuminate\Support\Collection Object
 )
 ```
 
+## Invoices
+
+### Get all invoices
+```php
+$invoices = $client->invoices->list();
+print_r($invoices);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\Invoice Object
+(
+    [invoiceListItems] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\InvoiceItem Object
+                        (
+                            [invoiceId] => 4500022543921
+                            [invoiceMediaTypes] => Array
+                                (
+                                    [0] => application/json
+                                    [1] => application/xml
+                                    [2] => application/pdf
+                                )
+
+                            [invoiceType] => ALL_IN_ONE
+                            [issueDate] => DateTime Object
+                                (
+                                    [date] => 2018-04-30 22:00:00.000000
+                                    [timezone_type] => 1
+                                    [timezone] => +00:00
+                                )
+
+                            [invoicePeriod] => Array
+                                (
+                                    [endDate] => DateTime Object
+                                        (
+                                            [date] => 2019-04-29 22:00:00.000000
+                                            [timezone_type] => 1
+                                            [timezone] => +00:00
+                                        )
+
+                                    [startDate] => DateTime Object
+                                        (
+                                            [date] => 2019-03-31 22:00:00.000000
+                                            [timezone_type] => 1
+                                            [timezone] => +00:00
+                                        )
+
+                                )
+
+                            [legalMonetaryTotal] => stdClass Object
+                                (
+                                    [lineExtensionAmount] => stdClass Object
+                                        (
+                                            [amount] => -1336.3
+                                            [currencyID] => EUR
+                                        )
+
+                                    [payableAmount] => stdClass Object
+                                        (
+                                            [amount] => -1336.3
+                                            [currencyID] => EUR
+                                        )
+
+                                    [taxExclusiveAmount] => stdClass Object
+                                        (
+                                            [amount] => -1290.66
+                                            [currencyID] => EUR
+                                        )
+
+                                    [taxInclusiveAmount] => stdClass Object
+                                        (
+                                            [amount] => -1290.66
+                                            [currencyID] => EUR
+                                        )
+
+                                )
+
+                            [specificationMediaTypes] => Array
+                                (
+                                    [0] => application/json
+                                    [1] => application/xml
+                                    [2] => application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [period] => Array
+        (
+            [from] => DateTime Object
+                (
+                    [date] => 2018-04-12 00:00:00.000000
+                    [timezone_type] => 1
+                    [timezone] => +02:00
+                )
+
+            [till] => DateTime Object
+                (
+                    [date] => 2018-05-09 00:00:00.000000
+                    [timezone_type] => 1
+                    [timezone] => +02:00
+                )
+
+        )
+
+    [type] => 
+    [contents] => 
+)
+```
+
+### Get an invoice by invoice id
+
+### Get an invoice specification by invoice id
+
+
+## Offers
+
+### Create a new offer
+```php
+$offer = new Offer([
+    'ean' => '0000007740404',
+    'condition' => 'NEW',
+    'reference' => 'unit-test',
+    'onHoldByRetailer' => true,
+    'unknownProductTitle' => 'unit-test',
+    'price' => 99.99,
+    'stock' => 0,
+    'fulfilment' => 'FBB'
+]);
+$status = $client->offers->create($offer);
+print_r($status);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\ProcessStatus Object
+(
+    [processStatusId] => 1
+    [entityId] => 
+    [eventType] => CREATE_OFFER
+    [description] => Create an offer with ean 0000007740404.
+    [status] => PENDING
+    [errorMessage] => 
+    [createTimestamp] => 2021-03-17T11:00:31+01:00
+    [links] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\ProcessStatus\Link Object
+                        (
+                            [rel] => self
+                            [href] => https://api.bol.com/retailer-demo/process-status/1
+                            [method] => GET
+                        )
+
+                )
+
+        )
+
+    [id] => 1
+)
+```
+
+### Request an offer export file
+
+```php
+$status = $client->offers->requestExport();
+print_r($status);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\ProcessStatus Object
+(
+    [processStatusId] => 1
+    [entityId] => 
+    [eventType] => CREATE_OFFER_EXPORT
+    [description] => Create an offer export.
+    [status] => PENDING
+    [errorMessage] => 
+    [createTimestamp] => 2021-03-19T09:28:42+01:00
+    [links] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\ProcessStatus\Link Object
+                        (
+                            [rel] => self
+                            [href] => https://api.bol.com/retailer-demo/process-status/1
+                            [method] => GET
+                        )
+
+                )
+
+        )
+
+    [id] => 1
+)
+```
+
+### Retrieve an offer export file by offer export id
+```php
+$offerExportId = 'some-id-retrieved-from-status-response-by-offer-export-request';
+$offers = $client->offers->getExport($offerExportId);
+print_r($offers);
+```
+
+```php
+// todo
+```
+
+### Retrieve an offer by its offer id
+```php
+$offerId = '13722de8-8182-d161-5422-4a0a1caab5c8';
+$offer = $client->offers->get($offerId);
+print_r($offer);
+```
+
+// todo: check offer object response
+
+```php
+Budgetlens\BolRetailerApi\Resources\Offer Object
+(
+    [ean] => 3165140085229
+    [offerId] => 13722de8-8182-d161-5422-4a0a1caab5c8
+    [reference] => 02224499
+    [condition] => Budgetlens\BolRetailerApi\Resources\Condition Object
+        (
+            [name] => NEW
+            [category] => 
+            [comment] => 
+        )
+
+    [onHoldByRetailer] => 
+    [unknownProductTitle] => 
+    [pricing] => Budgetlens\BolRetailerApi\Resources\Pricing Object
+        (
+            [bundlePrices] => Illuminate\Support\Collection Object
+                (
+                    [items:protected] => Array
+                        (
+                            [0] => Budgetlens\BolRetailerApi\Resources\Price Object
+                                (
+                                    [quantity] => 1
+                                    [unitPrice] => 4499
+                                )
+
+                            [1] => Budgetlens\BolRetailerApi\Resources\Price Object
+                                (
+                                    [quantity] => 6
+                                    [unitPrice] => 4299
+                                )
+
+                            [2] => Budgetlens\BolRetailerApi\Resources\Price Object
+                                (
+                                    [quantity] => 12
+                                    [unitPrice] => 3999
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [stock] => Budgetlens\BolRetailerApi\Resources\Stock Object
+        (
+            [amount] => 3
+            [managedByRetailer] => 
+        )
+
+    [fulfilment] => Budgetlens\BolRetailerApi\Resources\Fulfilment Object
+        (
+            [method] => FBR
+            [deliveryCode] => 24uurs-15
+            [distributionParty] => 
+            [latestDeliveryDate] => 
+            [expiryDate] => 
+            [pickUpPoints] => 
+        )
+
+    [mutationDateTime] => 
+    [store] => Budgetlens\BolRetailerApi\Resources\Store Object
+        (
+            [productTitle] => Bosch Waterpomp voor boormachine 2500 L/M
+            [visible] => Array
+                (
+                    [0] => stdClass Object
+                        (
+                            [countryCode] => BE
+                        )
+
+                )
+
+        )
+
+    [notPublishableReasons] => 
+)
+```
+
+### Update an offer
+```php 
+$offer = new Offer([
+    'offerId' => '13722de8-8182-d161-5422-4a0a1caab5c8',
+    'onHoldByRetailer' => false,
+    'fulfilment' => 'FBR'
+]);
+$status = $client->offers->update($offer);
+print_r($status);
+```
+
+```php
+// todo: fix status response
+```
+
+### Delete offer by id
+
+```php
+$offerId = '13722de8-8182-d161-5422-4a0a1caab5c8';
+$status = $this->client->offers->delete($offerId);
+print_r($status);
+```
+
+```php
+// todo: fix status response
+```
+
+### Update price(s) for offer by id
+
+```php
+$offer = new Offer([
+    'offerId' => '13722de8-8182-d161-5422-4a0a1caab5c8',
+    'pricing' => new Pricing([
+        'bundlePrices' => [
+            ['quantity' => 1, 'unitPrice' => 99.99],
+            ['quantity' => 2, 'unitPrice' => 89.99],
+            ['quantity' => 3, 'unitPrice' => 85.99]
+        ]
+    ])
+]);
+$status = $client->offers->updatePrice($offer);
+print_r($status);
+```
+
+```php
+// todo: fix status response
+```
+
+### Update stock for offer by id
+
+```php
+$offer = new Offer([
+    'offerId' => '13722de8-8182-d161-5422-4a0a1caab5c8',
+    'stock' => new Stock([
+        'amount' => 100
+    ])
+]);
+$status = $client->offers->updateStock($offer);
+print_r($status);
+```
+
+```php
+// todo: fix status response
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
