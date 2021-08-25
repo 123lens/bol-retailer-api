@@ -1297,6 +1297,11 @@ Budgetlens\BolRetailerApi\Resources\Invoice Object
 
 
 ## Offers
+The offer related calls are async. Every action returns a `StatusProcess` resource. \
+With this resource you can `poll` the status of the transaction.
+
+**Note** After creating a new offer the `offerId` is set in the `entityId` property of the
+`StatusProcess` resource. (if state is `success`).
 
 ### Create a new offer
 ```php
@@ -1344,6 +1349,12 @@ Budgetlens\BolRetailerApi\Resources\ProcessStatus Object
 ```
 
 ### Request an offer export file
+The offers export comes with 2 steps.
+- request the export
+- retrieve the export
+
+The request returns a status process to poll. Once the state is `success` the `entityId` contains the
+report-id to use for retrieving the export.
 
 ```php
 $status = $client->offers->requestExport();
@@ -1389,6 +1400,26 @@ print_r($offers);
 ```php
 // todo
 ```
+
+### Request unpublished offers export
+The unpublished offers export comes with 2 steps.
+- request the export
+- retrieve the export
+
+The request returns a status process to poll. Once the state is `success` the `entityId` contains the
+report-id to use for retrieving the export.
+
+```php
+$status = $client->offers->requestUnpublishedExport();
+```
+
+### Retrieve Unpublished Offers Export
+```php
+$offers = $client->offers->getUnpublishedExport('$reportId');
+```
+
+
+
 
 ### Retrieve an offer by its offer id
 ```php
@@ -1544,26 +1575,9 @@ print_r($status);
 // todo: fix status response
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Orders
 
-### List Orders
+### Get Orders
 
 ``` php
 // all 
@@ -1571,16 +1585,116 @@ $orders = $client->orders->getOpenOrders();
 
 // specific fulfilment
 $orders = $client->orders->getOpenOrders('FBR');
-
+print_r($orders);
 // pagination
 $orders = $client->orders->getOpenOrders('FBR', 2);
 ```
 
-### Retrieve a single order
 ```php
-$order = $client->orders->get($orderId);
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => Budgetlens\BolRetailerApi\Resources\Order Object
+                (
+                    [orderId] => 1043946570
+                    [pickUpPoint] => 
+                    [shipmentDetails] => 
+                    [billingDetails] => 
+                    [orderPlacedDateTime] => DateTime Object
+                        (
+                            [date] => 2019-04-29 16:18:21.000000
+                            [timezone_type] => 1
+                            [timezone] => +02:00
+                        )
+
+                    [orderItems] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\OrderItem Object
+                                        (
+                                            [orderItemId] => 6042823871
+                                            [cancellationRequest] => 
+                                            [fulfilment] => 
+                                            [offer] => 
+                                            [product] => 
+                                            [ean] => 8785075035214
+                                            [quantity] => 3
+                                            [unitPrice] => 
+                                            [commission] => 
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+            [1] => Budgetlens\BolRetailerApi\Resources\Order Object
+                (
+                    [orderId] => 1042831430
+                    [pickUpPoint] => 
+                    [shipmentDetails] => 
+                    [billingDetails] => 
+                    [orderPlacedDateTime] => DateTime Object
+                        (
+                            [date] => 2019-04-20 10:58:39.000000
+                            [timezone_type] => 1
+                            [timezone] => +02:00
+                        )
+
+                    [orderItems] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\OrderItem Object
+                                        (
+                                            [orderItemId] => 6107331382
+                                            [cancellationRequest] => 
+                                            [fulfilment] => 
+                                            [offer] => 
+                                            [product] => 
+                                            [ean] => 8712626055143
+                                            [quantity] => 1
+                                            [unitPrice] => 
+                                            [commission] => 
+                                        )
+
+                                    [1] => Budgetlens\BolRetailerApi\Resources\OrderItem Object
+                                        (
+                                            [orderItemId] => 6107331383
+                                            [cancellationRequest] => 
+                                            [fulfilment] => 
+                                            [offer] => 
+                                            [product] => 
+                                            [ean] => 8804269223123
+                                            [quantity] => 1
+                                            [unitPrice] => 
+                                            [commission] => 
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+)
 ```
 
+### Cancel an order item by an order item id
+```php
+$orderItemId = '7616222250';
+$status = $client->orders->cancelOrderItem($orderItemId, CancelReasonCodes::REQUESTED_BY_CUSTOMER);
+print_r($status);
+```
+
+```php
+// todo: fix status response
+```
 
 ### Ship Order Item With Transporter information
 ```php
@@ -1592,7 +1706,13 @@ $transport = new Transport([
 ]);
 
 $status = $client->orders->shipOrderItem($orderItemId, $shipmentReference, null, $transport);
+print_r($status);
 ```
+
+```php
+// todo: fix status response
+```
+
 
 ### Ship Order Item using Bol Shipment Label
 ```php
@@ -1601,178 +1721,108 @@ $shipmentReference = 'unit-test';
 $shipmentLabelId = 'd4c50077-0c19-435f-9bee-1b30b9f4ba1a';
 
 $status = $client->orders->shipOrderItem($orderItemId, $shipmentReference, $shipmentLabelId);
+print_r($status);
 ```
 
-### Cancel Order Item
 ```php
-$orderItemId = '7616222250';
-$status = $client->orders->cancelOrderItem($orderItemId, CancelReasonCodes::REQUESTED_BY_CUSTOMER);
+// todo: fix status response
 ```
+
+### Retrieve a single order
+```php
+$order = $client->orders->get($orderId);
+print_r($order);
+```
+
+```php
+// todo: fix response
+```
+
+
+## Process Status
+
+### Gets the status of an asynchronous process by entity id and event type for a retailer
+``` php
+$statusResource = new ProcessStatus([
+    'entityId' => 1,
+    'eventType' => 'CONFIRM_SHIPMENT'
+]);
+$status = $client->status->get($statusResource);
+// or 
+$status = $client->status->getByEntityId(1, 'CONFIRM_SHIPMENT');
+print_r($status);
+```
+
+```php
+// todo: fix response
+```
+
+### Gets the status of multiple asynchronous processes by an array of process status ids for a retailer
+
+``` php
+$status = $client->status->batch([1,2,3]);
+// or 
+$batch = [
+    new ProcessStatus(['id' => 1]),
+    new ProcessStatus(['id' => 2]),
+    new ProcessStatus(['id' => 3])
+];
+$statusses = $client->status->batch($batch);
+print_r($statusses);
+```
+
+```php
+// todo: fix response
+```
+
+### Get the status of an asynchronous process by process status id
+``` php
+$status = $client->status->get(1);
+// or
+$status = $client->status->getById(1);
+```
+Or you may pass the ProcessStatus instance directly to this method:
+``` php
+$statusResource = new ProcessStatus([
+    'id' => 1
+]);
+$status = $client->status->get($statusResource);
+print_r($status);
+```
+
+```php
+// todo: fix response
+```
+
+### Get Process Status and wait for it to complete
+```php
+$status = $this->client->status->waitUntilComplete($processId);
+
+// try at least 10 times.
+$status = $this->client->status->waitUntilComplete($processId, 10);
+
+// try 10 times with a timeout of of 5 seconds.
+$status = $this->client->status->waitUntilComplete($processId, 10, 5);
+
+print_r($status);
+```
+
+```php
+// todo: fix response
+```
+
+
+## Product Content
+Not yet implemented
 
 ---
 
-## Offers
-The offer related calls are async. Every action returns a `StatusProcess` resource. \
-With this resource you can `poll` the status of the transaction.
+## Replenishments
 
-**Note** After creating a new offer the `offerId` is set in the `entityId` property of the 
-`StatusProcess` resource. (if state is `success`).
+### Get replenishments
 
-### Create FBB Offer
-``` php
-$offer = new Offer([
-    'ean' => '0000007740404',
-    'condition' => 'NEW',
-    'reference' => 'unit-test',
-    'onHoldByRetailer' => true,
-    'unknownProductTitle' => 'unit-test',
-    'price' => 99.99,
-    'stock' => 0,
-    'fulfilment' => 'FBB'
-]);
-$status = $client->offers->create($offer);
-```
 
-### Create FBR Offer
-``` php
-$offer = new Offer([
-    'ean' => '0000007740404',
-    'condition' => 'NEW',
-    'reference' => 'unit-test',
-    'onHoldByRetailer' => true,
-    'unknownProductTitle' => 'unit-test',
-    'price' => 99.99,
-    'stock' => 0,
-    'fulfilment' => new Fulfilment([
-        'method' => 'FBR',
-        'deliveryCode' => DeliveryCodes::WITHIN_24_HOURS_BEFORE_23
-    ])
-]);
-$status = $client->offers->create($offer);
 
-```
-
-### Update Offer
-```php
-$offer = new Offer([
-    'offerId' => 'offerId',
-    'onHoldByRetailer' => false,
-    'fulfilment' => 'FBR'
-]);
-$status = $client->offers->update($offer);
-```
-
-### Delete offer
-```php
-    $status = $client->offers->delete('$offerId');
-```
-Or you may pass the Offer instance directly to this method:
-```php
-    $offer = new Offer(['offerId' => '$offerId']);
-    $status = $client->offers->delete($offer);
-```
-
-### Retrieve offer
-```php
-    $offer = $client->offers->get('$offerId');
-```
-Or you may pass the Offer instance directly to this method:
-```php
-    $offer = new Offer(['offerId' => '$offerId']);
-    $offer = $client->offers->get($offer);
-```
-
-### Update offer pricing
-```php
-$offer = new Offer([
-    'offerId' => '$offerId',
-    'pricing' => new Pricing([
-        'bundlePrices' => [
-            ['quantity' => 1, 'unitPrice' => 99.99],
-            ['quantity' => 2, 'unitPrice' => 89.99],
-            ['quantity' => 3, 'unitPrice' => 85.99]
-        ]
-    ])
-]);
-$status = $client->offers->updatePrice($offer);
-```
-
-### Update Stock
-```php
-$offer = new Offer([
-    'offerId' => '$offerId',
-    'stock' => new Stock([
-        'amount' => 100
-    ])
-]);
-$status = $client->offers->updateStock($offer);
-```
-
-### Request Offers Export
-The offers export comes with 2 steps.
-- request the export
-- retrieve the export
-
-The request returns a status process to poll. Once the state is `success` the `entityId` contains the 
-report-id to use for retrieving the export.
-
-```php
-$status = $client->offers->requestExport();
-```
-
-### Retrieve Offers Export
-```php
-$offers = $client->offers->getExport('$reportId');
-```
-
-### Request unpublished offers export
-The unpublished offers export comes with 2 steps.
-- request the export
-- retrieve the export
-
-The request returns a status process to poll. Once the state is `success` the `entityId` contains the
-report-id to use for retrieving the export.
-
-```php
-$status = $client->offers->requestUnpublishedExport();
-```
-
-### Retrieve Unpublished Offers Export
-```php
-$offers = $client->offers->getUnpublishedExport('$reportId');
-```
-
----
-
-## Inventory
-
-### Get LVB/FBB inventory
-```php
-$inventory = $client->inventory->get();
-// filter inventory by quantity range. (0-20)
-$inventory = $client->inventory->get('0-20');
-```
-
-## Invoices
-
-### Get All Invoices
-```php
-$invoices = $client->invoices->list();
-```
-
-### Get Invoice 
-```php
-// format pdf
-$invoicePdf = $client->invoices->get($invoiceId, 'pdf');
-// -- save pdf 
-$invoicePdf->save('path for storage');
-
-// format xml
-$invoiceXml = $client->invoices->get($invoiceId, 'xml');
-// -- get xml
-$invoiceXml->getXml();
-```
---- 
 
 ## Shipping Labels
 
@@ -1894,56 +1944,6 @@ $deliveryWindows = $client->inbounds->getDeliveryWindows($expectedDeliveryDate, 
 $transporters = $client->inbounds->getTransporters();
 ```
 ---
-
-## Process Status
-
-### Get Process Status By ID
-``` php
-$status = $client->status->get(1);
-// or
-$status = $client->status->getById(1);
-```
-Or you may pass the ProcessStatus instance directly to this method:
-``` php
-$statusResource = new ProcessStatus([
-    'id' => 1
-]);
-$status = $client->status->get($statusResource);
-```
-
-### Get Process Status By Entity ID / Event TYPE
-``` php
-$statusResource = new ProcessStatus([
-    'entityId' => 1,
-    'eventType' => 'CONFIRM_SHIPMENT'
-]);
-$status = $client->status->get($statusResource);
-// or 
-$statusses = $client->status->getByEntityId(1, 'CONFIRM_SHIPMENT');
-```
-
-### Get Process Status and wait for it to complete
-```php
-$status = $this->client->status->waitUntilComplete($processId);
-
-// try at least 10 times.
-$status = $this->client->status->waitUntilComplete($processId, 10);
-
-// try 10 times with a timeout of of 5 seconds.
-$status = $this->client->status->waitUntilComplete($processId, 10, 5);
-```
-
-### Retrieve multiple statusses by id
-``` php
-$status = $client->status->batch([1,2,3]);
-// or 
-$batch = [
-    new ProcessStatus(['id' => 1]),
-    new ProcessStatus(['id' => 2]),
-    new ProcessStatus(['id' => 3])
-];
-$statusses = $client->status->batch($batch);
-```
 
 
 
