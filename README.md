@@ -204,6 +204,950 @@ Budgetlens\BolRetailerApi\Resources\Commission Object
 )
 ```
 
+## Insights
+
+### Get offer insights
+```php
+$offerId = '7aec42a4-8c2b-4c38-ac3c-5e5a3f54341e';
+$period = 'MONTH';
+$numberOfPeriods = 1;
+$name = ['PRODUCT_VISITS', 'BUY_BOX_PERCENTAGE'];
+
+$insights = $client->insights->get($offerId, $period, $numberOfPeriods, $name);
+print_r($insights);
+```
+
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => Budgetlens\BolRetailerApi\Resources\Insight Object
+                (
+                    [name] => BUY_BOX_PERCENTAGE
+                    [type] => percentage
+                    [total] => 0
+                    [countries] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                        (
+                                            [countryCode] => BE
+                                            [value] => 100
+                                            [minimum] => 
+                                            [maximum] => 
+                                        )
+
+                                    [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                        (
+                                            [countryCode] => NL
+                                            [value] => 92.9
+                                            [minimum] => 
+                                            [maximum] => 
+                                        )
+
+                                )
+
+                        )
+
+                    [periods] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\Insights\Period Object
+                                        (
+                                            [day] => 0
+                                            [week] => 0
+                                            [month] => 12
+                                            [year] => 2019
+                                            [total] => 0
+                                            [countries] => Illuminate\Support\Collection Object
+                                                (
+                                                    [items:protected] => Array
+                                                        (
+                                                            [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                                (
+                                                                    [countryCode] => BE
+                                                                    [value] => 100
+                                                                    [minimum] => 
+                                                                    [maximum] => 
+                                                                )
+
+                                                            [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                                (
+                                                                    [countryCode] => NL
+                                                                    [value] => 92.9
+                                                                    [minimum] => 
+                                                                    [maximum] => 
+                                                                )
+
+                                                        )
+
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+            [1] => Budgetlens\BolRetailerApi\Resources\Insight Object
+                (
+                    [name] => PRODUCT_VISITS
+                    [type] => count
+                    [total] => 72
+                    [countries] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                        (
+                                            [countryCode] => BE
+                                            [value] => 7
+                                            [minimum] => 
+                                            [maximum] => 
+                                        )
+
+                                    [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                        (
+                                            [countryCode] => NL
+                                            [value] => 65
+                                            [minimum] => 
+                                            [maximum] => 
+                                        )
+
+                                )
+
+                        )
+
+                    [periods] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\Insights\Period Object
+                                        (
+                                            [day] => 0
+                                            [week] => 0
+                                            [month] => 12
+                                            [year] => 2019
+                                            [total] => 72
+                                            [countries] => Illuminate\Support\Collection Object
+                                                (
+                                                    [items:protected] => Array
+                                                        (
+                                                            [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                                (
+                                                                    [countryCode] => BE
+                                                                    [value] => 7
+                                                                    [minimum] => 
+                                                                    [maximum] => 
+                                                                )
+
+                                                            [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                                (
+                                                                    [countryCode] => NL
+                                                                    [value] => 65
+                                                                    [minimum] => 
+                                                                    [maximum] => 
+                                                                )
+
+                                                        )
+
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+)
+```
+
+### Get performance indicators
+```php
+$year = 2019;
+$week = 10;
+$indicators = ['CANCELLATIONS', 'FULFILMENT', 'PHONE_AVAILABILITY', 'CASE_ITEM_RATIO',
+    'TRACK_AND_TRACE', 'RETURNS', 'REVIEWS'
+];
+
+$indicators = $client->insights->getPerformanceIndicators($year, $week, $indicators);
+print_r($indicators);
+```
+
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => Budgetlens\BolRetailerApi\Resources\PerformanceIndicator Object
+                (
+                    [name] => CANCELLATIONS
+                    [type] => PERCENTAGE
+                    [details] => Budgetlens\BolRetailerApi\Resources\Insights\PerformanceDetail Object
+                        (
+                            [week] => 10
+                            [year] => 2019
+                            [score] => Budgetlens\BolRetailerApi\Resources\Insights\Performance\Score Object
+                                (
+                                    [conforms] => 
+                                    [numerator] => 8
+                                    [denominator] => 88
+                                    [value] => 0.88
+                                    [distanceToNorm] => 0.86
+                                )
+
+                            [norm] => Budgetlens\BolRetailerApi\Resources\Insights\Performance\Norm Object
+                                (
+                                    [condition] => <=
+                                    [value] => 0.02
+                                )
+
+                        )
+
+                )
+
+            [1] => Budgetlens\BolRetailerApi\Resources\PerformanceIndicator Object
+                (
+                    [name] => PHONE_AVAILABILITY
+                    [type] => PERCENTAGE
+                    [details] => Budgetlens\BolRetailerApi\Resources\Insights\PerformanceDetail Object
+                        (
+                            [week] => 10
+                            [year] => 2019
+                            [score] => 
+                            [norm] => Budgetlens\BolRetailerApi\Resources\Insights\Performance\Norm Object
+                                (
+                                    [condition] => >=
+                                    [value] => 0.9
+                                )
+
+                        )
+
+                )
+
+            [2] => Budgetlens\BolRetailerApi\Resources\PerformanceIndicator Object
+                (
+                    [name] => REVIEWS
+                    [type] => AVERAGE
+                    [details] => Budgetlens\BolRetailerApi\Resources\Insights\PerformanceDetail Object
+                        (
+                            [week] => 10
+                            [year] => 2019
+                            [score] => 
+                            [norm] => Budgetlens\BolRetailerApi\Resources\Insights\Performance\Norm Object
+                                (
+                                    [condition] => >=
+                                    [value] => 8
+                                )
+
+                        )
+
+                )
+
+            [3] => Budgetlens\BolRetailerApi\Resources\PerformanceIndicator Object
+                (
+                    [name] => CASE_ITEM_RATIO
+                    [type] => PERCENTAGE
+                    [details] => Budgetlens\BolRetailerApi\Resources\Insights\PerformanceDetail Object
+                        (
+                            [week] => 10
+                            [year] => 2019
+                            [score] => Budgetlens\BolRetailerApi\Resources\Insights\Performance\Score Object
+                                (
+                                    [conforms] => 1
+                                    [numerator] => 0
+                                    [denominator] => 54
+                                    [value] => 0
+                                    [distanceToNorm] => 0.05
+                                )
+
+                            [norm] => Budgetlens\BolRetailerApi\Resources\Insights\Performance\Norm Object
+                                (
+                                    [condition] => <=
+                                    [value] => 0.05
+                                )
+
+                        )
+
+                )
+
+            [4] => Budgetlens\BolRetailerApi\Resources\PerformanceIndicator Object
+                (
+                    [name] => RETURNS
+                    [type] => PERCENTAGE
+                    [details] => Budgetlens\BolRetailerApi\Resources\Insights\PerformanceDetail Object
+                        (
+                            [week] => 10
+                            [year] => 2019
+                            [score] => 
+                            [norm] => Budgetlens\BolRetailerApi\Resources\Insights\Performance\Norm Object
+                                (
+                                    [condition] => <=
+                                    [value] => 0.05
+                                )
+
+                        )
+
+                )
+
+            [5] => Budgetlens\BolRetailerApi\Resources\PerformanceIndicator Object
+                (
+                    [name] => TRACK_AND_TRACE
+                    [type] => PERCENTAGE
+                    [details] => Budgetlens\BolRetailerApi\Resources\Insights\PerformanceDetail Object
+                        (
+                            [week] => 10
+                            [year] => 2019
+                            [score] => 
+                            [norm] => Budgetlens\BolRetailerApi\Resources\Insights\Performance\Norm Object
+                                (
+                                    [condition] => >=
+                                    [value] => 1
+                                )
+
+                        )
+
+                )
+
+            [6] => Budgetlens\BolRetailerApi\Resources\PerformanceIndicator Object
+                (
+                    [name] => FULFILMENT
+                    [type] => PERCENTAGE
+                    [details] => Budgetlens\BolRetailerApi\Resources\Insights\PerformanceDetail Object
+                        (
+                            [week] => 10
+                            [year] => 2019
+                            [score] => 
+                            [norm] => Budgetlens\BolRetailerApi\Resources\Insights\Performance\Norm Object
+                                (
+                                    [condition] => >=
+                                    [value] => 0.93
+                                )
+
+                        )
+
+                )
+
+        )
+
+)
+```
+
+### Get sales forecast
+```php
+$offerId = '91c28f60-ed1d-4b85-e053-828b620a4ed5';
+$weeks = 12;
+$forecast = $client->insights->getSalesForecast($offerId, $weeks);
+print_r($forecast);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\Insights\ForeCast Object
+(
+    [name] => SALES_FORECAST
+    [type] => decimal
+    [minimum] => 10
+    [maximum] => 100
+    [countries] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                        (
+                            [countryCode] => BE
+                            [value] => 
+                            [minimum] => 0
+                            [maximum] => 10
+                        )
+
+                    [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                        (
+                            [countryCode] => NL
+                            [value] => 
+                            [minimum] => 10
+                            [maximum] => 100
+                        )
+
+                )
+
+        )
+
+    [periods] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\Insights\Forecast\Period Object
+                        (
+                            [weeksAhead] => 1
+                            [minimum] => 0
+                            [maximum] => 10
+                            [countries] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => BE
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                            [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => NL
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [1] => Budgetlens\BolRetailerApi\Resources\Insights\Forecast\Period Object
+                        (
+                            [weeksAhead] => 2
+                            [minimum] => 0
+                            [maximum] => 10
+                            [countries] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => BE
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                            [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => NL
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [2] => Budgetlens\BolRetailerApi\Resources\Insights\Forecast\Period Object
+                        (
+                            [weeksAhead] => 3
+                            [minimum] => 0
+                            [maximum] => 10
+                            [countries] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => BE
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                            [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => NL
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [3] => Budgetlens\BolRetailerApi\Resources\Insights\Forecast\Period Object
+                        (
+                            [weeksAhead] => 4
+                            [minimum] => 0
+                            [maximum] => 10
+                            [countries] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => BE
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                            [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => NL
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [4] => Budgetlens\BolRetailerApi\Resources\Insights\Forecast\Period Object
+                        (
+                            [weeksAhead] => 5
+                            [minimum] => 0
+                            [maximum] => 10
+                            [countries] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => BE
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                            [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => NL
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [5] => Budgetlens\BolRetailerApi\Resources\Insights\Forecast\Period Object
+                        (
+                            [weeksAhead] => 6
+                            [minimum] => 0
+                            [maximum] => 10
+                            [countries] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => BE
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                            [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => NL
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [6] => Budgetlens\BolRetailerApi\Resources\Insights\Forecast\Period Object
+                        (
+                            [weeksAhead] => 7
+                            [minimum] => 0
+                            [maximum] => 10
+                            [countries] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => BE
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                            [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => NL
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [7] => Budgetlens\BolRetailerApi\Resources\Insights\Forecast\Period Object
+                        (
+                            [weeksAhead] => 8
+                            [minimum] => 0
+                            [maximum] => 10
+                            [countries] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => BE
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                            [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => NL
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [8] => Budgetlens\BolRetailerApi\Resources\Insights\Forecast\Period Object
+                        (
+                            [weeksAhead] => 9
+                            [minimum] => 0
+                            [maximum] => 10
+                            [countries] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => BE
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                            [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => NL
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [9] => Budgetlens\BolRetailerApi\Resources\Insights\Forecast\Period Object
+                        (
+                            [weeksAhead] => 10
+                            [minimum] => 0
+                            [maximum] => 10
+                            [countries] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => BE
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                            [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => NL
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [10] => Budgetlens\BolRetailerApi\Resources\Insights\Forecast\Period Object
+                        (
+                            [weeksAhead] => 11
+                            [minimum] => 0
+                            [maximum] => 10
+                            [countries] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => BE
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                            [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => NL
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [11] => Budgetlens\BolRetailerApi\Resources\Insights\Forecast\Period Object
+                        (
+                            [weeksAhead] => 12
+                            [minimum] => 0
+                            [maximum] => 10
+                            [countries] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => BE
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                            [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => NL
+                                                    [value] => 
+                                                    [minimum] => 0
+                                                    [maximum] => 10
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+)
+```
+
+### Get search terms (with related)
+```php
+$term = 'Potter';
+$period = 'WEEK';
+$weeks = 2;
+$related = true;
+
+$searchTerm = $client->insights->getSearchTerms($term, $period, $weeks, $related);
+print_r($searchTerm);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\Insights\SearchTerm Object
+(
+    [searchTerm] => Potter
+    [type] => count
+    [total] => 19
+    [countries] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                        (
+                            [countryCode] => NL
+                            [value] => 15
+                            [minimum] => 
+                            [maximum] => 
+                        )
+
+                    [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                        (
+                            [countryCode] => BE
+                            [value] => 4
+                            [minimum] => 
+                            [maximum] => 
+                        )
+
+                )
+
+        )
+
+    [periods] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\Insights\Period Object
+                        (
+                            [day] => 0
+                            [week] => 32
+                            [month] => 0
+                            [year] => 2021
+                            [total] => 16
+                            [countries] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => NL
+                                                    [value] => 12
+                                                    [minimum] => 
+                                                    [maximum] => 
+                                                )
+
+                                            [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => BE
+                                                    [value] => 4
+                                                    [minimum] => 
+                                                    [maximum] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [1] => Budgetlens\BolRetailerApi\Resources\Insights\Period Object
+                        (
+                            [day] => 0
+                            [week] => 33
+                            [month] => 0
+                            [year] => 2021
+                            [total] => 3
+                            [countries] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => NL
+                                                    [value] => 3
+                                                    [minimum] => 
+                                                    [maximum] => 
+                                                )
+
+                                            [1] => Budgetlens\BolRetailerApi\Resources\Insights\Country Object
+                                                (
+                                                    [countryCode] => BE
+                                                    [value] => 0
+                                                    [minimum] => 
+                                                    [maximum] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [relatedSearchTerms] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\Insights\Search\RelatedTerm Object
+                        (
+                            [total] => 99
+                            [searchTerm] => plotter
+                        )
+
+                    [1] => Budgetlens\BolRetailerApi\Resources\Insights\Search\RelatedTerm Object
+                        (
+                            [total] => 13
+                            [searchTerm] => pottery pots
+                        )
+
+                    [2] => Budgetlens\BolRetailerApi\Resources\Insights\Search\RelatedTerm Object
+                        (
+                            [total] => 13
+                            [searchTerm] => pottery
+                        )
+
+                    [3] => Budgetlens\BolRetailerApi\Resources\Insights\Search\RelatedTerm Object
+                        (
+                            [total] => 7
+                            [searchTerm] => pottery wheel
+                        )
+
+                    [4] => Budgetlens\BolRetailerApi\Resources\Insights\Search\RelatedTerm Object
+                        (
+                            [total] => 5
+                            [searchTerm] => potter lego
+                        )
+
+                    [5] => Budgetlens\BolRetailerApi\Resources\Insights\Search\RelatedTerm Object
+                        (
+                            [total] => 4
+                            [searchTerm] => potterdutch bestek
+                        )
+
+                    [6] => Budgetlens\BolRetailerApi\Resources\Insights\Search\RelatedTerm Object
+                        (
+                            [total] => 3
+                            [searchTerm] => potterbakker klei
+                        )
+
+                    [7] => Budgetlens\BolRetailerApi\Resources\Insights\Search\RelatedTerm Object
+                        (
+                            [total] => 3
+                            [searchTerm] => potters clay
+                        )
+
+                    [8] => Budgetlens\BolRetailerApi\Resources\Insights\Search\RelatedTerm Object
+                        (
+                            [total] => 3
+                            [searchTerm] => potter vuurbeker
+                        )
+
+                    [9] => Budgetlens\BolRetailerApi\Resources\Insights\Search\RelatedTerm Object
+                        (
+                            [total] => 3
+                            [searchTerm] => pottermore
+                        )
+
+                )
+
+        )
+
+)
+```
 ## Orders
 
 ### List Orders
