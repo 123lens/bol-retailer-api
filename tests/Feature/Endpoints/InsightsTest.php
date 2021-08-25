@@ -28,8 +28,7 @@ class InsightsTest extends TestCase
         $name = ['PRODUCT_VISITS', 'BUY_BOX_PERCENTAGE'];
 
         $insights = $this->client->insights->get($offerId, $period, $numberOfPeriods, $name);
-//        print_r($insights);
-//        exit;
+
         $this->assertInstanceOf(Collection::class, $insights);
         $this->assertCount(2, $insights);
 
@@ -96,6 +95,7 @@ class InsightsTest extends TestCase
         ];
 
         $indicators = $this->client->insights->getPerformanceIndicators($year, $week, $indicators);
+
         $this->assertInstanceOf(Collection::class, $indicators);
         $this->assertCount(7, $indicators);
         $this->assertInstanceOf(PerformanceIndicator::class, $indicators->first());
@@ -186,7 +186,7 @@ class InsightsTest extends TestCase
         $term = 'Potter';
         $period = 'WEEK';
         $weeks = 2;
-        $related = false;
+        $related = true;
 
         $searchTerm = $this->client->insights->getSearchTerms($term, $period, $weeks, $related);
         $this->assertInstanceOf(SearchTerm::class, $searchTerm);

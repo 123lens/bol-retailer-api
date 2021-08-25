@@ -236,9 +236,9 @@ class ReturnsTest extends TestCase
     /** @test */
     public function getReturnByIdWithMultipleReturnsWithCustomerDetails()
     {
-        $id = 15896813;
         $this->useMock('200-get-return-by-id-multiple-return-items-with-customer-details.json');
 
+        $id = 15896813;
         $return = $this->client->returns->get($id);
         $this->assertInstanceOf(Returns::class, $return);
         $this->assertNotNull($return->returnId);
