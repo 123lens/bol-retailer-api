@@ -1821,6 +1821,637 @@ Not yet implemented
 
 ### Get replenishments
 
+```php
+$replenishments = $client->replenishments->list(
+    null,
+    null,
+    null,
+    null,
+    'ANNOUNCED',
+);
+print_r($replenishments);
+```
+
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => Budgetlens\BolRetailerApi\Resources\Replenishment Object
+                (
+                    [replenishmentId] => 2312208180
+                    [reference] => MYREF02
+                    [creationDateTime] => DateTime Object
+                        (
+                            [date] => 2021-01-20 11:55:32.000000
+                            [timezone_type] => 1
+                            [timezone] => +01:00
+                        )
+
+                    [lines] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\Replenishment\Line Object
+                                        (
+                                            [ean] => 0846127026185
+                                            [type] => 
+                                            [quantity] => 
+                                        )
+
+                                )
+
+                        )
+
+                    [invalidLines] => Array
+                        (
+                        )
+
+                    [labelingByBol] => 
+                    [state] => 
+                    [deliveryInformation] => 
+                    [numberOfLoadCarriers] => 
+                    [loadCarriers] => Array
+                        (
+                        )
+
+                    [stateTransitions] => Array
+                        (
+                        )
+
+                )
+
+            [1] => Budgetlens\BolRetailerApi\Resources\Replenishment Object
+                (
+                    [replenishmentId] => 2312208179
+                    [reference] => MYREF01
+                    [creationDateTime] => DateTime Object
+                        (
+                            [date] => 2021-01-20 11:35:33.000000
+                            [timezone_type] => 1
+                            [timezone] => +01:00
+                        )
+
+                    [lines] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\Replenishment\Line Object
+                                        (
+                                            [ean] => 8716393000627
+                                            [type] => 
+                                            [quantity] => 
+                                        )
+
+                                    [1] => Budgetlens\BolRetailerApi\Resources\Replenishment\Line Object
+                                        (
+                                            [ean] => 0846127026185
+                                            [type] => 
+                                            [quantity] => 
+                                        )
+
+                                )
+
+                        )
+
+                    [invalidLines] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\Replenishment\Line Object
+                                        (
+                                            [ean] => 
+                                            [type] => UNKNOWN_FBB_PRODUCT
+                                            [quantity] => 
+                                        )
+
+                                )
+
+                        )
+
+                    [labelingByBol] => 
+                    [state] => 
+                    [deliveryInformation] => 
+                    [numberOfLoadCarriers] => 
+                    [loadCarriers] => Array
+                        (
+                        )
+
+                    [stateTransitions] => Array
+                        (
+                        )
+
+                )
+
+        )
+
+)
+```
+
+### Post replenishment
+
+```php
+$replenishment = new Replenishment([
+    'reference' => 'unittest001',
+    'deliveryInformation' => new Replenishment\DeliveryInformation([
+        'expectedDeliveryDate' => '2024-02-01',
+        'transporterCode' => 'POSTNL'
+    ]),
+    'labelingByBol' => true,
+    'numberOfLoadCarriers' => 2,
+    'lines' => [
+        [
+            'ean' => '0846127026185',
+            'quantity' => 5
+        ],
+        [
+            'ean' => '8716393000627',
+            'quantity' => 2
+        ]
+    ]
+]);
+
+
+$status = $client->replenishments->create($replenishment);
+print_r($status);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\ProcessStatus Object
+(
+    [processStatusId] => 1
+    [entityId] => 
+    [eventType] => CREATE_REPLENISHMENT
+    [description] => Create replenishment with reference 'UNITTEST001'.
+    [status] => PENDING
+    [errorMessage] => 
+    [createTimestamp] => 2021-08-19T12:07:09+02:00
+    [links] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\ProcessStatus\Link Object
+                        (
+                            [rel] => self
+                            [href] => https://api.bol.com/retailer-demo/process-status/1
+                            [method] => GET
+                        )
+
+                )
+
+        )
+
+)
+```
+
+### Post replenishment (Pickup)
+```php
+$replenishment = new Replenishment([
+    'reference' => 'unittest002',
+    'pickupAppointment' => new Replenishment\PickupAppointment([
+        'address' => new Address([
+            'streetName' => 'Utrechtseweg',
+            'houseNumber' => 99,
+            'zipCode' => '3702 AA',
+            'city' => 'Zeist',
+            'countryCode' => 'NL',
+            'attentionOf' => 'Station'
+        ]),
+        'pickupTimeSlot' => new Replenishment\PickupTimeslot([
+            'fromDateTime' => '2024-01-21 09:30:00',
+            'untilDateTime' => '2024-01-21 11:30:00'
+        ]),
+        'commentToTransporter' => 'Custom reference'
+    ]),
+    'labelingByBol' => true,
+    'numberOfLoadCarriers' => 1,
+    'lines' => [
+        [
+            'ean' => '0846127026185',
+            'quantity' => 1
+        ]
+    ]
+]);
+$status = $client->replenishments->create($replenishment);
+print_r($status);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\ProcessStatus Object
+(
+    [processStatusId] => 1
+    [entityId] => 
+    [eventType] => CREATE_REPLENISHMENT
+    [description] => Create replenishment with reference 'UNITTEST002'.
+    [status] => PENDING
+    [errorMessage] => 
+    [createTimestamp] => 2021-08-19T14:22:06+02:00
+    [links] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\ProcessStatus\Link Object
+                        (
+                            [rel] => self
+                            [href] => https://api.bol.com/retailer-demo/process-status/1
+                            [method] => GET
+                        )
+
+                )
+
+        )
+
+)
+```
+### Post pickup time slots
+
+```php
+$address = new Address([
+    'streetName' => 'Utrechtseweg',
+    'houseNumber' => 99,
+    'houseNumberExtension' => 'A',
+    'zipCode' => '3702 AA',
+    'city' => 'Zeist',
+    'countryCode' => 'NL',
+]);
+$numberOfLoadCarriers = 2;
+
+$timeslots = $client->replenishments->pickupTimeslots($address, $numberOfLoadCarriers);
+print_r($timeslots);
+```
+
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => Budgetlens\BolRetailerApi\Resources\Replenishment\PickupTimeslot Object
+                (
+                    [fromDateTime] => DateTime Object
+                        (
+                            [date] => 2024-01-21 09:00:00.000000
+                            [timezone_type] => 1
+                            [timezone] => +01:00
+                        )
+
+                    [untilDateTime] => DateTime Object
+                        (
+                            [date] => 2024-01-21 11:00:00.000000
+                            [timezone_type] => 1
+                            [timezone] => +01:00
+                        )
+
+                )
+
+            [1] => Budgetlens\BolRetailerApi\Resources\Replenishment\PickupTimeslot Object
+                (
+                    [fromDateTime] => DateTime Object
+                        (
+                            [date] => 2024-01-21 09:30:00.000000
+                            [timezone_type] => 1
+                            [timezone] => +01:00
+                        )
+
+                    [untilDateTime] => DateTime Object
+                        (
+                            [date] => 2024-01-21 11:30:00.000000
+                            [timezone_type] => 1
+                            [timezone] => +01:00
+                        )
+
+                )
+
+            [2] => Budgetlens\BolRetailerApi\Resources\Replenishment\PickupTimeslot Object
+                (
+                    [fromDateTime] => DateTime Object
+                        (
+                            [date] => 2024-01-21 10:00:00.000000
+                            [timezone_type] => 1
+                            [timezone] => +01:00
+                        )
+
+                    [untilDateTime] => DateTime Object
+                        (
+                            [date] => 2024-01-21 12:00:00.000000
+                            [timezone_type] => 1
+                            [timezone] => +01:00
+                        )
+
+                )
+
+            [3] => Budgetlens\BolRetailerApi\Resources\Replenishment\PickupTimeslot Object
+                (
+                    [fromDateTime] => DateTime Object
+                        (
+                            [date] => 2024-01-21 15:00:00.000000
+                            [timezone_type] => 1
+                            [timezone] => +01:00
+                        )
+
+                    [untilDateTime] => DateTime Object
+                        (
+                            [date] => 2024-01-21 17:00:00.000000
+                            [timezone_type] => 1
+                            [timezone] => +01:00
+                        )
+
+                )
+
+            [4] => Budgetlens\BolRetailerApi\Resources\Replenishment\PickupTimeslot Object
+                (
+                    [fromDateTime] => DateTime Object
+                        (
+                            [date] => 2024-01-21 15:30:00.000000
+                            [timezone_type] => 1
+                            [timezone] => +01:00
+                        )
+
+                    [untilDateTime] => DateTime Object
+                        (
+                            [date] => 2024-01-21 17:30:00.000000
+                            [timezone_type] => 1
+                            [timezone] => +01:00
+                        )
+
+                )
+
+            [5] => Budgetlens\BolRetailerApi\Resources\Replenishment\PickupTimeslot Object
+                (
+                    [fromDateTime] => DateTime Object
+                        (
+                            [date] => 2024-01-21 16:00:00.000000
+                            [timezone_type] => 1
+                            [timezone] => +01:00
+                        )
+
+                    [untilDateTime] => DateTime Object
+                        (
+                            [date] => 2024-01-21 18:00:00.000000
+                            [timezone_type] => 1
+                            [timezone] => +01:00
+                        )
+
+                )
+
+            [6] => Budgetlens\BolRetailerApi\Resources\Replenishment\PickupTimeslot Object
+                (
+                    [fromDateTime] => DateTime Object
+                        (
+                            [date] => 2024-01-21 16:30:00.000000
+                            [timezone_type] => 1
+                            [timezone] => +01:00
+                        )
+
+                    [untilDateTime] => DateTime Object
+                        (
+                            [date] => 2024-01-21 18:30:00.000000
+                            [timezone_type] => 1
+                            [timezone] => +01:00
+                        )
+
+                )
+
+        )
+
+)
+```
+
+### Post product labels
+
+```php
+$products = [
+    ['ean' => '0846127026185', 'quantity' => 5],
+    ['ean' => '8716393000627', 'quantity' => 2]
+];
+
+$labels = $client->replenishments->productLabels($products, LabelFormat::AVERY_J8159);
+print_r($labels);
+
+// the labels can be saved by using resource
+// filename is optional, if empty the product labels export id (product-labels) is used as filename
+$labels->save($path, $filename); 
+```
+
+```php
+.Budgetlens\BolRetailerApi\Resources\Replenishment\ProductLabels Object
+(
+    [id] => product-labels
+    [contents] => PDFCONTENT
+    [fileExt:protected] => pdf
+)
+```
+
+### Get a replenishment by replenishment id
+
+```php
+$id = '2312208179';
+$replenishment = $client->replenishments->get($id);
+print_r($replenishment);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\Replenishment Object
+(
+    [replenishmentId] => 2312208179
+    [reference] => MYREF01
+    [creationDateTime] => DateTime Object
+        (
+            [date] => 2021-01-20 11:35:33.000000
+            [timezone_type] => 1
+            [timezone] => +01:00
+        )
+
+    [lines] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\Replenishment\Line Object
+                        (
+                            [ean] => 8716393000627
+                            [type] => 
+                            [quantity] => 
+                        )
+
+                    [1] => Budgetlens\BolRetailerApi\Resources\Replenishment\Line Object
+                        (
+                            [ean] => 0846127026185
+                            [type] => 
+                            [quantity] => 
+                        )
+
+                )
+
+        )
+
+    [invalidLines] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\Replenishment\Line Object
+                        (
+                            [ean] => 
+                            [type] => UNKNOWN_FBB_PRODUCT
+                            [quantity] => 
+                        )
+
+                )
+
+        )
+
+    [labelingByBol] => 1
+    [state] => ANNOUNCED
+    [deliveryInformation] => Budgetlens\BolRetailerApi\Resources\Replenishment\DeliveryInformation Object
+        (
+            [expectedDeliveryDate] => DateTime Object
+                (
+                    [date] => 2021-01-22 00:00:00.000000
+                    [timezone_type] => 3
+                    [timezone] => UTC
+                )
+
+            [transporterCode] => POSTNL
+            [destinationWarehouse] => Budgetlens\BolRetailerApi\Resources\Replenishment\Warehouse Object
+                (
+                    [streetName] => Mechie Trommelenweg
+                    [houseNumber] => 1
+                    [zipCode] => 5145ND
+                    [city] => Waalwijk
+                    [countryCode] => NL
+                    [attentionOf] => t.a.v. bol.com
+                )
+
+        )
+
+    [numberOfLoadCarriers] => 2
+    [loadCarriers] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\Replenishment\LoadCarrier Object
+                        (
+                            [sscc] => 020001200000007628
+                            [transportState] => ANNOUNCED
+                            [transportStateUpdateDateTime] => DateTime Object
+                                (
+                                    [date] => 2021-01-20 11:35:34.000000
+                                    [timezone_type] => 1
+                                    [timezone] => +01:00
+                                )
+
+                        )
+
+                    [1] => Budgetlens\BolRetailerApi\Resources\Replenishment\LoadCarrier Object
+                        (
+                            [sscc] => 020001200000007635
+                            [transportState] => ANNOUNCED
+                            [transportStateUpdateDateTime] => DateTime Object
+                                (
+                                    [date] => 2021-01-20 11:35:34.000000
+                                    [timezone_type] => 1
+                                    [timezone] => +01:00
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [stateTransitions] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\Replenishment\StateTransition Object
+                        (
+                            [state] => ANNOUNCED
+                            [stateDateTime] => DateTime Object
+                                (
+                                    [date] => 2021-01-20 11:35:34.000000
+                                    [timezone_type] => 1
+                                    [timezone] => +01:00
+                                )
+
+                        )
+
+                )
+
+        )
+
+)
+```
+
+### Update replenishment
+
+```php
+$replenishment = new Replenishment([
+    'replenishmentId' => '2312188192',
+    'deliveryInformation' => new Replenishment\DeliveryInformation([
+        'expectedDeliveryDate' => '2024-01-29'
+    ])
+]);
+$status = $client->replenishments->update($replenishment);
+print_r($status);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\ProcessStatus Object
+(
+    [processStatusId] => 1
+    [entityId] => 2312188192
+    [eventType] => UPDATE_REPLENISHMENT
+    [description] => Update replenishment with replenishment id '2312188192'.
+    [status] => PENDING
+    [errorMessage] => 
+    [createTimestamp] => 2021-08-19T15:13:28+02:00
+    [links] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\ProcessStatus\Link Object
+                        (
+                            [rel] => self
+                            [href] => https://api.bol.com/retailer-demo/process-status/1
+                            [method] => GET
+                        )
+
+                )
+
+        )
+
+)
+```
+
+### Get load carrier labels
+
+```php
+$id = '4220489554';
+$labelType = 'TRANSPORT';
+$label = $client->replenishments->loadCarrierLabels($id, $labelType);
+```
+
+```php
+// todo: implement response
+```
+
+### Get pick list
+
+```php
+$id = '2312208179';
+$response = $client->replenishments->picklist($id);
+print_r($response);
+// the picklist can be saved by using resource
+// filename is optional, if empty the picklist id is used as filename
+$response->save($path, $filename); 
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\Replenishment\Picklist Object
+(
+    [id] => 2312208179
+    [contents] => PDFCONTENT
+    [fileExt:protected] => pdf
+)
+```
 
 
 
