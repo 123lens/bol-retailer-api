@@ -3508,8 +3508,46 @@ Budgetlens\BolRetailerApi\Resources\Label Object
 
 ---
 
-## Shipments
+## Transports
 
+### Add transport information by transport id
+
+```php
+$transportId = '358612589';
+$transporterCode = TransporterCode::TNT;
+$trackAndTrace = '3SAOLD1234567';
+
+$status = $client->transports->addInformation($transportId, $transporterCode, $trackAndTrace);
+print_r($status);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\ProcessStatus Object
+(
+    [processStatusId] => 1
+    [entityId] => 358612589
+    [eventType] => CHANGE_TRANSPORT
+    [description] => Change transport with id 358612589.
+    [status] => PENDING
+    [errorMessage] => 
+    [createTimestamp] => 2021-08-24T15:14:40+02:00
+    [links] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\ProcessStatus\Link Object
+                        (
+                            [rel] => self
+                            [href] => https://api.bol.com/retailer-demo/process-status/1
+                            [method] => GET
+                        )
+
+                )
+
+        )
+
+)
+```
 
 ---
 
