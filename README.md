@@ -2914,9 +2914,445 @@ Budgetlens\BolRetailerApi\Resources\ProcessStatus Object
 
 --- 
 
+## Shipments
 
+### Get Shipments List
+```php
+$shipments = $client->shipments->list();
+print_r($shipments);
 
+// get FBR Shipments only
+$shipments = $client->shipments->list('FBR');
 
+// get Shipments Belonging to specific orderID
+$shipments = $client->shipments->list(null, '$orderId');
+```
+
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => Budgetlens\BolRetailerApi\Resources\Shipment Object
+                (
+                    [shipmentId] => 914587795
+                    [shipmentDateTime] => DateTime Object
+                        (
+                            [date] => 2018-04-20 19:20:11.000000
+                            [timezone_type] => 1
+                            [timezone] => +02:00
+                        )
+
+                    [shipmentReference] => 
+                    [pickUpPoint] => 
+                    [order] => Budgetlens\BolRetailerApi\Resources\Order Object
+                        (
+                            [orderId] => 7616222250
+                            [pickUpPoint] => 
+                            [shipmentDetails] => 
+                            [billingDetails] => 
+                            [orderPlacedDateTime] => DateTime Object
+                                (
+                                    [date] => 2018-01-08 10:45:12.000000
+                                    [timezone_type] => 1
+                                    [timezone] => +01:00
+                                )
+
+                            [orderItems] => Array
+                                (
+                                )
+
+                        )
+
+                    [shipmentDetails] => 
+                    [billingDetails] => 
+                    [shipmentItems] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\Shipment\ShipmentItem Object
+                                        (
+                                            [orderItemId] => 6107434013
+                                            [ean] => 8421152081990
+                                            [fulfilment] => 
+                                            [offer] => 
+                                            [product] => 
+                                            [quantity] => 
+                                            [unitPrice] => 
+                                            [commission] => 
+                                        )
+
+                                )
+
+                        )
+
+                    [transport] => Budgetlens\BolRetailerApi\Resources\Transport Object
+                        (
+                            [transportId] => 358612589
+                            [transporterCode] => 
+                            [trackAndTrace] => 
+                        )
+
+                )
+
+            [1] => Budgetlens\BolRetailerApi\Resources\Shipment Object
+                (
+                    [shipmentId] => 953266576
+                    [shipmentDateTime] => DateTime Object
+                        (
+                            [date] => 2018-04-20 19:10:19.000000
+                            [timezone_type] => 1
+                            [timezone] => +02:00
+                        )
+
+                    [shipmentReference] => 
+                    [pickUpPoint] => 
+                    [order] => Budgetlens\BolRetailerApi\Resources\Order Object
+                        (
+                            [orderId] => 7616222700
+                            [pickUpPoint] => 
+                            [shipmentDetails] => 
+                            [billingDetails] => 
+                            [orderPlacedDateTime] => DateTime Object
+                                (
+                                    [date] => 2018-01-08 10:45:12.000000
+                                    [timezone_type] => 1
+                                    [timezone] => +01:00
+                                )
+
+                            [orderItems] => Array
+                                (
+                                )
+
+                        )
+
+                    [shipmentDetails] => 
+                    [billingDetails] => 
+                    [shipmentItems] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\Shipment\ShipmentItem Object
+                                        (
+                                            [orderItemId] => 6107331383
+                                            [ean] => 8421152081990
+                                            [fulfilment] => 
+                                            [offer] => 
+                                            [product] => 
+                                            [quantity] => 
+                                            [unitPrice] => 
+                                            [commission] => 
+                                        )
+
+                                )
+
+                        )
+
+                    [transport] => Budgetlens\BolRetailerApi\Resources\Transport Object
+                        (
+                            [transportId] => 356988715
+                            [transporterCode] => 
+                            [trackAndTrace] => 
+                        )
+
+                )
+
+            [2] => Budgetlens\BolRetailerApi\Resources\Shipment Object
+                (
+                    [shipmentId] => 953267579
+                    [shipmentDateTime] => DateTime Object
+                        (
+                            [date] => 2018-04-20 18:46:01.000000
+                            [timezone_type] => 1
+                            [timezone] => +02:00
+                        )
+
+                    [shipmentReference] => 
+                    [pickUpPoint] => 
+                    [order] => Budgetlens\BolRetailerApi\Resources\Order Object
+                        (
+                            [orderId] => 7616222700
+                            [pickUpPoint] => 
+                            [shipmentDetails] => 
+                            [billingDetails] => 
+                            [orderPlacedDateTime] => DateTime Object
+                                (
+                                    [date] => 2018-01-08 10:45:12.000000
+                                    [timezone_type] => 1
+                                    [timezone] => +01:00
+                                )
+
+                            [orderItems] => Array
+                                (
+                                )
+
+                        )
+
+                    [shipmentDetails] => 
+                    [billingDetails] => 
+                    [shipmentItems] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\Shipment\ShipmentItem Object
+                                        (
+                                            [orderItemId] => 6107432387
+                                            [ean] => 8421152081990
+                                            [fulfilment] => 
+                                            [offer] => 
+                                            [product] => 
+                                            [quantity] => 
+                                            [unitPrice] => 
+                                            [commission] => 
+                                        )
+
+                                )
+
+                        )
+
+                    [transport] => Budgetlens\BolRetailerApi\Resources\Transport Object
+                        (
+                            [transportId] => 356988715
+                            [transporterCode] => 
+                            [trackAndTrace] => 
+                        )
+
+                )
+
+            [3] => Budgetlens\BolRetailerApi\Resources\Shipment Object
+                (
+                    [shipmentId] => 953316694
+                    [shipmentDateTime] => DateTime Object
+                        (
+                            [date] => 2019-07-04 18:16:28.000000
+                            [timezone_type] => 1
+                            [timezone] => +02:00
+                        )
+
+                    [shipmentReference] => WSR1096399593
+                    [pickUpPoint] => 
+                    [order] => Budgetlens\BolRetailerApi\Resources\Order Object
+                        (
+                            [orderId] => 4616526971
+                            [pickUpPoint] => 
+                            [shipmentDetails] => 
+                            [billingDetails] => 
+                            [orderPlacedDateTime] => DateTime Object
+                                (
+                                    [date] => 2018-01-08 10:45:12.000000
+                                    [timezone_type] => 1
+                                    [timezone] => +01:00
+                                )
+
+                            [orderItems] => Array
+                                (
+                                )
+
+                        )
+
+                    [shipmentDetails] => 
+                    [billingDetails] => 
+                    [shipmentItems] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\Shipment\ShipmentItem Object
+                                        (
+                                            [orderItemId] => 6702312887
+                                            [ean] => 8421152081990
+                                            [fulfilment] => 
+                                            [offer] => 
+                                            [product] => 
+                                            [quantity] => 
+                                            [unitPrice] => 
+                                            [commission] => 
+                                        )
+
+                                )
+
+                        )
+
+                    [transport] => Budgetlens\BolRetailerApi\Resources\Transport Object
+                        (
+                            [transportId] => 356567193
+                            [transporterCode] => 
+                            [trackAndTrace] => 
+                        )
+
+                )
+
+        )
+
+)
+```
+
+### Get Shipment By ID
+```php
+$id = '914587795';
+$shipment = $client->shipments->get($id);
+print_r($shipment);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\Shipment Object
+(
+    [shipmentId] => 914587795
+    [shipmentDateTime] => DateTime Object
+        (
+            [date] => 2018-04-20 19:20:11.000000
+            [timezone_type] => 1
+            [timezone] => +02:00
+        )
+
+    [shipmentReference] => Shipment1
+    [pickUpPoint] => 1
+    [order] => Budgetlens\BolRetailerApi\Resources\Order Object
+        (
+            [orderId] => 7616222250
+            [pickUpPoint] => 
+            [shipmentDetails] => 
+            [billingDetails] => 
+            [orderPlacedDateTime] => DateTime Object
+                (
+                    [date] => 2018-04-20 16:13:31.000000
+                    [timezone_type] => 1
+                    [timezone] => +02:00
+                )
+
+            [orderItems] => Array
+                (
+                )
+
+        )
+
+    [shipmentDetails] => Budgetlens\BolRetailerApi\Resources\Address Object
+        (
+            [salutation] => MALE
+            [firstName] => Anakin
+            [surname] => Skywalker
+            [streetName] => Tatooinestraat
+            [houseNumber] => 100
+            [houseNumberExtension] => B
+            [extraAddressInformation] => 
+            [zipCode] => 3528BJ
+            [city] => Utrecht
+            [countryCode] => NL
+            [email] => 25whxgzlkmvotjhskwf5x27wlrldny@verkopen.test2.bol.com
+            [language] => nl
+            [company] => 
+            [vatNumber] => 
+            [kvkNumber] => 
+            [orderReference] => 
+            [attentionOf] => 
+        )
+
+    [billingDetails] => Budgetlens\BolRetailerApi\Resources\Address Object
+        (
+            [salutation] => MALE
+            [firstName] => Anakin
+            [surname] => Skywalker
+            [streetName] => Tatooinestraat
+            [houseNumber] => 100
+            [houseNumberExtension] => B
+            [extraAddressInformation] => Extra informatie
+            [zipCode] => 3528BJ
+            [city] => UTRECHT
+            [countryCode] => NL
+            [email] => 25whxgzlkmvotjhskwf5x27wlrldny@verkopen.test2.bol.com
+            [language] => 
+            [company] => Pieter Post
+            [vatNumber] => NL123456789B01
+            [kvkNumber] => 99887766
+            [orderReference] => Mijn order ref
+            [attentionOf] => 
+        )
+
+    [shipmentItems] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\Shipment\ShipmentItem Object
+                        (
+                            [orderItemId] => 6107434013
+                            [ean] => 
+                            [fulfilment] => Budgetlens\BolRetailerApi\Resources\Fulfilment Object
+                                (
+                                    [method] => FBR
+                                    [deliveryCode] => 24uurs-14
+                                    [distributionParty] => 
+                                    [latestDeliveryDate] => 2018-04-21
+                                    [expiryDate] => 
+                                    [pickUpPoints] => 
+                                )
+
+                            [offer] => Budgetlens\BolRetailerApi\Resources\Offer Object
+                                (
+                                    [ean] => 
+                                    [offerId] => 8f6085e3-de98-c97f-e053-3542090a63b3
+                                    [reference] => Test1
+                                    [condition] => Budgetlens\BolRetailerApi\Resources\Condition Object
+                                        (
+                                            [name] => 
+                                            [category] => 
+                                            [comment] => 
+                                        )
+
+                                    [onHoldByRetailer] => 
+                                    [unknownProductTitle] => 
+                                    [pricing] => Budgetlens\BolRetailerApi\Resources\Pricing Object
+                                        (
+                                            [bundlePrices] => Array
+                                                (
+                                                )
+
+                                        )
+
+                                    [stock] => Budgetlens\BolRetailerApi\Resources\Stock Object
+                                        (
+                                            [amount] => 0
+                                            [managedByRetailer] => 
+                                        )
+
+                                    [fulfilment] => Budgetlens\BolRetailerApi\Resources\Fulfilment Object
+                                        (
+                                            [method] => 
+                                            [deliveryCode] => 24uurs-14
+                                            [distributionParty] => 
+                                            [latestDeliveryDate] => 
+                                            [expiryDate] => 
+                                            [pickUpPoints] => 
+                                        )
+
+                                    [mutationDateTime] => 
+                                    [store] => 
+                                    [notPublishableReasons] => 
+                                )
+
+                            [product] => Budgetlens\BolRetailerApi\Resources\Product Object
+                                (
+                                    [ean] => 8712626055150
+                                    [title] => Star Wars - Original Trilogy
+                                    [announcedQuantity] => 
+                                )
+
+                            [quantity] => 3
+                            [unitPrice] => 34.99
+                            [commission] => 14
+                        )
+
+                )
+
+        )
+
+    [transport] => Budgetlens\BolRetailerApi\Resources\Transport Object
+        (
+            [transportId] => 358612589
+            [transporterCode] => TNT
+            [trackAndTrace] => 3SAOLD1234567
+        )
+
+)
+```
 
 
 
@@ -2949,21 +3385,7 @@ $label = $this->client->shipping->getLabel('$shippingLabelId');
 
 ## Shipments
 
-### Get Shipments List
-```php
-$shipments = $client->shipments->list();
 
-// get FBR Shipments only
-$shipments = $client->shipments->list('FBR');
-
-// get Shipments Belonging to specific orderID
-$shipments = $client->shipments->list(null, '$orderId');
-```
-
-### Get Shipment By ID
-```php
-$shipment = $this->client->shipments->get('$shipmentId');
-```
 ---
 
 ## Inbounds
