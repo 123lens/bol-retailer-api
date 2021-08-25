@@ -1148,6 +1148,40 @@ Budgetlens\BolRetailerApi\Resources\Insights\SearchTerm Object
 
 )
 ```
+
+## Inventory
+
+### Get LVB/FBB inventory
+```php
+$inventory = $client->inventory->get();
+print_r($inventory);
+```
+
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => Budgetlens\BolRetailerApi\Resources\Inventory Object
+                (
+                    [ean] => 8718526069334
+                    [bsku] => 2950003119187
+                    [gradedStock] => 0
+                    [regularStock] => 5
+                    [title] => Star Wars - Nappy Star wars T-shirt - XL
+                )
+
+        )
+
+)
+```
+
+
+
+
+
+
+
 ## Orders
 
 ### List Orders
