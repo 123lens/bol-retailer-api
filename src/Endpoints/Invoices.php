@@ -5,6 +5,7 @@ use Budgetlens\BolRetailerApi\Exceptions\InvalidFormatException;
 use Budgetlens\BolRetailerApi\Resources\Invoice\InvoicePDF;
 use Budgetlens\BolRetailerApi\Resources\Invoice\InvoiceXML;
 use Budgetlens\BolRetailerApi\Resources\Invoice as InvoiceResource;
+use Budgetlens\BolRetailerApi\Resources\InvoiceDetailed;
 
 class Invoices extends BaseEndpoint
 {
@@ -40,7 +41,7 @@ class Invoices extends BaseEndpoint
         return new InvoiceResource(collect($response));
     }
 
-    public function get(string $invoiceId, $format = 'pdf')
+    public function get(string $invoiceId, $format = 'json')
     {
         if (!in_array($format, $this->availableFormats)) {
             throw new InvalidFormatException();
@@ -54,7 +55,6 @@ class Invoices extends BaseEndpoint
                 'Accept' => $this->getAcceptHeader($format)
             ]
         );
-
         switch ($format) {
             case 'xml':
                 return new InvoiceXML([
@@ -66,6 +66,8 @@ class Invoices extends BaseEndpoint
                     'id' => $invoiceId,
                     'contents' => $response
                 ]);
+            default:
+                return new InvoiceDetailed(collect($response));
         }
     }
 

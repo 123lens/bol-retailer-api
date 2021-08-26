@@ -2,7 +2,7 @@
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
 
 use Budgetlens\BolRetailerApi\Resources\Invoice;
-use Budgetlens\BolRetailerApi\Resources\InvoiceItem;
+use Budgetlens\BolRetailerApi\Resources\Invoice\InvoiceItem;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
 use Illuminate\Support\Collection;
 
@@ -14,8 +14,10 @@ class InvoicesTest extends TestCase
         $this->useMock('200-get-all-invoices.json');
 
         $invoices = $this->client->invoices->list();
+
         $this->assertInstanceOf(Invoice::class, $invoices);
         $this->assertInstanceOf(Collection::class, $invoices->invoiceListItems);
+        $this->assertInstanceOf(Invoice\Period::class, $invoices->period);
         $this->assertCount(1, $invoices->invoiceListItems);
         $this->assertInstanceOf(InvoiceItem::class, $invoices->invoiceListItems->first());
         $this->assertSame('4500022543921', $invoices->invoiceListItems->first()->invoiceId);
@@ -23,6 +25,14 @@ class InvoicesTest extends TestCase
         $this->assertIsArray($invoices->invoiceListItems->first()->specificationMediaTypes);
     }
 
+    /** @test */
+    public function getInvoiceById()
+    {
+        $id = '4500022543921';
+        $invoice = $this->client->invoices->get($id);
+        print_r($invoice);
+        exit;
+    }
     /** @test */
     public function getInvoicePdf()
     {

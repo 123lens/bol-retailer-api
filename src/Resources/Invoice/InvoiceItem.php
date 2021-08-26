@@ -1,5 +1,7 @@
 <?php
-namespace Budgetlens\BolRetailerApi\Resources;
+namespace Budgetlens\BolRetailerApi\Resources\Invoice;
+
+use Budgetlens\BolRetailerApi\Resources\BaseResource;
 
 class InvoiceItem extends BaseResource
 {

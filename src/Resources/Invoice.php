@@ -1,7 +1,8 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Resources;
 
-use Budgetlens\BolRetailerApi\Resources\InvoiceItem as InvoiceResource;
+use Budgetlens\BolRetailerApi\Resources\Invoice\InvoiceItem;
+use Budgetlens\BolRetailerApi\Resources\Invoice\Period;
 use Illuminate\Support\Collection;
 
 class Invoice extends BaseResource
@@ -42,13 +43,11 @@ class Invoice extends BaseResource
     public function setPeriodAttribute($value): self
     {
         list ($from, $till) = explode("/", $value);
-        $this->period = collect([
-            'from' => $from,
-            'till' => $till
-        ])->map(function ($value) {
-            return new \DateTime($value);
-        })
-        ->all();
+
+        $this->period = new Period([
+            'start' => $from,
+            'end' => $till
+        ]);
 
         return $this;
     }
