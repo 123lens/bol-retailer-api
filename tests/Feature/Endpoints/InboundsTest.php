@@ -1,7 +1,6 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
 
-use Budgetlens\BolRetailerApi\Client;
 use Budgetlens\BolRetailerApi\Resources\Inbound;
 use Budgetlens\BolRetailerApi\Resources\InboundPackinglist;
 use Budgetlens\BolRetailerApi\Resources\InboundProductLabels;
@@ -11,7 +10,6 @@ use Budgetlens\BolRetailerApi\Resources\Timeslot;
 use Budgetlens\BolRetailerApi\Resources\Transporter;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
 use Budgetlens\BolRetailerApi\Types\LabelFormat;
-use Cassandra\Date;
 use Illuminate\Support\Collection;
 
 class InboundsTest extends TestCase
@@ -19,6 +17,8 @@ class InboundsTest extends TestCase
     /** @test */
     public function getAllInbounds()
     {
+        $this->markTestSkipped('Endpoint removed in v5 version of the Retailer API');
+
         $this->useMock('200-get-inbounds.json');
 
         $inbounds = $this->client->inbounds->list();
@@ -36,6 +36,8 @@ class InboundsTest extends TestCase
     /** @test */
     public function getInboundById()
     {
+        $this->markTestSkipped('Endpoint removed in v5 version of the Retailer API');
+
         $this->useMock('200-get-inbound-by-id.json');
         $id = '5850051250';
 
@@ -51,6 +53,8 @@ class InboundsTest extends TestCase
     /** @test */
     public function createInbound()
     {
+        $this->markTestSkipped('Endpoint removed in v5 version of the Retailer API');
+
         $this->useMock('200-create-inbound.json');
 
         $inbound = new Inbound([
@@ -83,6 +87,8 @@ class InboundsTest extends TestCase
     /** @test */
     public function getPackingList()
     {
+        $this->markTestSkipped('Endpoint removed in v5 version of the Retailer API');
+
         $id = '5850051250';
 
         $inbound = $this->client->inbounds->getPackingList($id);
@@ -94,6 +100,8 @@ class InboundsTest extends TestCase
     /** @test */
     public function getShippingLabel()
     {
+        $this->markTestSkipped('Endpoint removed in v5 version of the Retailer API');
+
         $id = '5850051250';
 
         $inbound = $this->client->inbounds->getShippingLabel($id);
@@ -104,6 +112,8 @@ class InboundsTest extends TestCase
     /** @test */
     public function getProductLabels()
     {
+        $this->markTestSkipped('Endpoint removed in v5 version of the Retailer API');
+
         $products = [
             ['ean' => '8717185945126', 'quantity' => 1],
             ['ean' => '8717185944747', 'quantity' => 2]
@@ -116,6 +126,8 @@ class InboundsTest extends TestCase
     /** @test */
     public function invalidStateThrowsAnException()
     {
+        $this->markTestSkipped('Endpoint removed in v5 version of the Retailer API');
+
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid state');
         $this->client->inbounds->list(null, null, null, null, 'invalid');
@@ -124,6 +136,8 @@ class InboundsTest extends TestCase
     /** @test */
     public function getDeliveryWindows()
     {
+        $this->markTestSkipped('Endpoint removed in v5 version of the Retailer API');
+
         $this->useMock('200-get-delivery-windows.json');
 
         $deliveryWindows = $this->client->inbounds->getDeliveryWindows(new \DateTime('2018-05-31'));
@@ -139,6 +153,8 @@ class InboundsTest extends TestCase
     /** @test */
     public function getTransporters()
     {
+        $this->markTestSkipped('Endpoint removed in v5 version of the Retailer API');
+
         $this->useMock('200-get-inbound-transporters.json');
 
         $transporters = $this->client->inbounds->getTransporters();
@@ -148,7 +164,4 @@ class InboundsTest extends TestCase
         $this->assertNotNull($transporters->first()->name);
         $this->assertNotNull($transporters->first()->code);
     }
-
-
-
 }
