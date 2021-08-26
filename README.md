@@ -1177,7 +1177,8 @@ Illuminate\Support\Collection Object
 ```
 
 ## Invoices
-
+> Not production ready !
+ 
 ### Get all invoices
 ```php
 $invoices = $client->invoices->list();
