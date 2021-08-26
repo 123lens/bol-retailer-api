@@ -2,10 +2,13 @@
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
 use Budgetlens\BolRetailerApi\Exceptions\InvalidFormatException;
+use Budgetlens\BolRetailerApi\Resources\Inventory as InventoryResource;
 use Budgetlens\BolRetailerApi\Resources\Invoice\InvoicePDF;
 use Budgetlens\BolRetailerApi\Resources\Invoice\InvoiceXML;
 use Budgetlens\BolRetailerApi\Resources\Invoice as InvoiceResource;
 use Budgetlens\BolRetailerApi\Resources\InvoiceDetailed;
+use Budgetlens\BolRetailerApi\Resources\InvoiceSpecification;
+use Illuminate\Support\Collection;
 
 class Invoices extends BaseEndpoint
 {
@@ -71,7 +74,7 @@ class Invoices extends BaseEndpoint
         }
     }
 
-    public function getSpecification(string $invoiceId, $format = 'pdf')
+    public function getSpecification(string $invoiceId, $format = 'json'): Collection
     {
         if (!in_array($format, $this->availableFormats)) {
             throw new InvalidFormatException();
@@ -85,8 +88,27 @@ class Invoices extends BaseEndpoint
                 'Accept' => $this->getAcceptHeader($format)
             ]
         );
-        print_r($response);
-        exit;
+
+        switch ($format) {
+//            case 'xml':
+//                return new InvoiceXML([
+//                    'id' => $invoiceId,
+//                    'contents' => $response
+//                ]);
+//            case 'pdf':
+//                return new InvoicePDF([
+//                    'id' => $invoiceId,
+//                    'contents' => $response
+//                ]);
+            default:
+                $collection = new Collection();
+
+                collect($response->invoiceSpecification)->each(function ($item) use ($collection) {
+                    $collection->push(new InvoiceSpecification($item));
+                });
+
+                return $collection;
+        }
     }
 
     /**

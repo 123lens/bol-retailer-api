@@ -87,8 +87,8 @@ class InvoiceDetailed extends BaseResource
             $value = $value->value ?? null;
         }
 
-        $this->issueDate = new \DateTime();
-        $this->issueDate->setTimestamp($value);
+        $this->IssueDate = new \DateTime();
+        $this->IssueDate->setTimestamp($value);
 
         return $this;
     }

@@ -9,7 +9,7 @@ class Item extends BaseResource
     public $Description;
     public $Name;
     public $ClassifiedTaxCategory;
-
+    public $AdditionalItemProperty;
 
     public function __construct($attributes = [])
     {
@@ -54,6 +54,22 @@ class Item extends BaseResource
         });
 
         $this->ClassifiedTaxCategory = $items;
+
+        return $this;
+    }
+
+    public function setAdditionalItemPropertyAttribute($value)
+    {
+        $items = new Collection();
+
+        collect($value)->each(function ($item) use ($items) {
+            if (!$item instanceof AdditionalItemProperty) {
+                $item = new AdditionalItemProperty($item);
+            }
+            $items->push($item);
+        });
+
+        $this->AdditionalItemProperty = $items;
 
         return $this;
     }

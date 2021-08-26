@@ -3,6 +3,8 @@ namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
 
 use Budgetlens\BolRetailerApi\Resources\Invoice;
 use Budgetlens\BolRetailerApi\Resources\Invoice\InvoiceItem;
+use Budgetlens\BolRetailerApi\Resources\InvoiceDetailed;
+use Budgetlens\BolRetailerApi\Resources\InvoiceSpecification;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
 use Illuminate\Support\Collection;
 
@@ -28,11 +30,33 @@ class InvoicesTest extends TestCase
     /** @test */
     public function getInvoiceById()
     {
+        // todo: Improve tests
         $id = '4500022543921';
         $invoice = $this->client->invoices->get($id);
-        print_r($invoice);
-        exit;
+
+        $this->assertInstanceOf(InvoiceDetailed::class, $invoice);
+        $this->assertNotNull($invoice->ID);
+        $this->assertSame('4500022543921', $invoice->ID);
+        $this->assertInstanceOf(\DateTime::class, $invoice->IssueDate);
+        $this->assertInstanceOf(InvoiceDetailed\InvoiceTypeCode::class, $invoice->InvoiceTypeCode);
+        $this->assertSame('EUR', $invoice->DocumentCurrencyCode);
+        $this->assertInstanceOf(InvoiceDetailed\AccountingSupplierParty::class, $invoice->AccountingSupplierParty);
+        $this->assertInstanceOf(InvoiceDetailed\Party::class, $invoice->AccountingSupplierParty->Party);
+        $this->assertInstanceOf(InvoiceDetailed\AccountingCustomerParty::class, $invoice->AccountingCustomerParty);
+        $this->assertInstanceOf(InvoiceDetailed\Party::class, $invoice->AccountingCustomerParty->Party);
     }
+
+    /** @test */
+    public function getInvoiceSpecification()
+    {
+        // todo: write additional test.
+        // todo: write additional logic on resource (->item->getProperty('some-name');
+        $id = '4500022543921';
+        $specification = $this->client->invoices->getSpecification($id);
+        $this->assertInstanceOf(Collection::class, $specification);
+        $this->assertInstanceOf(InvoiceSpecification::class, $specification->first());
+    }
+
     /** @test */
     public function getInvoicePdf()
     {
