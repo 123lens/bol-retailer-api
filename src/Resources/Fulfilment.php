@@ -9,24 +9,45 @@ class Fulfilment extends BaseResource
     public $deliveryCode;
     public $distributionParty;
     public $latestDeliveryDate;
+    public $exactDeliveryDate;
     public $expiryDate;
     public $pickUpPoints;
-
+    public $timeFrameType;
 
     public function __construct($attributes = [])
     {
-        $this->setDefaults();
-
         parent::__construct($attributes);
     }
 
-    /**
-     * Set Default
-     * @return $this
-     */
-    public function setDefaults(): self
+    public function setLatestDeliveryDateAttribute($value): self
     {
-        $this->deliveryCode = DeliveryCodes::DEFAULT;
+        if (!$value instanceof \DateTime) {
+            $value = new \DateTime($value);
+        }
+
+        $this->latestDeliveryDate = $value;
+
+        return $this;
+    }
+
+    public function setExactDeliveryDateAttribute($value): self
+    {
+        if (!$value instanceof \DateTime) {
+            $value = new \DateTime($value);
+        }
+
+        $this->exactDeliveryDate = $value;
+
+        return $this;
+    }
+
+    public function setExpiryDateAttribute($value): self
+    {
+        if (!$value instanceof \DateTime) {
+            $value = new \DateTime($value);
+        }
+
+        $this->expiryDate = $value;
 
         return $this;
     }

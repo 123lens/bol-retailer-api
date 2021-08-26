@@ -3,6 +3,7 @@ namespace Budgetlens\BolRetailerApi\Resources;
 
 class Address extends BaseResource
 {
+    public $pickupPointName;
     public $salutation;
     public $firstName;
     public $surname;
@@ -20,4 +21,5 @@ class Address extends BaseResource
     public $kvkNumber;
     public $orderReference;
     public $attentionOf;
+    public $deliveryPhoneNumber;
 }

@@ -14,9 +14,32 @@ use Budgetlens\BolRetailerApi\Tests\TestCase;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Types\CancelReasonCodes;
 use Budgetlens\BolRetailerApi\Types\EventTypes;
+use Illuminate\Support\Collection;
 
 class OrdersTest extends TestCase
 {
+    /** @test */
+    public function getAllOrders()
+    {
+        $this->useMock('200-get-all-orders.json');
+
+        $orders = $this->client->orders->getOrders();
+        $this->assertInstanceOf(Collection::class, $orders);
+        $this->assertInstanceOf(Order::class, $orders->first());
+        $this->assertNotNull($orders->first()->orderId);
+        $this->assertNotNull($orders->first()->orderPlacedDateTime);
+        $this->assertInstanceOf(\DateTime::class, $orders->first()->orderPlacedDateTime);
+        $this->assertTrue(count($orders->first()->orderItems) > 0);
+        $this->assertSame('1043946570', $orders->first()->orderId);
+        $this->assertInstanceOf(Collection::class, $orders->first()->orderItems);
+        $this->assertInstanceOf(Order\OrderItem::class, $orders->first()->orderItems->first());
+        $this->assertSame('6042823871', $orders->first()->orderItems->first()->orderItemId);
+        $this->assertSame('8717418510749', $orders->first()->orderItems->first()->ean);
+        $this->assertSame(3, $orders->first()->orderItems->first()->quantity);
+        $this->assertSame(3, $orders->first()->orderItems->first()->quantityShipped);
+        $this->assertSame(0, $orders->first()->orderItems->first()->quantityCancelled);
+    }
+
     /** @test */
     public function getOpenFbrOrders()
     {
@@ -60,22 +83,61 @@ class OrdersTest extends TestCase
     public function getOrderById()
     {
         $this->useMock('200-order-details.json');
-        $order = $this->client->orders->get('1234');
+        $orderId = '1042823870';
+        $order = $this->client->orders->get($orderId);
+
         $this->assertInstanceOf(Order::class, $order);
         $this->assertNotNull($order->orderId);
-        $this->assertInstanceOf(Address::class, $order->billingDetails);
+        $this->assertSame('1042823870', $order->orderId);
         $this->assertInstanceOf(Address::class, $order->shipmentDetails);
-        $this->assertCount(1, $order->orderItems);
+        $this->assertSame('MALE', $order->shipmentDetails->salutation);
+        $this->assertSame('Hans', $order->shipmentDetails->firstName);
+        $this->assertSame('de Grote', $order->shipmentDetails->surname);
+        $this->assertSame('Skywalkerstraat', $order->shipmentDetails->streetName);
+        $this->assertSame('199', $order->shipmentDetails->houseNumber);
+        $this->assertSame('1234AB', $order->shipmentDetails->zipCode);
+        $this->assertSame('PLATOONDORP', $order->shipmentDetails->city);
+        $this->assertSame('NL', $order->shipmentDetails->countryCode);
+        $this->assertSame('27zoytzc3crf2r6bctxfa3m2mrjbci@verkopen.test2.bol.com', $order->shipmentDetails->email);
+        $this->assertInstanceOf(Address::class, $order->billingDetails);
+        $this->assertSame('MALE', $order->billingDetails->salutation);
+        $this->assertSame('Pieter', $order->billingDetails->firstName);
+        $this->assertSame('Post', $order->billingDetails->surname);
+        $this->assertSame('Skywalkerstraat', $order->billingDetails->streetName);
+        $this->assertSame('21', $order->billingDetails->houseNumber);
+        $this->assertSame('X', $order->billingDetails->houseNumberExtension);
+        $this->assertSame('Extra informatie', $order->billingDetails->extraAddressInformation);
+        $this->assertSame('1234AB', $order->billingDetails->zipCode);
+        $this->assertSame('PLATOONDORP', $order->billingDetails->city);
+        $this->assertSame('NL', $order->billingDetails->countryCode);
+        $this->assertSame('2yldzdi2wjcf5ir4sycq7lufqpytxy@verkopen.test2.bol.com', $order->billingDetails->email);
+        $this->assertSame('Pieter Post', $order->billingDetails->company);
+        $this->assertSame('NL123456789B01', $order->billingDetails->vatNumber);
+        $this->assertSame('99887766', $order->billingDetails->kvkNumber);
+        $this->assertSame('Mijn order ref', $order->billingDetails->orderReference);
+        $this->assertInstanceOf(\DateTime::class, $order->orderPlacedDateTime);
+        $this->assertInstanceOf(Collection::class, $order->orderItems);
+        $this->assertCount(2, $order->orderItems);
+        $this->assertInstanceOf(Order\OrderItem::class, $order->orderItems->first());
         $this->assertNotNull($order->orderItems->first()->orderItemId);
+        $this->assertSame('6107771545', $order->orderItems->first()->orderItemId);
+        $this->assertIsBool($order->orderItems->first()->cancellationRequest);
         $this->assertInstanceOf(Fulfilment::class, $order->orderItems->first()->fulfilment);
+        $this->assertSame('FBB', $order->orderItems->first()->fulfilment->method);
+        $this->assertInstanceOf(\DateTime::class, $order->orderItems->first()->fulfilment->latestDeliveryDate);
+        $this->assertInstanceOf(\DateTime::class, $order->orderItems->first()->fulfilment->expiryDate);
+        $this->assertSame('REGULAR', $order->orderItems->first()->fulfilment->timeFrameType);
         $this->assertInstanceOf(Offer::class, $order->orderItems->first()->offer);
+        $this->assertSame('8f1183e3-de98-c92f-e053-3590612a63b7', $order->orderItems->first()->offer->offerId);
+        $this->assertSame('MijnOffer0021', $order->orderItems->first()->offer->reference);
         $this->assertInstanceOf(Product::class, $order->orderItems->first()->product);
-        $this->assertSame('FBR', $order->orderItems->first()->fulfilment->method);
-        $this->assertSame('8c5d5aa9-5f01-7849-e053-828b620a2bd4', $order->orderItems->first()->offer->offerId);
-        $this->assertSame('8717185945140', $order->orderItems->first()->product->ean);
+        $this->assertSame('8785056370398', $order->orderItems->first()->product->ean);
+        $this->assertSame('Star Wars Prequel Trilogy', $order->orderItems->first()->product->title);
         $this->assertSame(1, $order->orderItems->first()->quantity);
-        $this->assertSame(2825, $order->orderItems->first()->unitPrice);
-        $this->assertSame(45, $order->orderItems->first()->commission);
+        $this->assertSame(1, $order->orderItems->first()->quantityShipped);
+        $this->assertSame(0, $order->orderItems->first()->quantityCancelled);
+        $this->assertSame(19.99, $order->orderItems->first()->unitPrice);
+        $this->assertSame(2.21, $order->orderItems->first()->commission);
     }
 
     /** @test */

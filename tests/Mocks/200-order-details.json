@@ -1,51 +1,82 @@
 {
-  "orderId": "1209176585",
-  "pickUpPoint": false,
-  "orderPlacedDateTime": "2021-03-16T13:33:00+01:00",
-  "shipmentDetails": {
-    "salutation": "FEMALE",
-    "firstName": "Lisa",
-    "surname": "Test",
-    "streetName": "De Straat",
-    "houseNumber": "1",
-    "zipCode": "1234AA",
-    "city": "Amsterdam",
-    "countryCode": "NL",
-    "email": "some-random-hash@verkopen.bol.com",
-    "language": "nl"
+  "orderId":"1042823870",
+  "pickupPoint":false,
+  "orderPlacedDateTime":"2019-04-30T16:47:32+02:00",
+  "shipmentDetails":{
+    "salutation":"MALE",
+    "firstName":"Hans",
+    "surname":"de Grote",
+    "streetName":"Skywalkerstraat",
+    "houseNumber":"199",
+    "zipCode":"1234AB",
+    "city":"PLATOONDORP",
+    "countryCode":"NL",
+    "email":"27zoytzc3crf2r6bctxfa3m2mrjbci@verkopen.test2.bol.com",
+    "language":"nl"
   },
-  "billingDetails": {
-    "salutation": "FEMALE",
-    "firstName": "Lisa",
-    "surname": "Test",
-    "streetName": "De Straat",
-    "houseNumber": "1",
-    "zipCode": "1234AA",
-    "city": "Amsterdam",
-    "countryCode": "NL",
-    "email": "some-random-hash@verkopen.bol.com"
+  "billingDetails":{
+    "salutation":"MALE",
+    "firstName":"Pieter",
+    "surname":"Post",
+    "streetName":"Skywalkerstraat",
+    "houseNumber":"21",
+    "houseNumberExtension":"X",
+    "extraAddressInformation":"Extra informatie",
+    "zipCode":"1234AB",
+    "city":"PLATOONDORP",
+    "countryCode":"NL",
+    "email":"2yldzdi2wjcf5ir4sycq7lufqpytxy@verkopen.test2.bol.com",
+    "company":"Pieter Post",
+    "vatNumber":"NL123456789B01",
+    "kvkNumber":"99887766",
+    "orderReference":"Mijn order ref"
   },
-  "orderItems": [
+  "orderItems":[
     {
-      "orderItemId": "2592294022",
-      "cancellationRequest": false,
-      "fulfilment": {
-        "method": "FBR",
-        "distributionParty": "RETAILER",
-        "latestDeliveryDate": "2021-03-23",
-        "expiryDate": "2021-03-26"
+      "orderItemId":"6107771545",
+      "cancellationRequest":false,
+      "fulfilment":{
+        "method":"FBB",
+        "latestDeliveryDate":"2018-04-22",
+        "expiryDate":"2018-04-25",
+        "timeFrameType":"REGULAR"
       },
-      "offer": {
-        "offerId": "8c5d5aa9-5f01-7849-e053-828b620a2bd4",
-        "reference": "1356_2590"
+      "offer":{
+        "offerId":"8f1183e3-de98-c92f-e053-3590612a63b7",
+        "reference":"MijnOffer0021"
       },
-      "product": {
-        "ean": "8717185945140",
-        "title": "A Great Product"
+      "product":{
+        "ean":"8785056370398",
+        "title":"Star Wars Prequel Trilogy"
       },
-      "quantity": 1,
-      "unitPrice": 28.25,
-      "commission": 0.45
+      "quantity":1,
+      "quantityShipped":1,
+      "quantityCancelled":0,
+      "unitPrice":19.99,
+      "commission":2.21
+    },
+    {
+      "orderItemId":"6107771546",
+      "cancellationRequest":false,
+      "fulfilment":{
+        "method":"FBB",
+        "latestDeliveryDate":"2018-01-16",
+        "expiryDate":"2018-01-16",
+        "timeFrameType":"REGULAR"
+      },
+      "offer":{
+        "offerId":"8f6485e3-de66-c08f-e053-8602590a63b4",
+        "reference":"MijnOffer1121"
+      },
+      "product":{
+        "ean":"8717418510749",
+        "title":"Star Wars - The happy family 2"
+      },
+      "quantity":1,
+      "quantityShipped":1,
+      "quantityCancelled":0,
+      "unitPrice":32.98,
+      "commission":6.38
     }
   ]
 }
