@@ -18,16 +18,6 @@ class Offer extends BaseResource
     public $store;
     public $notPublishableReasons;
 
-    public function __construct($attributes = [])
-    {
-        $this->condition = new Condition();
-        $this->pricing = new Pricing();
-        $this->stock = new Stock();
-        $this->fulfilment = new Fulfilment();
-
-        parent::__construct($attributes);
-    }
-
     /**
      * Set Condition
      *
@@ -169,12 +159,22 @@ class Offer extends BaseResource
     public function toArray(): array
     {
         return collect(parent::toArray())
-            ->merge([
-                'condition' => $this->condition->toArray(),
-                'pricing' => $this->pricing->toArray(),
-                'stock' => $this->stock->toArray(),
-                'fulfilment' => $this->fulfilment->toArray()
-            ])
+            ->when(!is_null($this->condition), function ($collection) {
+                return $collection
+                    ->put('condition', $this->condition->toArray());
+            })
+            ->when(!is_null($this->pricing), function ($collection) {
+                return $collection
+                    ->put('pricing', $this->pricing->toArray());
+            })
+            ->when(!is_null($this->stock), function ($collection) {
+                return $collection
+                    ->put('stock', $this->stock->toArray());
+            })
+            ->when(!is_null($this->fulfilment), function ($collection) {
+                return $collection
+                    ->put('fulfilment', $this->fulfilment->toArray());
+            })
             ->all();
     }
 }

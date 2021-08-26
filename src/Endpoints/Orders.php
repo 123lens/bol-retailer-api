@@ -14,21 +14,28 @@ use Budgetlens\BolRetailerApi\Resources\Order as OrderResource;
 class Orders extends BaseEndpoint
 {
     /**
-     * Get Open Orders
-     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/orders-shipments.html#_retrieve_open_orders
+     * Get Orders
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-orders
      * @param string $fulfillmentMethod
+     * @param string $status (ALL or OPEN)
      * @param int $page
      * @return Collection
      */
-    public function getOpenOrders(string $fulfillmentMethod = 'FBR', int $page = 1)
+    public function getOrders(string $fulfillmentMethod = 'FBR', string $status = 'ALL', int $page = 1)
     {
+        $query = collect([
+            'fulfilment-method' => $fulfillmentMethod,
+            'status' => $status,
+            'page' => $page
+        ])->reject(function ($value) {
+            return empty($value);
+        })->all();
+
         $response = $this->performApiCall(
             'GET',
-            'orders' . $this->buildQueryString([
-                'fulfilment-method' => $fulfillmentMethod,
-                'page' => $page
-            ])
+            'orders' . $this->buildQueryString($query)
         );
+
         $collection = new Collection();
 
         collect($response->orders)->each(function ($item) use ($collection) {
@@ -39,8 +46,19 @@ class Orders extends BaseEndpoint
     }
 
     /**
+     * Get Open Orders
+     * @param string $fulfillmentMethod
+     * @param int $page
+     * @return Collection
+     */
+    public function getOpenOrders(string $fulfillmentMethod = 'FBR', int $page = 1)
+    {
+        return $this->getOrders($fulfillmentMethod, 'OPEN', $page);
+    }
+
+    /**
      * Retrieve a single order
-     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/orders-shipments.html#_retrieve_a_single_order
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-order
      * @param int $id
      * @return OrderResource
      */
