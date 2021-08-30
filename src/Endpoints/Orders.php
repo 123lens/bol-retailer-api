@@ -21,7 +21,7 @@ class Orders extends BaseEndpoint
      * @param int $page
      * @return Collection
      */
-    public function getOrders(string $fulfillmentMethod = 'FBR', string $status = 'ALL', int $page = 1)
+    public function getOrders(string $fulfillmentMethod = 'FBR', string $status = 'ALL', int $page = 1): Collection
     {
         $query = collect([
             'fulfilment-method' => $fulfillmentMethod,
@@ -38,9 +38,13 @@ class Orders extends BaseEndpoint
 
         $collection = new Collection();
 
-        collect($response->orders)->each(function ($item) use ($collection) {
-            $collection->push(new OrderResource($item));
-        });
+        $orders = $response->orders ?? null;
+
+        if (!is_null($orders)) {
+            collect($response->orders)->each(function ($item) use ($collection) {
+                $collection->push(new OrderResource($item));
+            });
+        }
 
         return $collection;
     }
