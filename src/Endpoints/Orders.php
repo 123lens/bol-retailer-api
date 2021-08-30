@@ -63,10 +63,10 @@ class Orders extends BaseEndpoint
     /**
      * Retrieve a single order
      * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-order
-     * @param int $id
+     * @param string $id
      * @return OrderResource
      */
-    public function get(int $id): OrderResource
+    public function get(string $id): OrderResource
     {
         $response = $this->performApiCall(
             'GET',
