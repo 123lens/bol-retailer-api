@@ -79,4 +79,29 @@ class OrderItem extends BaseResource
 
         return $this;
     }
+
+    public function toArray(): array
+    {
+        return collect(parent::toArray())
+            ->when(!is_null($this->fulfilment), function ($collection) {
+                return $collection
+                    ->forget('fulfilment')
+                    ->put('fulfilment', $this->fulfilment->toArray());
+            })
+            ->when(!is_null($this->offer), function ($collection) {
+                return $collection
+                    ->forget('offer')
+                    ->put('offer', $this->offer->toArray());
+            })
+            ->when(!is_null($this->product), function ($collection) {
+                return $collection
+                    ->forget('product')
+                    ->put('product', $this->product->toArray());
+            })
+            ->reject(function ($value) {
+                return is_null($value);
+            })
+            ->all();
+    }
+
 }
