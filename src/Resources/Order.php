@@ -78,4 +78,36 @@ class Order extends BaseResource
 
         return $this;
     }
+
+    public function toArray(): array
+    {
+        return collect(parent::toArray())
+            ->when(count($this->orderItems), function ($collection) {
+                $items = collect($this->orderItems)->map(function ($item) {
+                    return $item->toArray();
+                });
+                return $collection->put('orderItems', $items->all());
+            })
+            ->when(!is_null($this->shipmentDetails), function ($collection) {
+                return $collection
+                    ->forget('shipmentDetails')
+                    ->put('shipmentDetails', $this->shipmentDetails->toArray());
+            })
+            ->when(!is_null($this->billingDetails), function ($collection) {
+                return $collection
+                    ->forget('billingDetails')
+                    ->put('billingDetails', $this->billingDetails->toArray());
+            })
+            ->reject(function ($value) {
+                return is_null($value) || (is_countable($value) && !count($value));
+            })
+            ->map(function ($item) {
+                if ($item instanceof \DateTime) {
+                    return $item->format('c');
+                }
+
+                return $item;
+            })
+            ->all();
+    }
 }

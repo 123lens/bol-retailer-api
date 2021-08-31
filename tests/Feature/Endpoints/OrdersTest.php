@@ -85,7 +85,6 @@ class OrdersTest extends TestCase
         $this->useMock('200-order-details.json');
         $orderId = '1042823870';
         $order = $this->client->orders->get($orderId);
-
         $this->assertInstanceOf(Order::class, $order);
         $this->assertNotNull($order->orderId);
         $this->assertSame('1042823870', $order->orderId);

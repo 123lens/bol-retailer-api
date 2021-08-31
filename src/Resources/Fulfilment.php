@@ -59,8 +59,12 @@ class Fulfilment extends BaseResource
     public function toArray(): array
     {
         return collect(parent::toArray())
-            ->when($this->method === 'FBB', function ($collection) {
-                return $collection->forget('deliveryCode');
+            ->map(function ($item) {
+                if ($item instanceof \DateTime) {
+                    return $item->format('c');
+                }
+
+                return $item;
             })
             ->all();
     }
