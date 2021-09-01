@@ -18,6 +18,16 @@ class Offer extends BaseResource
     public $store;
     public $notPublishableReasons;
 
+    public function setMutationDateTimeAttribute($value): self
+    {
+        if (!$value instanceof \DateTime) {
+            $value = new \DateTime($value);
+        }
+
+        $this->mutationDateTime = $value;
+
+        return $this;
+    }
     /**
      * Set Condition
      *
