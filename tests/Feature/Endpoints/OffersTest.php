@@ -221,12 +221,19 @@ class OffersTest extends TestCase
     public function getOffersExport()
     {
         $this->useMock('200-offers-export.csv', 200, ['Content-Type' => 'application/vnd.retailer.v4+csv;charset=UTF-8']);
-        $offers = $this->client->offers->getExport('offer-export-id');
+        $id = '73985e00-d461-4461-80e7-d3fea8d23ef4';
+        $offers = $this->client->offers->getExport($id);
 
         $this->assertInstanceOf(Collection::class, $offers);
-        $this->assertCount(10, $offers);
+        $this->assertCount(9, $offers);
         $this->assertInstanceOf(Offer::class, $offers->first());
-        $this->assertSame('offer-id-1', $offers->first()->offerId);
+        $this->assertSame('8785073983111', $offers->first()->ean);
+        $this->assertSame('4ae7a221-65e7-a333-e620-3f8e1caab5c3', $offers->first()->offerId);
+        $this->assertInstanceOf(Condition::class, $offers->first()->condition);
+        $this->assertInstanceOf(Pricing::class, $offers->first()->pricing);
+        $this->assertInstanceOf(Stock::class, $offers->first()->stock);
+        $this->assertInstanceOf(Fulfilment::class, $offers->first()->fulfilment);
+        $this->assertInstanceOf(\DateTime::class, $offers->first()->mutationDateTime);
     }
 
     /** @test */

@@ -202,6 +202,7 @@ class Offers extends BaseEndpoint
             'GET',
             "offers/export/{$id}"
         );
+
         $lines = collect(explode("\n", $response))->reject(function ($line) {
             return empty($line);
         });
@@ -220,7 +221,7 @@ class Offers extends BaseEndpoint
                     'category' => $cols[3],
                     'comment' => $cols[4]
                 ]),
-                'price' => $cols[5] * 100,
+                'price' => $cols[5],
                 'fulfilment' => new Fulfilment([
                     'method' => $cols[9],
                     'deliveryCode' => $cols[6],
@@ -228,7 +229,6 @@ class Offers extends BaseEndpoint
                 'stock' => $cols[7],
                 'onHoldByRetailer' => $cols[8],
                 'mutationDateTime' => $cols[10],
-                'reference' => $cols[11]
             ]));
         });
 

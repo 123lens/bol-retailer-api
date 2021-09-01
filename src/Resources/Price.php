@@ -18,7 +18,7 @@ class Price extends BaseResource
      */
     public function setUnitPriceAttribute($value): self
     {
-        $this->unitPrice = (int)($value * 100);
+        $this->unitPrice = $value;
 
         return $this;
     }
@@ -27,7 +27,7 @@ class Price extends BaseResource
     {
         return [
             'quantity' => (int)$this->quantity,
-            'unitPrice' => number_format(($this->unitPrice/100), 2)
+            'unitPrice' => $this->unitPrice
         ];
     }
 }
