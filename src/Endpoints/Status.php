@@ -44,7 +44,7 @@ class Status extends BaseEndpoint
 
     /**
      * Get Process Status
-     * @param $status - ProcessStatus | int
+     * @param $status - ProcessStatus | string
      * @return ProcessStatus|ProcessStatusCollection
      * @throws \InvalidArgumentException
      */
@@ -52,27 +52,27 @@ class Status extends BaseEndpoint
     {
         if ($status instanceof ProcessStatus) {
             if ($status->id) {
-                return $this->getById((int)$status->id);
+                return $this->getById((string)$status->id);
             }
             if ($status->entityId && $status->eventType) {
-                return $this->getByEntityId((int)$status->entityId, $status->eventType);
+                return $this->getByEntityId((string)$status->entityId, $status->eventType);
             } else {
                 throw new \InvalidArgumentException(
                     "Unable to collect status, 'id' or 'entityId' & 'eventType' are required"
                 );
             }
         } else {
-            return $this->getById((int)$status);
+            return $this->getById((string)$status);
         }
     }
 
     /**
      * Get Process status by id
      * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/process-status.html
-     * @param int $id
+     * @param string $id
      * @return ProcessStatus
      */
-    public function getById(int $id): ProcessStatus
+    public function getById(string $id): ProcessStatus
     {
         $response = $this->performApiCall(
             'GET',
