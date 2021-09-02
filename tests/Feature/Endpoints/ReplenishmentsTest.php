@@ -31,6 +31,7 @@ class ReplenishmentsTest extends TestCase
             null,
             null,
             ['ANNOUNCED'],
+            1
         );
         $this->assertInstanceOf(Collection::class, $replenishments);
         $this->assertCount(2, $replenishments);

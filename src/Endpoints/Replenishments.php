@@ -79,9 +79,13 @@ class Replenishments extends BaseEndpoint
 
         $collection = new Collection();
 
-        collect($response->replenishments)->each(function ($item) use ($collection) {
-            $collection->push(new Replenishment($item));
-        });
+        $replenishments = $response->replenishments ?? null;
+
+        if (!is_null($replenishments)) {
+            collect($replenishments)->each(function ($item) use ($collection) {
+                $collection->push(new Replenishment($item));
+            });
+        }
 
         return $collection;
     }

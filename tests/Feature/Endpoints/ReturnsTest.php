@@ -426,13 +426,4 @@ class ReturnsTest extends TestCase
         $this->assertInstanceOf(Collection::class, $status->links);
         $this->assertInstanceOf(ProcessStatus\Link::class, $status->links->first());
     }
-
-
-    /** @test */
-    public function invalidStateThrowsAnException()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid state');
-        $this->client->replenishments->list(null, null, null, null, 'invalid');
-    }
 }
