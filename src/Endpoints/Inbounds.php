@@ -1,16 +1,10 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
-use Budgetlens\BolRetailerApi\Exceptions\InvalidFormatException;
 use Budgetlens\BolRetailerApi\Resources\Inbound;
 use Budgetlens\BolRetailerApi\Resources\InboundPackinglist;
 use Budgetlens\BolRetailerApi\Resources\InboundProductLabels;
 use Budgetlens\BolRetailerApi\Resources\InboundShippingLabel;
-use Budgetlens\BolRetailerApi\Resources\Invoice\InvoicePDF;
-use Budgetlens\BolRetailerApi\Resources\Invoice\InvoiceXML;
-use Budgetlens\BolRetailerApi\Resources\Invoice as InvoiceResource;
-use Budgetlens\BolRetailerApi\Resources\Label;
-use Budgetlens\BolRetailerApi\Resources\Order as OrderResource;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\Timeslot;
 use Budgetlens\BolRetailerApi\Resources\Transporter;
@@ -84,9 +78,13 @@ class Inbounds extends BaseEndpoint
 
         $collection = new Collection();
 
-        collect($response->inbounds)->each(function ($item) use ($collection) {
-            $collection->push(new Inbound($item));
-        });
+        $inbounds = $response->inbounds ?? null;
+
+        if (!is_null($inbounds)) {
+            collect($inbounds)->each(function ($item) use ($collection) {
+                $collection->push(new Inbound($item));
+            });
+        }
 
         return $collection;
     }

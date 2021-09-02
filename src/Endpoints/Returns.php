@@ -37,9 +37,13 @@ class Returns extends BaseEndpoint
 
         $collection = new Collection();
 
-        collect($response->returns)->each(function ($item) use ($collection) {
-            $collection->push(new ReturnsResource($item));
-        });
+        $returns = $response->returns ?? null;
+
+        if (!is_null($returns)) {
+            collect($returns)->each(function ($item) use ($collection) {
+                $collection->push(new ReturnsResource($item));
+            });
+        }
 
         return $collection;
     }

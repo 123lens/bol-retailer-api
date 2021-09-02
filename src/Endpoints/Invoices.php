@@ -2,7 +2,6 @@
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
 use Budgetlens\BolRetailerApi\Exceptions\InvalidFormatException;
-use Budgetlens\BolRetailerApi\Resources\Inventory as InventoryResource;
 use Budgetlens\BolRetailerApi\Resources\Invoice\InvoicePDF;
 use Budgetlens\BolRetailerApi\Resources\Invoice\InvoiceXML;
 use Budgetlens\BolRetailerApi\Resources\Invoice as InvoiceResource;

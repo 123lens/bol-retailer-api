@@ -49,9 +49,13 @@ class Shipping extends BaseEndpoint
 
         $collection = new Collection();
 
-        collect($response->deliveryOptions)->each(function ($item) use ($collection) {
-            $collection->push(new DeliveryOption($item));
-        });
+        $deliveryOptions = $response->deliveryOptions ?? null;
+
+        if (!is_null($deliveryOptions)) {
+            collect($deliveryOptions)->each(function ($item) use ($collection) {
+                $collection->push(new DeliveryOption($item));
+            });
+        }
 
         return $collection;
     }

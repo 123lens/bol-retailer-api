@@ -145,9 +145,13 @@ class Replenishments extends BaseEndpoint
 
         $collection = new Collection();
 
-        collect($response->timeSlots)->each(function ($item) use ($collection) {
-            $collection->push(new Replenishment\PickupTimeslot($item));
-        });
+        $timeslots = $response->timeSlots ?? null;
+
+        if (!is_null($timeslots)) {
+            collect($timeslots)->each(function ($item) use ($collection) {
+                $collection->push(new Replenishment\PickupTimeslot($item));
+            });
+        }
 
         return $collection;
     }

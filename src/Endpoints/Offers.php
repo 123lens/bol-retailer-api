@@ -1,16 +1,12 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
-use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
 use Budgetlens\BolRetailerApi\Resources\Condition;
 use Budgetlens\BolRetailerApi\Resources\Fulfilment;
 use Budgetlens\BolRetailerApi\Resources\Offer;
-use Budgetlens\BolRetailerApi\Resources\Order;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
-use Budgetlens\BolRetailerApi\Resources\Shipment as ShipmentResource;
 use Budgetlens\BolRetailerApi\Support\Arr;
 use Illuminate\Support\Collection;
-use Budgetlens\BolRetailerApi\Resources\Order as OrderResource;
 
 class Offers extends BaseEndpoint
 {

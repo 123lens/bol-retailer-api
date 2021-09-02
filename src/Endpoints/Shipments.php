@@ -1,10 +1,6 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
-use Budgetlens\BolRetailerApi\Resources\DeliveryOption;
-use Budgetlens\BolRetailerApi\Resources\Label;
-use Budgetlens\BolRetailerApi\Resources\Order;
-use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\Shipment;
 use Budgetlens\BolRetailerApi\Resources\ShipmentItem;
 use Illuminate\Support\Collection;
@@ -35,9 +31,13 @@ class Shipments extends BaseEndpoint
 
         $collection = new Collection();
 
-        collect($response->shipments)->each(function ($item) use ($collection) {
-            $collection->push(new Shipment($item));
-        });
+        $shipments = $response->shipments ?? null;
+
+        if (!is_null($shipments)) {
+            collect($shipments)->each(function ($item) use ($collection) {
+                $collection->push(new Shipment($item));
+            });
+        }
 
         return $collection;
     }
