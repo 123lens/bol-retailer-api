@@ -1828,7 +1828,7 @@ $replenishments = $client->replenishments->list(
     null,
     null,
     null,
-    'ANNOUNCED',
+    ['ANNOUNCED'],
 );
 print_r($replenishments);
 ```

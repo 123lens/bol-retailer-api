@@ -48,13 +48,13 @@ class Replenishments extends BaseEndpoint
         string    $eancode = null,
         \DateTime $startDate = null,
         \DateTime $endDate = null,
-        string    $state = null,
+        array     $states = [],
         int       $page = 1
     ): Collection {
-        if (!is_null($state) &&
-            !in_array($state, $this->availableStates)
-        ) {
-            throw new \InvalidArgumentException("Invalid state");
+        foreach ($states as $state) {
+            if (!in_array($state, $this->availableStates)) {
+                throw new \InvalidArgumentException("Invalid state");
+            }
         }
 
         $parameters = collect([
@@ -62,10 +62,10 @@ class Replenishments extends BaseEndpoint
             'ean' => $eancode,
             'start-date' => $startDate,
             'end-date' => $endDate,
-            'state' => $state,
+            'state' => $states,
             'page' => $page
         ])->reject(function ($value) {
-            return empty($value);
+            return (is_countable($value) && !count($value) || is_null($value));
         })->map(function ($value) {
             return ($value instanceof \DateTime)
                 ? $value->format('Y-m-d')
