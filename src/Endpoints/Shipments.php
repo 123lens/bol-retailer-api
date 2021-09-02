@@ -35,9 +35,13 @@ class Shipments extends BaseEndpoint
 
         $collection = new Collection();
 
-        collect($response->shipments)->each(function ($item) use ($collection) {
-            $collection->push(new Shipment($item));
-        });
+        $shipments = $response->shipments ?? null;
+
+        if (!is_null($shipments)) {
+            collect($shipments)->each(function ($item) use ($collection) {
+                $collection->push(new Shipment($item));
+            });
+        }
 
         return $collection;
     }

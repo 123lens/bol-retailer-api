@@ -1,11 +1,8 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
-use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
-use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
 use Budgetlens\BolRetailerApi\Resources\Order;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
-use Budgetlens\BolRetailerApi\Resources\Shipment as ShipmentResource;
 use Budgetlens\BolRetailerApi\Resources\Transport;
 use Budgetlens\BolRetailerApi\Types\CancelReasonCodes;
 use Illuminate\Support\Collection;
@@ -41,7 +38,7 @@ class Orders extends BaseEndpoint
         $orders = $response->orders ?? null;
 
         if (!is_null($orders)) {
-            collect($response->orders)->each(function ($item) use ($collection) {
+            collect($orders)->each(function ($item) use ($collection) {
                 $collection->push(new OrderResource($item));
             });
         }
