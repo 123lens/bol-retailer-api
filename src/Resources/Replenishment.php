@@ -4,23 +4,24 @@ namespace Budgetlens\BolRetailerApi\Resources;
 use Budgetlens\BolRetailerApi\Resources\Replenishment\DeliveryInformation;
 use Budgetlens\BolRetailerApi\Resources\Replenishment\Line;
 use Budgetlens\BolRetailerApi\Resources\Replenishment\LoadCarrier;
+use Budgetlens\BolRetailerApi\Resources\Replenishment\PickupAppointment;
 use Budgetlens\BolRetailerApi\Resources\Replenishment\StateTransition;
 use Illuminate\Support\Collection;
 
 class Replenishment extends BaseResource
 {
     public $replenishmentId;
-    public $reference;
     public $creationDateTime;
-    public $lines;
-    public $invalidLines;
+    public $reference;
     public $labelingByBol;
     public $state;
     public $deliveryInformation;
+    public $pickupAppointment;
     public $numberOfLoadCarriers;
     public $loadCarriers;
+    public $lines;
+    public $invalidLines;
     public $stateTransitions;
-
 
     public function __construct($attributes = [])
     {
@@ -46,6 +47,17 @@ class Replenishment extends BaseResource
         }
 
         $this->deliveryInformation = $value;
+
+        return $this;
+    }
+
+    public function setPickupAppointmentAttribute($value): self
+    {
+        if (!$value instanceof PickupAppointment) {
+            $value = new PickupAppointment($value);
+        }
+
+        $this->pickupAppointment = $value;
 
         return $this;
     }

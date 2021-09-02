@@ -6,6 +6,7 @@ use Budgetlens\BolRetailerApi\Resources\BaseResource;
 class LoadCarrier extends BaseResource
 {
     public $sscc;
+    public $transportLabelTrackAndTrace;
     public $transportState;
     public $transportStateUpdateDateTime;
 
