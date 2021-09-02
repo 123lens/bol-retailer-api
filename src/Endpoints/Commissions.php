@@ -54,7 +54,7 @@ class Commissions extends BaseEndpoint
     {
         $parameters = collect([
             'condition' => $condition,
-            'unit-price' => number_format($unitPrice/100, 2, '.', ','),
+            'unit-price' => number_format($unitPrice, 2, '.', ','),
         ])->reject(function ($value) {
             return empty($value);
         });

@@ -109,7 +109,7 @@ class Offers extends BaseEndpoint
         $prices = $offer->pricing->bundlePrices->map(function ($item) {
             return [
                 'quantity' => $item->quantity,
-                'unitPrice' => number_format($item->unitPrice/100, 2)
+                'unitPrice' => number_format($item->unitPrice, 2, '.', ',')
             ];
         })->all();
 

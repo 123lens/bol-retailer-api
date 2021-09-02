@@ -25,7 +25,7 @@ class LabelPrice extends BaseResource
     public function toArray(): array
     {
         return [
-            'totalPrice' => number_format(($this->totalPrice/100), 2)
+            'totalPrice' => number_format($this->totalPrice, 2)
         ];
     }
 }
