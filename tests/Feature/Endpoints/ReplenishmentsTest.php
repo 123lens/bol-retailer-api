@@ -30,7 +30,7 @@ class ReplenishmentsTest extends TestCase
             null,
             null,
             null,
-            'ANNOUNCED',
+            ['ANNOUNCED'],
         );
         $this->assertInstanceOf(Collection::class, $replenishments);
         $this->assertCount(2, $replenishments);
@@ -251,6 +251,6 @@ class ReplenishmentsTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid state');
-        $this->client->replenishments->list(null, null, null, null, 'invalid');
+        $this->client->replenishments->list(null, null, null, null, ['invalid']);
     }
 }
