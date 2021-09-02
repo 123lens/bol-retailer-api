@@ -1,10 +1,6 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
-use Budgetlens\BolRetailerApi\Resources\DeliveryOption;
-use Budgetlens\BolRetailerApi\Resources\Label;
-use Budgetlens\BolRetailerApi\Resources\Order;
-use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\Shipment;
 use Budgetlens\BolRetailerApi\Resources\ShipmentItem;
 use Illuminate\Support\Collection;
