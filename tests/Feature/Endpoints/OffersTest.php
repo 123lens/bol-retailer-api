@@ -118,9 +118,9 @@ class OffersTest extends TestCase
         $this->assertInstanceOf(Condition::class, $offer->condition);
         $this->assertSame('NEW', $offer->condition->name);
         $this->assertInstanceOf(Pricing::class, $offer->pricing);
-        $this->assertSame(4499, $offer->pricing->bundlePrices->first()->unitPrice);
+        $this->assertSame(44.99, $offer->pricing->bundlePrices->first()->unitPrice);
         $this->assertSame(1, $offer->pricing->bundlePrices->first()->quantity);
-        $this->assertSame(3999, $offer->pricing->bundlePrices->last()->unitPrice);
+        $this->assertSame(39.99, $offer->pricing->bundlePrices->last()->unitPrice);
         $this->assertSame(12, $offer->pricing->bundlePrices->last()->quantity);
         $this->assertInstanceOf(Stock::class, $offer->stock);
         $this->assertSame(3, $offer->stock->amount);
@@ -148,9 +148,9 @@ class OffersTest extends TestCase
         $this->assertInstanceOf(Condition::class, $offer->condition);
         $this->assertSame('NEW', $offer->condition->name);
         $this->assertInstanceOf(Pricing::class, $offer->pricing);
-        $this->assertSame(4499, $offer->pricing->bundlePrices->first()->unitPrice);
+        $this->assertSame(44.99, $offer->pricing->bundlePrices->first()->unitPrice);
         $this->assertSame(1, $offer->pricing->bundlePrices->first()->quantity);
-        $this->assertSame(3999, $offer->pricing->bundlePrices->last()->unitPrice);
+        $this->assertSame(39.99, $offer->pricing->bundlePrices->last()->unitPrice);
         $this->assertSame(12, $offer->pricing->bundlePrices->last()->quantity);
         $this->assertInstanceOf(Stock::class, $offer->stock);
         $this->assertSame(3, $offer->stock->amount);
