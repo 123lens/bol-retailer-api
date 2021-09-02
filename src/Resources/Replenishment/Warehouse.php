@@ -7,6 +7,7 @@ class Warehouse extends BaseResource
 {
     public $streetName;
     public $houseNumber;
+    public $houseNumberExtension;
     public $zipCode;
     public $city;
     public $countryCode;

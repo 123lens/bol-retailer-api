@@ -6,9 +6,11 @@ use Budgetlens\BolRetailerApi\Resources\BaseResource;
 
 class PickupAppointment extends BaseResource
 {
+    public $commentToTransporter;
     public $address;
     public $pickupTimeSlot;
-    public $commentToTransporter;
+    public $pickupDateTime;
+    public $cancellationReason;
 
     public function setAddressAttribute($value): self
     {
@@ -32,6 +34,16 @@ class PickupAppointment extends BaseResource
         return $this;
     }
 
+    public function setPickupDateTimeAttribute($value): self
+    {
+        if (!$value instanceof \DateTime) {
+            $value = new \DateTime($value);
+        }
+
+        $this->pickupDateTime = $value;
+
+        return $this;
+    }
 
     public function toArray(): array
     {
@@ -41,6 +53,13 @@ class PickupAppointment extends BaseResource
             })
             ->when(!is_null($this->pickupTimeSlot), function ($collection) {
                 return $collection->put('pickupTimeSlot', $this->pickupTimeSlot->toArray());
+            })
+            ->map(function ($item) {
+                if ($item instanceof \DateTime) {
+                    return $item->format('c');
+                }
+
+                return $item;
             })
             ->all();
     }

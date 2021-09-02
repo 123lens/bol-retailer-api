@@ -7,7 +7,12 @@ class Line extends BaseResource
 {
     public $ean;
     public $type;
-    public $quantity;
+    public $lineState;
+    public $quantityAnnounced;
+    public $quantityReceived;
+    public $quantityInProgress;
+    public $quantityWithGradedState;
+    public $quantityWithRegularState;
 
     public function setQuantityAttribute($value): self
     {
