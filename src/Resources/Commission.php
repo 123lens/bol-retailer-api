@@ -17,7 +17,6 @@ class Commission extends BaseResource
     public function __construct($attributes = [])
     {
         $this->condition = 'NEW';
-        $this->reductions = [];
 
         parent::__construct($attributes);
     }
