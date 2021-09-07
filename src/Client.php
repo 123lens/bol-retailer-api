@@ -134,6 +134,9 @@ class Client
         if (is_null($this->httpClient)) {
             $stack = HandlerStack::create();
 
+            // add token middleware
+            $stack->push(new RefreshToken($this->config));
+
             foreach ($this->config->getMiddleware() as $middlware) {
                 $stack->push($middlware);
             }
@@ -142,8 +145,6 @@ class Client
                 'handler' => $stack,
                 'timeout' => $this->config->getTimeout(),
             ]);
-            // add token middleware
-            $stack->push(new RefreshToken($this->config));
             $this->setClient($client);
         }
 

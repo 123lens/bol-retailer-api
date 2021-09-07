@@ -5,6 +5,7 @@ use Budgetlens\BolRetailerApi\Contracts\Config;
 use Budgetlens\BolRetailerApi\Exceptions\AuthenticationException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\HandlerStack;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Client as HttpClient;
 
@@ -117,7 +118,14 @@ final class RefreshToken
         ];
         try {
             $client = new HttpClient();
+            $stack = HandlerStack::create();
+
+            foreach ($this->config->getMiddleware() as $middlware) {
+                $stack->push($middlware);
+            }
+
             $response = $client->request('POST', 'https://login.bol.com/token?grant_type=client_credentials', [
+                'handler' => $stack,
                 'headers' => $headers,
                 'auth' => [$this->config->getClientId(), $this->config->getClientSecret()]
             ]);
