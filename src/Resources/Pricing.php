@@ -28,10 +28,13 @@ class Pricing extends BaseResource
      */
     public function add($price, int $quantity = 1): self
     {
-        $this->bundlePrices[] = new Price([
+        if (!$this->bundlePrices) {
+            $this->bundlePrices = new Collection();
+        }
+        $this->bundlePrices->push(new Price([
             'quantity' => $quantity,
             'unitPrice' => $price
-        ]);
+        ]));
 
         return $this;
     }
@@ -40,7 +43,7 @@ class Pricing extends BaseResource
     {
         return collect(parent::toArray())
             ->when(count($this->bundlePrices), function ($collection) {
-                $pricing = collect($this->bundlePrices)->map(function ($item) {
+                $pricing = $this->bundlePrices->map(function ($item) {
                     return $item->toArray();
                 });
                 return $collection->put('bundlePrices', $pricing->all());
