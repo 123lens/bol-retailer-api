@@ -252,8 +252,8 @@ class Offers extends BaseEndpoint
             "offers/unpublished/{$id}",
             null,
             [
-                'Accept' => 'application/vnd.retailer.v6+json',
-                'Content-Type' => 'application/vnd.retailer.v6+json',
+                'Accept' => 'application/vnd.retailer.v6+csv',
+                'Content-Type' => 'application/vnd.retailer.v6+csv',
             ]
         );
 
