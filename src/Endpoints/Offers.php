@@ -176,7 +176,11 @@ class Offers extends BaseEndpoint
             'offers/unpublished',
             json_encode([
                 'format' => 'CSV'
-            ])
+            ]),
+            [
+                'Accept' => 'application/vnd.retailer.v6+json',
+                'Content-Type' => 'application/vnd.retailer.v6+json',
+            ]
         );
 
         return new ProcessStatus(collect($response));
@@ -245,7 +249,12 @@ class Offers extends BaseEndpoint
 
         $response = $this->performApiCall(
             'GET',
-            "offers/unpublished/{$id}"
+            "offers/unpublished/{$id}",
+            null,
+            [
+                'Accept' => 'application/vnd.retailer.v6+json',
+                'Content-Type' => 'application/vnd.retailer.v6+json',
+            ]
         );
 
         $lines = collect(explode("\n", $response))->reject(function ($line) {
