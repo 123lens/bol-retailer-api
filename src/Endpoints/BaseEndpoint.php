@@ -65,6 +65,13 @@ abstract class BaseEndpoint
     ) {
         $response = $this->apiClient->performHttpCall($httpMethod, $apiMethod, $httpBody, $requestHeaders);
 
+        // hit a rate limit ?
+        if ($response->getStatusCode() === 429) {
+            $retryAfter = collect($response->getHeader('Retry-After'))->first();
+            throw new RateLimitException($retryAfter);
+        }
+
+
         $directResponseHeaders = [
             'application/vnd.retailer.v4+pdf;charset=UTF-8',
             'application/vnd.retailer.v4+csv;charset=UTF-8',
@@ -92,12 +99,6 @@ abstract class BaseEndpoint
 
         if (json_last_error() != JSON_ERROR_NONE) {
             throw new BolRetailerException("Unable to decode response: '{$body}'.");
-        }
-
-        // hit a rate limit ?
-        if ($response->getStatusCode() === 429) {
-            $retryAfter = collect($response->getHeader('Retry-After'))->first();
-            throw new RateLimitException($retryAfter);
         }
 
         // error handling
