@@ -1,0 +1,8 @@
+{
+  "type" : "https://api.bol.com/problems",
+  "title" : "Not Found",
+  "status" : 404,
+  "detail" : "Order for order id 9999999999 not found.",
+  "host" : "Instance-111",
+  "instance" : "https://api.bol.com/retailer/orders/9999999999"
+}

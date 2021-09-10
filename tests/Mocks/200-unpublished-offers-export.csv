@@ -1,0 +1,11 @@
+offerId,ean,notPublishableReason,notPublishableReasonDescription
+offer-id-1,8053672768770,PRICE_NOT_COMPETITIVE,Price too high
+offer-id-2,5050474104907,MISSING_RIGHTS_CATEGORY_BRAND,Additional sales rights are required.
+offer-id-3,7391899237008,PRICE_NOT_COMPETITIVE,Price too high
+offer-id-4,5050474101548,PRICE_NOT_COMPETITIVE,Price too high
+offer-id-5,0829196662515,PRICE_NOT_COMPETITIVE,Price too high
+offer-id-6,0824442849528,PRICE_NOT_COMPETITIVE,Price too high
+offer-id-7,5050474103474,PRICE_NOT_COMPETITIVE,Price too high
+offer-id-8,0805289018919,PRICE_NOT_COMPETITIVE,Price too high
+offer-id-9,7391899848433,PRICE_NOT_COMPETITIVE,Price too high
+offer-id-10,5050474102323,PRICE_NOT_COMPETITIVE,Price too high

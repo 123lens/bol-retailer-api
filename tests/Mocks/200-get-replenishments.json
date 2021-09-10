@@ -1,0 +1,32 @@
+{
+  "replenishments":[
+    {
+      "replenishmentId":"2312208180",
+      "reference":"MYREF02",
+      "creationDateTime":"2021-01-20T11:55:32+01:00",
+      "lines":[
+        {
+          "ean":"0846127026185"
+        }
+      ]
+    },
+    {
+      "replenishmentId":"2312208179",
+      "reference":"MYREF01",
+      "creationDateTime":"2021-01-20T11:35:33+01:00",
+      "lines":[
+        {
+          "ean":"8716393000627"
+        },
+        {
+          "ean":"0846127026185"
+        }
+      ],
+      "invalidLines":[
+        {
+          "type":"UNKNOWN_FBB_PRODUCT"
+        }
+      ]
+    }
+  ]
+}

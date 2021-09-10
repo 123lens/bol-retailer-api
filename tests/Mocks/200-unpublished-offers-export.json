@@ -1,0 +1,12 @@
+{
+  "id" : 1,
+  "eventType" : "UNPUBLISHED_OFFER_REPORT",
+  "description" : "Create unpublished offer report.",
+  "status" : "PENDING",
+  "createTimestamp" : "2021-03-19T09:32:44+01:00",
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://api.bol.com/retailer-demo/process-status/1",
+    "method" : "GET"
+  } ]
+}

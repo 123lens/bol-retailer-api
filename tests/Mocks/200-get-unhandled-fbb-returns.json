@@ -1,0 +1,22 @@
+{
+  "returns":[
+    {
+      "returnId":"6",
+      "registrationDateTime":"2018-04-27T19:55:12+02:00",
+      "fulfilmentMethod":"FBB",
+      "returnItems":[
+        {
+          "rmaId":"86127131",
+          "orderId":"7616247328",
+          "ean":"8718526069334",
+          "expectedQuantity":1,
+          "returnReason":{
+            "mainReason":"Verkeerd besteld",
+            "customerComments":"Ik wilde eigenlijk een groter formaat"
+          },
+          "handled":false
+        }
+      ]
+    }
+  ]
+}

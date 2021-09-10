@@ -1,0 +1,15 @@
+{
+  "type" : "https://api.bol.com/problems",
+  "title" : "Error validating request. Consult the bol.com API documentation for more information.",
+  "status" : 400,
+  "detail" : "Bad request",
+  "host" : "Instance-101",
+  "instance" : "https://api.bol.com/retailer-demo/returns/86129741",
+  "violations" : [ {
+    "name" : "handlingResult",
+    "reason" : "Request contains invalid value(s): '', allowed values: RETURN_RECEIVED, EXCHANGE_PRODUCT, RETURN_DOES_NOT_MEET_CONDITIONS, REPAIR_PRODUCT, CUSTOMER_KEEPS_PRODUCT_PAID, STILL_APPROVED."
+  }, {
+    "name" : "handlingResult",
+    "reason" : "The supplied value is empty, but is required."
+  } ]
+}

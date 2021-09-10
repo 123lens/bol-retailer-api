@@ -1,0 +1,36 @@
+{
+  "returns":[
+    {
+      "returnId":"5",
+      "registrationDateTime":"2018-04-27T19:55:12+02:00",
+      "fulfilmentMethod":"FBB",
+      "returnItems":[
+        {
+          "rmaId":"86127199",
+          "orderId":"7616247328",
+          "ean":"8718526069334",
+          "expectedQuantity":1,
+          "returnReason":{
+            "mainReason":"Verkeerd besteld",
+            "customerComments":"Ik wilde eigenlijk een groter formaat"
+          },
+          "handled":true,
+          "processingResults":[
+            {
+              "quantity":1,
+              "processingResult":"ACCEPTED",
+              "handlingResult":"RETURN_RECEIVED",
+              "processingDateTime":"2019-05-02T10:45:20+02:00"
+            },
+            {
+              "quantity":1,
+              "processingResult":"ACCEPTED",
+              "handlingResult":"RETURN_RECEIVED",
+              "processingDateTime":"2019-05-02T10:45:20+02:00"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

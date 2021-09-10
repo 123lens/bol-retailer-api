@@ -1,0 +1,13 @@
+{
+  "id" : 1,
+  "entityId" : "555551",
+  "eventType" : "CONFIRM_SHIPMENT",
+  "description" : "This is a mocked process status.",
+  "status" : "PENDING",
+  "createTimestamp" : "2021-03-22T09:11:19.98362+01:00",
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://api.bol.com/retailer-demo/process-status/1",
+    "method" : "GET"
+  } ]
+}

@@ -1,0 +1,12 @@
+{
+  "id" : 1,
+  "eventType" : "CREATE_SHIPPING_LABEL",
+  "description" : "Create shipping label with shipping label offer id 8f956bfc-fabe-45b4-b0e1-1b52a0896b74.",
+  "status" : "PENDING",
+  "createTimestamp" : "2021-03-22T09:06:13+01:00",
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://api.bol.com/retailer-demo/process-status/1",
+    "method" : "GET"
+  } ]
+}

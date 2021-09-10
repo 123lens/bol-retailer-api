@@ -1,0 +1,8 @@
+{
+  "type" : "https://api.bol.com/problems",
+  "title" : "Not Found",
+  "status" : 404,
+  "detail" : "Return for return id 158968131111 not found.",
+  "host" : "Instance-109",
+  "instance" : "https://api.bol.com/retailer/returns/158968131111"
+}

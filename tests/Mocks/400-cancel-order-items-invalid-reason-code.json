@@ -1,0 +1,12 @@
+{
+  "type" : "https://api.bol.com/problems",
+  "title" : "Error validating request body. Consult the bol.com API documentation for more information.",
+  "status" : 400,
+  "detail" : "Bad request",
+  "host" : "Instance-101",
+  "instance" : "https://api.bol.com/retailer-demo/orders/cancellation",
+  "violations" : [ {
+    "name" : "orderItems[0].reasonCode",
+    "reason" : "Request contains invalid value(s): 'Unknown', allowed values: OUT_OF_STOCK, REQUESTED_BY_CUSTOMER, BAD_CONDITION, HIGHER_SHIPCOST, INCORRECT_PRICE, NOT_AVAIL_IN_TIME, NO_BOL_GUARANTEE, ORDERED_TWICE, RETAIN_ITEM, TECH_ISSUE, UNFINDABLE_ITEM, OTHER."
+  } ]
+}

@@ -1,0 +1,22 @@
+{
+  "returns":[
+    {
+      "returnId":"15897410",
+      "registrationDateTime":"2019-06-03T17:06:12+02:00",
+      "fulfilmentMethod":"FBR",
+      "returnItems":[
+        {
+          "rmaId":"60283608",
+          "orderId":"1044796550",
+          "ean":"0634154562956",
+          "expectedQuantity":1,
+          "returnReason":{
+            "mainReason":"Anders, namelijk:",
+            "customerComments":"Cadeau vonden ze niet leuk"
+          },
+          "handled":false
+        }
+      ]
+    }
+  ]
+}

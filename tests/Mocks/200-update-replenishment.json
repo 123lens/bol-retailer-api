@@ -1,0 +1,13 @@
+{
+  "processStatusId" : "1",
+  "entityId" : "2312188192",
+  "eventType" : "UPDATE_REPLENISHMENT",
+  "description" : "Update replenishment with replenishment id '2312188192'.",
+  "status" : "PENDING",
+  "createTimestamp" : "2021-08-19T15:13:28+02:00",
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://api.bol.com/retailer-demo/process-status/1",
+    "method" : "GET"
+  } ]
+}

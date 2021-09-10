@@ -1,0 +1,21 @@
+{
+  "inbounds" : [ {
+    "inboundId" : 5850051250,
+    "reference" : "ZENDINGLVB1GVR",
+    "creationDateTime" : "2018-04-03T14:59:52+02:00",
+    "state" : "ARRIVEDATWH",
+    "labellingService" : false,
+    "announcedBSKUs" : 1,
+    "announcedQuantity" : 5,
+    "receivedBSKUs" : 1,
+    "receivedQuantity" : 5,
+    "timeSlot" : {
+      "startDateTime" : "2018-04-05T12:00:00+02:00",
+      "endDateTime" : "2018-04-05T17:00:00+02:00"
+    },
+    "inboundTransporter" : {
+      "name" : "UPS",
+      "code" : "UPS"
+    }
+  } ]
+}
