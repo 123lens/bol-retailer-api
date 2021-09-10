@@ -10,3 +10,4 @@ vendor
 src/Cache/token.cache
 # keep gitkeeps
 !/**/.gitkeep
+phpunit.xml
