@@ -29,6 +29,9 @@ class PerformanceIndicator extends BaseResource
     public function toArray(): array
     {
         return collect(parent::toArray())
+            ->when(!is_null($this->details), function ($collection) {
+                return $collection->put('details', $this->details->toArray());
+            })
             ->reject(function ($value) {
                 return is_null($value);
             })
