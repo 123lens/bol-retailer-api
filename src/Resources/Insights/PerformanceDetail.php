@@ -37,6 +37,12 @@ class PerformanceDetail extends BaseResource
     public function toArray(): array
     {
         return collect(parent::toArray())
+            ->when(!is_null($this->score), function ($collection) {
+                return $collection->put('score', $this->score->toArray());
+            })
+            ->when(!is_null($this->norm), function ($collection) {
+                return $collection->put('norm', $this->norm->toArray());
+            })
             ->reject(function ($value) {
                 return is_null($value);
             })
