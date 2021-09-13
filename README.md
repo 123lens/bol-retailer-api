@@ -6,7 +6,6 @@
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
 [![Tests][ico-tests]][link-tests]
-[![StyleCI][ico-code-style]][link-code-style]
 [![Total Downloads][ico-downloads]][link-downloads]
 
 
@@ -3667,13 +3666,11 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-php-version]: https://img.shields.io/packagist/php-v/budgetlens/bol-retailer-api?style=flat-square
 [ico-version]: https://img.shields.io/packagist/v/budgetlens/bol-retailer-api.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-tests]: https://img.shields.io/github/workflow/status/budgetlens/bol-retailer-api/tests/main?label=tests&style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/bol/bol-retailer-api.svg?style=flat-square
-[ico-code-style]: https://styleci.io/repos/xxxx/shield?branch=main
+[ico-tests]: https://github.com/123lens/bol-retailer-api/actions/workflows/tests.yml/badge.svg
+[ico-downloads]: https://img.shields.io/packagist/dt/budgetlens/bol-retailer-api.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/budgetlens/bol-retailer-api
 [link-tests]: https://github.com/123lens/bol-retailer-api/actions/workflows/tests.yml?query=workflow%3Atests
 [link-downloads]: https://packagist.org/packages/budgetlens/bol-retailer-api
-[link-code-style]: https://styleci.io/repos/xxxx
 [link-author]: https://github.com/avido
 [link-contributors]: https://github.com/123lens/bol-retailer-api/graphs/contributors
