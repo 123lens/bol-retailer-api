@@ -41,9 +41,13 @@ class Inventory extends BaseEndpoint
 
         $collection = new Collection();
 
-        collect($response->inventory)->each(function ($item) use ($collection) {
-            $collection->push(new InventoryResource($item));
-        });
+        $inventory = $response->inventory ?? null;
+
+        if (!is_null($inventory)) {
+            collect($inventory)->each(function ($item) use ($collection) {
+                $collection->push(new InventoryResource($item));
+            });
+        }
 
         return $collection;
     }
