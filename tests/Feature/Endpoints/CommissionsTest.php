@@ -81,7 +81,7 @@ class CommissionsTest extends TestCase
         $this->useMock('200-get-commission-by-eancode-8718526069334.json');
 
         $ean = '8718526069334';
-        $unitPrice = 25.00;
+        $unitPrice = 25.85;
         $commission = $this->client->commission->get($ean, $unitPrice);
         $this->assertInstanceOf(Commission::class, $commission);
         $this->assertSame($ean, $commission->ean);
