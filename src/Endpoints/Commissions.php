@@ -46,11 +46,11 @@ class Commissions extends BaseEndpoint
      * Get Commission by Eancode
      * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-commission
      * @param string $eancode
-     * @param int $unitPrice price in cents
+     * @param float $unitPrice price
      * @param string $condition
      * @return Commission
      */
-    public function get(string $eancode, int $unitPrice, string $condition = 'NEW'): Commission
+    public function get(string $eancode, float $unitPrice, string $condition = 'NEW'): Commission
     {
         $parameters = collect([
             'condition' => $condition,
