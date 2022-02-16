@@ -6,9 +6,11 @@ use Budgetlens\BolRetailerApi\Types\DeliveryCodes;
 class DeliveryOption extends BaseResource
 {
     public $shippingLabelOfferId;
+    public $recommended;
     public $validUntilDate;
     public $transporterCode;
     public $labelType;
+    public $labelDisplayName;
     public $labelPrice;
     public $packageRestrictions;
     public $handoverDetails;
@@ -16,6 +18,13 @@ class DeliveryOption extends BaseResource
     public function __construct($attributes = [])
     {
         parent::__construct($attributes);
+    }
+
+    public function setRecommendedAttribute($value): self
+    {
+        $this->recommended = (bool) $value;
+
+        return $this;
     }
 
     /**
