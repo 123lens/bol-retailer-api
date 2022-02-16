@@ -3,6 +3,8 @@
 All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
+
+### [v5.0.2] - 2021-09-21
 - Commissions endpoint
 - Insights Endpoint
 - Replenishment Endpoint
