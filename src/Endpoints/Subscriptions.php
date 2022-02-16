@@ -15,7 +15,7 @@ class Subscriptions extends BaseEndpoint
     public function list(): Collection
     {
         $response = $this->performApiCall(
-            'POST',
+            'GET',
             "subscriptions"
         );
 
