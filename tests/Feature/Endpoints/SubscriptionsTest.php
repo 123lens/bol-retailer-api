@@ -3,6 +3,7 @@ namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
 
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\Subscription;
+use Budgetlens\BolRetailerApi\Resources\Subscriptions\SignatureKey;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
 use Budgetlens\BolRetailerApi\Types\SubscriptionResource;
 use Illuminate\Support\Collection;
@@ -13,7 +14,6 @@ class SubscriptionsTest extends TestCase
     public function listSubscriptions()
     {
         $subscriptions = $this->client->subscriptions->list();
-
         $this->assertInstanceOf(Collection::class, $subscriptions);
         $this->assertCount(1, $subscriptions);
         $this->assertInstanceOf(Subscription::class, $subscriptions->first());
@@ -28,6 +28,7 @@ class SubscriptionsTest extends TestCase
     {
         $id = '1234';
         $subscription = $this->client->subscriptions->get($id);
+
         $this->assertInstanceOf(Subscription::class, $subscription);
         $this->assertSame('1234', $subscription->id);
         $this->assertInstanceOf(Collection::class, $subscription->resources);
@@ -91,5 +92,18 @@ class SubscriptionsTest extends TestCase
         $this->assertSame('SEND_SUBSCRIPTION_TST_MSG', $status->eventType);
         $this->assertSame('PENDING', $status->status);
         $this->assertInstanceOf(\DateTime::class, $status->createTimestamp);
+    }
+
+    /** @test */
+    public function getSignatureKeys()
+    {
+        $keys = $this->client->subscriptions->getSignatureKeys();
+        print_r($keys);exit;
+        $this->assertInstanceOf(Collection::class, $keys);
+        $this->assertCount(1, $keys);
+        $this->assertInstanceOf(SignatureKey::class, $keys->first());
+        $this->assertSame('0', $keys->first()->id);
+        $this->assertSame('RSA', $keys->first()->type);
+        $this->assertNotNull($keys->first()->publicKey);
     }
 }
