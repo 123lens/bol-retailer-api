@@ -13,6 +13,7 @@ use Budgetlens\BolRetailerApi\Endpoints\Returns;
 use Budgetlens\BolRetailerApi\Endpoints\Shipments;
 use Budgetlens\BolRetailerApi\Endpoints\Shipping;
 use Budgetlens\BolRetailerApi\Endpoints\Status;
+use Budgetlens\BolRetailerApi\Endpoints\Subscriptions;
 use Budgetlens\BolRetailerApi\Endpoints\Transports;
 use Budgetlens\BolRetailerApi\Middleware\RefreshToken;
 use Composer\CaBundle\CaBundle;
@@ -76,6 +77,9 @@ class Client
     /** @var  Inbounds */
     public $inbounds;
 
+    /** @var Subscriptions */
+    public $subscriptions;
+
     /** @var  Transports */
     public $transports;
 
@@ -112,6 +116,7 @@ class Client
         $this->inventory = new Inventory($this);
         $this->invoices = new Invoices($this);
         $this->inbounds = new Inbounds($this);
+        $this->subscriptions = new Subscriptions($this);
         $this->transports = new Transports($this);
     }
 
