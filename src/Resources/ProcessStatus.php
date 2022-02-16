@@ -23,6 +23,17 @@ class ProcessStatus extends BaseResource
         parent::__construct($attributes);
     }
 
+    public function setCreateTimestampAttribute($value): self
+    {
+        if (!$value instanceof \DateTime) {
+            $value = new \DateTime($value);
+        }
+
+        $this->createTimestamp = $value;
+
+        return $this;
+    }
+
     /**
      * Set ID Attribute
      * @param $value
