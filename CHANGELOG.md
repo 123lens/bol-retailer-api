@@ -4,6 +4,7 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
 - Processed changed resources https://api.bol.com/retailer/public/Retailer-API/v6/migrationguide/v5-v6/migrationguide.html
+- Changed main version header to v6
 
 ### [v5.0.2] - 2021-09-21
 - Commissions endpoint
