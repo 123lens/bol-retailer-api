@@ -157,6 +157,32 @@ class Replenishments extends BaseEndpoint
     }
 
     /**
+     * Retrieve delivery dates
+     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-delivery-dates
+     * @return Collection
+     */
+    public function deliveryDates(): Collection
+    {
+        $response = $this->performApiCall(
+            'GET',
+            'replenishments/delivery-dates',
+        );
+
+        $collection = new Collection();
+
+        $deliveryDates = $response->deliveryDates ?? null;
+        if (!is_null($deliveryDates)) {
+            collect($deliveryDates)->each(function ($item) use ($collection) {
+                $collection->push(new Replenishment\DeliveryDate([
+                    'date' => $item
+                ]));
+            });
+        }
+
+        return $collection;
+    }
+
+    /**
      * Get Product Labels
      * @see https://api.bol.com/retailer/public/redoc/v5#operation/post-product-labels
      * @param array $products

@@ -98,7 +98,6 @@ class SubscriptionsTest extends TestCase
     public function getSignatureKeys()
     {
         $keys = $this->client->subscriptions->getSignatureKeys();
-        print_r($keys);exit;
         $this->assertInstanceOf(Collection::class, $keys);
         $this->assertCount(1, $keys);
         $this->assertInstanceOf(SignatureKey::class, $keys->first());

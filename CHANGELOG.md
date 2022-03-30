@@ -7,6 +7,7 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 - Changed main version header to v6
 - Update ProcessStatus resource, set `createTimestamp` as `DateTime`
 - Added endpoint `subscriptions`
+- Added method `getDeliveryDates` to `/replenishment` endpoint
 
 ### [v5.0.2] - 2021-09-21
 - Commissions endpoint

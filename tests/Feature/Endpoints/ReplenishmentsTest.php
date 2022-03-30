@@ -96,6 +96,18 @@ class ReplenishmentsTest extends TestCase
     }
 
     /** @test */
+    public function getDeliveryDates()
+    {
+        $this->useMock('200-get-replenishment-delivery-dates.json');
+
+        $result = $this->client->replenishments->deliveryDates();
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertInstanceOf(Replenishment\DeliveryDate::class, $result->first());
+        $this->assertInstanceOf(\DateTime::class, $result->first()->date);
+        $this->assertSame('2021-12-28', $result->first()->date->format('Y-m-d'));
+    }
+
+    /** @test */
     public function createReplenishment()
     {
         $this->useMock('200-create-replenishment.json');
