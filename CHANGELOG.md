@@ -3,6 +3,10 @@
 All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
+
+--
+
+### [v6.0.0] - 2022-03-30
 - Processed changed resources https://api.bol.com/retailer/public/Retailer-API/v6/migrationguide/v5-v6/migrationguide.html
 - Changed main version header to v6
 - Update ProcessStatus resource, set `createTimestamp` as `DateTime`
@@ -15,7 +19,6 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 - Replenishment Endpoint
 - Returns endpoint
 - added transports endpoint
-## Latest Releases 
 
 ### [v2.2.0] - 2020-11-11
 
