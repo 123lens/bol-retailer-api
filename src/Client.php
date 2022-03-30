@@ -13,6 +13,7 @@ use Budgetlens\BolRetailerApi\Endpoints\Returns;
 use Budgetlens\BolRetailerApi\Endpoints\Shipments;
 use Budgetlens\BolRetailerApi\Endpoints\Shipping;
 use Budgetlens\BolRetailerApi\Endpoints\Status;
+use Budgetlens\BolRetailerApi\Endpoints\Subscriptions;
 use Budgetlens\BolRetailerApi\Endpoints\Transports;
 use Budgetlens\BolRetailerApi\Middleware\RefreshToken;
 use Composer\CaBundle\CaBundle;
@@ -30,53 +31,56 @@ class Client
 {
     const HTTP_STATUS_NO_CONTENT = 204;
 
-    const USER_AGENT = "Budgetlens/BolRetailerApi/V1.0.0";
+    const USER_AGENT = "Budgetlens/BolRetailerApi/V6.0.0";
 
     /** @var string */
-    public $apiVersionHeader = 'application/vnd.retailer.v5+json';
+    public $apiVersionHeader = 'application/vnd.retailer.v6+json';
 
     /** @var Config  */
     protected $config;
 
-    /** @var \Budgetlens\BolRetailerApi\Endpoints\Commissions */
+    /** @var Commissions */
     public $commission;
 
-    /** @var \Budgetlens\BolRetailerApi\Endpoints\Insights */
+    /** @var Insights */
     public $insights;
 
-    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Inventory */
+    /** @var  Inventory */
     public $inventory;
 
-    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Invoices */
+    /** @var  Invoices */
     public $invoices;
 
-    /** @var \Budgetlens\BolRetailerApi\Endpoints\Offers */
+    /** @var Offers */
     public $offers;
 
-    /** @var \Budgetlens\BolRetailerApi\Endpoints\Orders */
+    /** @var Orders */
     public $orders;
 
-    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Status */
+    /** @var  Status */
     public $status;
 
     // product-content
 
-    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Replenishments */
+    /** @var  Replenishments */
     public $replenishments;
 
-    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Returns */
+    /** @var  Returns */
     public $returns;
 
-    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Shipping */
+    /** @var  Shipping */
     public $shipping;
 
-    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Shipments */
+    /** @var  Shipments */
     public $shipments;
 
-    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Inbounds */
+    /** @var  Inbounds */
     public $inbounds;
 
-    /** @var  \Budgetlens\BolRetailerApi\Endpoints\Transports */
+    /** @var Subscriptions */
+    public $subscriptions;
+
+    /** @var  Transports */
     public $transports;
 
     /** @var \GuzzleHttp\Client */
@@ -112,9 +116,9 @@ class Client
         $this->inventory = new Inventory($this);
         $this->invoices = new Invoices($this);
         $this->inbounds = new Inbounds($this);
+        $this->subscriptions = new Subscriptions($this);
         $this->transports = new Transports($this);
     }
-
 
     /**
      * Set Client
@@ -140,11 +144,13 @@ class Client
             foreach ($this->config->getMiddleware() as $middlware) {
                 $stack->push($middlware);
             }
+
             $client = new HttpClient([
                 RequestOptions::VERIFY => CaBundle::getBundledCaBundlePath(),
                 'handler' => $stack,
                 'timeout' => $this->config->getTimeout(),
             ]);
+
             $this->setClient($client);
         }
 
@@ -158,6 +164,7 @@ class Client
     private function getUserAgent(): string
     {
         $agent = $this->config->getUserAgent();
+
         return $agent !== '' ? $agent : self::USER_AGENT;
     }
 
@@ -187,14 +194,14 @@ class Client
 
         try {
             $response = $this->getClient()->send($request, ['http_errors' => false, 'debug' => false]);
+
+            if (!$response) {
+                throw new BolRetailerException('No API response received.');
+            }
+
+            return $response;
         } catch (GuzzleException $e) {
             throw new BolRetailerException($e->getMessage(), $e->getCode());
         }
-
-        if (! $response) {
-            throw new BolRetailerException('No API response received.');
-        }
-
-        return $response;
     }
 }

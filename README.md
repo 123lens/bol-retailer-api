@@ -3548,8 +3548,266 @@ Budgetlens\BolRetailerApi\Resources\ProcessStatus Object
 
 )
 ```
-
 ---
+
+## Subscriptions
+
+### List subscriptions
+```php
+$subscriptions = $this->client->subscriptions->list();
+print_r($subscriptions);
+```
+
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => Budgetlens\BolRetailerApi\Resources\Subscription Object
+                (
+                    [id] => 1234
+                    [resources] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => PROCESS_STATUS
+                                )
+
+                            [escapeWhenCastingToString:protected] => 
+                        )
+
+                    [url] => https://www.example.com/push
+                )
+
+        )
+
+    [escapeWhenCastingToString:protected] => 
+)
+```
+
+### Get Subscription By Id
+```php
+$id = '1234';
+$subscription = $this->client->subscriptions->get($id);
+print_r($subscription)
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\Subscription Object
+(
+    [id] => 1234
+    [resources] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => PROCESS_STATUS
+                )
+
+            [escapeWhenCastingToString:protected] => 
+        )
+
+    [url] => https://www.example.com/push
+)
+```
+
+### Create subscription
+```php
+$resources = [SubscriptionResource::PROCESS_STATUS];
+$url = 'https://www.example.com/push';
+$status = $this->client->subscriptions->create($resources, $url);
+print_r($status);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\ProcessStatus Object
+(
+    [processStatusId] => 1
+    [entityId] => 
+    [eventType] => CREATE_SUBSCRIPTION
+    [description] => Create push notification subscription.
+    [status] => PENDING
+    [errorMessage] => 
+    [createTimestamp] => DateTime Object
+        (
+            [date] => 2022-02-16 22:27:37.000000
+            [timezone_type] => 1
+            [timezone] => +01:00
+        )
+
+    [links] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\ProcessStatus\Link Object
+                        (
+                            [rel] => self
+                            [href] => https://api.bol.com/retailer-demo/process-status/1
+                            [method] => GET
+                        )
+
+                )
+
+            [escapeWhenCastingToString:protected] => 
+        )
+
+)
+```
+
+### Update subscription
+```php
+$id = '1234';
+$resources = [SubscriptionResource::PROCESS_STATUS];
+$url = 'https://www.example.com/push';
+
+$status = $this->client->subscriptions->update($id, $resources, $url);
+print_r($status);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\ProcessStatus Object
+(
+    [processStatusId] => 1
+    [entityId] => 1234
+    [eventType] => UPDATE_SUBSCRIPTION
+    [description] => Update push notification subscription with id 1234.
+    [status] => PENDING
+    [errorMessage] => 
+    [createTimestamp] => DateTime Object
+        (
+            [date] => 2022-02-16 22:28:27.000000
+            [timezone_type] => 1
+            [timezone] => +01:00
+        )
+
+    [links] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\ProcessStatus\Link Object
+                        (
+                            [rel] => self
+                            [href] => https://api.bol.com/retailer-demo/process-status/1
+                            [method] => GET
+                        )
+
+                )
+
+            [escapeWhenCastingToString:protected] => 
+        )
+
+)
+```
+
+### Delete subscription
+```php
+$id = '1234';
+$status = $this->client->subscriptions->delete($id);
+print_r($status);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\ProcessStatus Object
+(
+    [processStatusId] => 1
+    [entityId] => 
+    [eventType] => DELETE_SUBSCRIPTION
+    [description] => Delete push notification subscription with id 1234.
+    [status] => PENDING
+    [errorMessage] => 
+    [createTimestamp] => DateTime Object
+        (
+            [date] => 2022-02-16 22:29:15.000000
+            [timezone_type] => 1
+            [timezone] => +01:00
+        )
+
+    [links] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\ProcessStatus\Link Object
+                        (
+                            [rel] => self
+                            [href] => https://api.bol.com/retailer-demo/process-status/1
+                            [method] => GET
+                        )
+
+                )
+
+            [escapeWhenCastingToString:protected] => 
+        )
+
+)
+```
+
+### Send test notification
+```php
+$id = '54321';
+$status = $this->client->subscriptions->test($id);
+print_r($status);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\ProcessStatus Object
+(
+    [processStatusId] => 1
+    [entityId] => 
+    [eventType] => SEND_SUBSCRIPTION_TST_MSG
+    [description] => Send a test push notification for configured subscription.
+    [status] => PENDING
+    [errorMessage] => 
+    [createTimestamp] => DateTime Object
+        (
+            [date] => 2022-02-16 22:30:15.000000
+            [timezone_type] => 1
+            [timezone] => +01:00
+        )
+
+    [links] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\ProcessStatus\Link Object
+                        (
+                            [rel] => self
+                            [href] => https://api.bol.com/retailer-demo/process-status/1
+                            [method] => GET
+                        )
+
+                )
+
+            [escapeWhenCastingToString:protected] => 
+        )
+
+)
+```
+
+### Get Signature (public) keys
+```php
+$keys = $this->client->subscriptions->getSignatureKeys();
+print_r($keys);
+```
+
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => Budgetlens\BolRetailerApi\Resources\Subscriptions\SignatureKey Object
+                (
+                    [id] => 0
+                    [type] => RSA
+                    [publicKey] => MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh5x6f/IexlWgo23VF9yH7zmRWEaFShAXyFoR3Flh0ZwSn8hZY+rR3zJt/FWKT6mcw51cFjNWGoi92FLLCsXq49TS+8T6z5/AqpS/cORzFndiaPeMN5k9nla9ECwWqizqoBWRFyg7tnP0GkbZF+rjLlAbUznisEItGcfu9rw4+CfulFTwA9CGxKUDNJOcihEkUflsMlGL2Stqs1Q54O2GTPlLX4KTn1z7Iy4E8IqSOm9Z7sEFHK/RR7sf6K3JsN/h3nR0+NN8o2OGCZ1z17OjSnWXbq1QDZIkN+PntEIW540Og0SHDshLAGxOeW0jw8tU/uKZMhR7lmmrabLjutk3NQIDAQAB
+                )
+
+        )
+
+    [escapeWhenCastingToString:protected] => 
+)
+```
+---
+
+
 
 # Deprecated Endpoints
 
