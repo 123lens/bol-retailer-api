@@ -15,8 +15,13 @@ use Psr\Http\Message\ResponseInterface;
 
 abstract class BaseClient
 {
+    protected $endpoint = 'https://api.bol.com/retailer';
+    protected $endpointTest = 'https://api.bol.com/retailer-demo';
+
+    /** @var int http status code - no content */
     const HTTP_STATUS_NO_CONTENT = 204;
 
+    /** @var string - default user agent string */
     const USER_AGENT = "Budgetlens/BolRetailerApi/V7.0.0";
 
     /** @var string */

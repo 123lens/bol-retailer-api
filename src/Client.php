@@ -18,6 +18,10 @@ use Budgetlens\BolRetailerApi\Endpoints\Orders;
 
 class Client extends BaseClient
 {
+    protected $endpoint = 'https://api.bol.com/retailer';
+    protected $endpointTest = 'https://api.bol.com/retailer-demo';
+
+
     /** @var Commissions */
     public $commission;
 
