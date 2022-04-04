@@ -121,7 +121,7 @@ abstract class BaseClient
 
         $request = new Request(
             $httpMethod,
-            "{$this->config->getEndpoint()}/{$apiMethod}",
+            "{$this->getEndpoint()}/{$apiMethod}",
             $headers,
             $httpBody
         );
@@ -137,5 +137,16 @@ abstract class BaseClient
         } catch (GuzzleException $e) {
             throw new BolRetailerException($e->getMessage(), $e->getCode());
         }
+    }
+
+    /**
+     * Get Correct endpoint
+     * @return string
+     */
+    protected function getEndpoint(): string
+    {
+        return $this->config->getTestMode()
+            ? $this->endpointTest
+            : $this->endpoint;
     }
 }
