@@ -22,7 +22,9 @@ abstract class TestCase extends BaseTestCase
 
     protected function setUp(): void
     {
-        $this->client = new Client(new TestApiConfig());
+        $config = new TestApiConfig();
+
+        $this->client = new Client($config);
 
         parent::setUp();
     }
@@ -68,9 +70,9 @@ class TestApiConfig implements Config
         return getenv('CLIENT_SECRET');
     }
 
-    public function getEndpoint(): string
+    public function getTestMode(): bool
     {
-        return 'https://api.bol.com/retailer-demo';
+        return true;
     }
 
     public function getMiddleware(): array

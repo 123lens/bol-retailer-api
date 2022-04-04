@@ -28,7 +28,7 @@ abstract class BaseClient
     public $apiVersionHeader = 'application/vnd.retailer.v7+json';
 
     /** @var Config  */
-    protected $config;
+    private $config;
 
     /** @var \GuzzleHttp\Client */
     protected $httpClient;

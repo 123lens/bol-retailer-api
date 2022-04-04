@@ -1,6 +1,7 @@
 <?php
 namespace Budgetlens\BolRetailerApi;
 
+use Budgetlens\BolRetailerApi\Contracts\Config;
 use Budgetlens\BolRetailerApi\Endpoints\Commissions;
 use Budgetlens\BolRetailerApi\Endpoints\Inbounds;
 use Budgetlens\BolRetailerApi\Endpoints\Insights;
