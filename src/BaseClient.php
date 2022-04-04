@@ -2,19 +2,6 @@
 namespace Budgetlens\BolRetailerApi;
 
 use Budgetlens\BolRetailerApi\Contracts\Config;
-use Budgetlens\BolRetailerApi\Endpoints\Commissions;
-use Budgetlens\BolRetailerApi\Endpoints\Inbounds;
-use Budgetlens\BolRetailerApi\Endpoints\Insights;
-use Budgetlens\BolRetailerApi\Endpoints\Inventory;
-use Budgetlens\BolRetailerApi\Endpoints\Invoices;
-use Budgetlens\BolRetailerApi\Endpoints\Offers;
-use Budgetlens\BolRetailerApi\Endpoints\Replenishments;
-use Budgetlens\BolRetailerApi\Endpoints\Returns;
-use Budgetlens\BolRetailerApi\Endpoints\Shipments;
-use Budgetlens\BolRetailerApi\Endpoints\Shipping;
-use Budgetlens\BolRetailerApi\Endpoints\Status;
-use Budgetlens\BolRetailerApi\Endpoints\Subscriptions;
-use Budgetlens\BolRetailerApi\Endpoints\Transports;
 use Budgetlens\BolRetailerApi\Middleware\RefreshToken;
 use Composer\CaBundle\CaBundle;
 use GuzzleHttp\Client as HttpClient;
@@ -23,7 +10,6 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
-use Budgetlens\BolRetailerApi\Endpoints\Orders;
 use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
 use Psr\Http\Message\ResponseInterface;
 
@@ -31,10 +17,10 @@ abstract class BaseClient
 {
     const HTTP_STATUS_NO_CONTENT = 204;
 
-    const USER_AGENT = "Budgetlens/BolRetailerApi/V6.0.0";
+    const USER_AGENT = "Budgetlens/BolRetailerApi/V7.0.0";
 
     /** @var string */
-    public $apiVersionHeader = 'application/vnd.retailer.v6+json';
+    public $apiVersionHeader = 'application/vnd.retailer.v7+json';
 
     /** @var Config  */
     protected $config;
@@ -47,6 +33,7 @@ abstract class BaseClient
         if (is_null($config)) {
             $config = new ApiConfig();
         }
+
         // set config
         $this->config = $config;
 
@@ -65,9 +52,8 @@ abstract class BaseClient
     /**
      * Set Client
      * @param ClientInterface $client
-     * @return void
      */
-    public function setClient(ClientInterface $client): void
+    public function setClient(ClientInterface $client)
     {
         $this->httpClient = $client;
     }
@@ -104,7 +90,7 @@ abstract class BaseClient
      * Retrieve User Agent
      * @return string
      */
-    private function getUserAgent(): string
+    protected function getUserAgent(): string
     {
         $agent = $this->config->getUserAgent();
 
