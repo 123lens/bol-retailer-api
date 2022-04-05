@@ -44,7 +44,7 @@ class SubscriptionsTest extends TestCase
         $status = $this->client->subscriptions->create($resources, $url);
 
         $this->assertInstanceOf(ProcessStatus::class, $status);
-        $this->assertSame("1", $status->processStatusId);
+        $this->assertSame(1, $status->processStatusId);
         $this->assertSame('CREATE_SUBSCRIPTION', $status->eventType);
         $this->assertSame('PENDING', $status->status);
         $this->assertInstanceOf(\DateTime::class, $status->createTimestamp);
@@ -60,7 +60,7 @@ class SubscriptionsTest extends TestCase
         $status = $this->client->subscriptions->update($id, $resources, $url);
 
         $this->assertInstanceOf(ProcessStatus::class, $status);
-        $this->assertSame("1", $status->processStatusId);
+        $this->assertSame(1, $status->processStatusId);
         $this->assertSame('UPDATE_SUBSCRIPTION', $status->eventType);
         $this->assertSame('PENDING', $status->status);
         $this->assertInstanceOf(\DateTime::class, $status->createTimestamp);
@@ -74,7 +74,7 @@ class SubscriptionsTest extends TestCase
         $status = $this->client->subscriptions->delete($id);
 
         $this->assertInstanceOf(ProcessStatus::class, $status);
-        $this->assertSame("1", $status->processStatusId);
+        $this->assertSame(1, $status->processStatusId);
         $this->assertSame('DELETE_SUBSCRIPTION', $status->eventType);
         $this->assertSame('PENDING', $status->status);
         $this->assertInstanceOf(\DateTime::class, $status->createTimestamp);
@@ -88,7 +88,7 @@ class SubscriptionsTest extends TestCase
         $status = $this->client->subscriptions->test($id);
 
         $this->assertInstanceOf(ProcessStatus::class, $status);
-        $this->assertSame("1", $status->processStatusId);
+        $this->assertSame(1, $status->processStatusId);
         $this->assertSame('SEND_SUBSCRIPTION_TST_MSG', $status->eventType);
         $this->assertSame('PENDING', $status->status);
         $this->assertInstanceOf(\DateTime::class, $status->createTimestamp);

@@ -1,6 +1,6 @@
 {
   "processStatuses" : [ {
-    "id" : 1,
+    "processStatusId" : 1,
     "entityId" : "555551",
     "eventType" : "CONFIRM_SHIPMENT",
     "description" : "This is a mocked process status.",

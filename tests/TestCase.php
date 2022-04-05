@@ -3,6 +3,7 @@ namespace Budgetlens\BolRetailerApi\Tests;
 
 use Budgetlens\BolRetailerApi\Contracts\Config;
 use Budgetlens\BolRetailerApi\Client;
+use Budgetlens\BolRetailerApi\SharedClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase as BaseTestCase;
@@ -20,12 +21,19 @@ abstract class TestCase extends BaseTestCase
      */
     protected $client;
 
+    /**
+     * @var SharedClient
+     */
+    protected $sharedClient;
+
     protected function setUp(): void
     {
+        // setup multiple clients
         $config = new TestApiConfig();
-
+        // retailer api client
         $this->client = new Client($config);
-
+        // shared api client
+        $this->sharedClient = new SharedClient($config);
         parent::setUp();
     }
 

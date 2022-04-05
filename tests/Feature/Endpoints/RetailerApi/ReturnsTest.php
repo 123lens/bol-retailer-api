@@ -337,7 +337,7 @@ class ReturnsTest extends TestCase
 
         $status = $this->client->returns->create($orderItemId, $quantity, $state);
         $this->assertInstanceOf(ProcessStatus::class, $status);
-        $this->assertSame('1', $status->processStatusId);
+        $this->assertSame(1, $status->processStatusId);
         $this->assertSame('CREATE_RETURN_ITEM', $status->eventType);
         $this->assertSame('PENDING', $status->status);
         $this->assertInstanceOf(Collection::class, $status->links);
@@ -377,7 +377,7 @@ class ReturnsTest extends TestCase
 
         $status = $this->client->returns->handle($rmaId, $quantity, $state);
         $this->assertInstanceOf(ProcessStatus::class, $status);
-        $this->assertSame('1', $status->processStatusId);
+        $this->assertSame(1, $status->processStatusId);
         $this->assertSame('86123452', $status->entityId);
         $this->assertSame('HANDLE_RETURN_ITEM', $status->eventType);
         $this->assertSame('PENDING', $status->status);
@@ -419,7 +419,7 @@ class ReturnsTest extends TestCase
 
         $status = $this->client->returns->handle($rmaId, $quantity, $state);
         $this->assertInstanceOf(ProcessStatus::class, $status);
-        $this->assertSame('1', $status->processStatusId);
+        $this->assertSame(1, $status->processStatusId);
         $this->assertSame('86129741', $status->entityId);
         $this->assertSame('HANDLE_RETURN_ITEM', $status->eventType);
         $this->assertSame('PENDING', $status->status);

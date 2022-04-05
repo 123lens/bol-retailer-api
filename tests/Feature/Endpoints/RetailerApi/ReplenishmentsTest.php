@@ -135,7 +135,7 @@ class ReplenishmentsTest extends TestCase
 
         $status = $this->client->replenishments->create($replenishment);
         $this->assertInstanceOf(ProcessStatus::class, $status);
-        $this->assertSame('1', $status->processStatusId);
+        $this->assertSame(1, $status->processStatusId);
         $this->assertSame('CREATE_REPLENISHMENT', $status->eventType);
         $this->assertSame('PENDING', $status->status);
         $this->assertInstanceOf(Collection::class, $status->links);
@@ -175,7 +175,7 @@ class ReplenishmentsTest extends TestCase
         ]);
         $status = $this->client->replenishments->create($replenishment);
         $this->assertInstanceOf(ProcessStatus::class, $status);
-        $this->assertSame('1', $status->processStatusId);
+        $this->assertSame(1, $status->processStatusId);
         $this->assertSame('CREATE_REPLENISHMENT', $status->eventType);
         $this->assertSame('PENDING', $status->status);
         $this->assertInstanceOf(Collection::class, $status->links);
@@ -231,7 +231,7 @@ class ReplenishmentsTest extends TestCase
         ]);
         $status = $this->client->replenishments->update($replenishment);
         $this->assertInstanceOf(ProcessStatus::class, $status);
-        $this->assertSame('1', $status->processStatusId);
+        $this->assertSame(1, $status->processStatusId);
         $this->assertSame('UPDATE_REPLENISHMENT', $status->eventType);
         $this->assertSame('PENDING', $status->status);
         $this->assertInstanceOf(Collection::class, $status->links);

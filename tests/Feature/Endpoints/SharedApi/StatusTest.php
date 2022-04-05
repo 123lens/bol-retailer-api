@@ -1,5 +1,5 @@
 <?php
-namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints\RetailerApi;
+namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints\SharedApi;
 
 use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
 use Budgetlens\BolRetailerApi\Exceptions\ProcessStillPendingException;
@@ -14,7 +14,7 @@ class StatusTest extends TestCase
     public function pendingStateWillEndInException()
     {
         $this->expectException(ProcessStillPendingException::class);
-        $this->client->status->waitUntilComplete(1, 2, 1);
+        $this->sharedClient->status->waitUntilComplete(1, 2, 1);
     }
 
     /** @test */
@@ -22,7 +22,7 @@ class StatusTest extends TestCase
     {
         $this->useMock('200-status-success-response.json');
 
-        $status = $this->client->status->waitUntilComplete(2, 2, 3);
+        $status = $this->sharedClient->status->waitUntilComplete(2, 2, 3);
         $this->assertInstanceOf(ProcessStatus::class, $status);
         $this->assertSame(2, $status->processStatusId);
         $this->assertSame('555552', $status->entityId);
@@ -35,7 +35,7 @@ class StatusTest extends TestCase
     {
         $this->useMock('200-status-get-status-by-id.json');
 
-        $status = $this->client->status->get(1);
+        $status = $this->sharedClient->status->get(1);
         $this->assertInstanceOf(ProcessStatus::class, $status);
         $this->assertSame(1, $status->processStatusId);
         $this->assertSame('555551', $status->entityId);
@@ -50,7 +50,7 @@ class StatusTest extends TestCase
 
         $this->expectException(BolRetailerException::class);
         $this->expectExceptionMessage('Error executing API call : Not Found : Not Found (404)');
-        $status = $this->client->status->get(99999);
+        $status = $this->sharedClient->status->get(99999);
     }
 
     /** @test */
@@ -62,7 +62,7 @@ class StatusTest extends TestCase
             'id' => 1
         ]);
 
-        $status = $this->client->status->get($processStatus);
+        $status = $this->sharedClient->status->get($processStatus);
         $this->assertInstanceOf(ProcessStatus::class, $status);
         $this->assertSame(1, $status->processStatusId);
         $this->assertSame('555551', $status->entityId);
@@ -75,7 +75,7 @@ class StatusTest extends TestCase
     {
         $this->useMock('200-status-get-status-by-entity-id.json');
 
-        $status = $this->client->status->getByEntityId(555551, 'CONFIRM_SHIPMENT');
+        $status = $this->sharedClient->status->getByEntityId(555551, 'CONFIRM_SHIPMENT');
         $this->assertInstanceOf(ProcessStatusCollection::class, $status);
         $this->assertSame(1, $status->processStatuses->first()->processStatusId);
         $this->assertSame('555551', $status->processStatuses->first()->entityId);
@@ -92,7 +92,7 @@ class StatusTest extends TestCase
         $this->expectExceptionMessage('Validation Failed, See violations');
 
         try {
-            $this->client->status->getByEntityId('555551', 'INVALID_EVENT_TYPE');
+            $this->sharedClient->status->getByEntityId('555551', 'INVALID_EVENT_TYPE');
         } catch (ValidationException $e) {
             $violations = $e->getViolations();
             $this->assertCount(1, $violations);
@@ -108,7 +108,12 @@ class StatusTest extends TestCase
 
         $batch = [1,2];
 
-        $status = $this->client->status->batch($batch);
+        try {
+            $status = $this->sharedClient->status->batch($batch);
+        } catch (ValidationException $e ) {
+            print_r($e->getViolations());
+            exit;
+        }
         $this->assertInstanceOf(ProcessStatusCollection::class, $status);
         $this->assertCount(2, $status->processStatuses);
         $this->assertSame(1, $status->processStatuses->first()->processStatusId);
@@ -128,7 +133,8 @@ class StatusTest extends TestCase
         $this->useMock('200-status-multiple-processes.json');
 
         $batch = [1,new ProcessStatus(['id' => 2])];
-        $status = $this->client->status->batch($batch);
+
+        $status = $this->sharedClient->status->batch($batch);
         $this->assertInstanceOf(ProcessStatusCollection::class, $status);
         $this->assertCount(2, $status->processStatuses);
         $this->assertSame(1, $status->processStatuses->first()->processStatusId);
@@ -150,6 +156,6 @@ class StatusTest extends TestCase
         $status = new ProcessStatus([
             'eventType' => 'test'
         ]);
-        $status = $this->client->status->get($status);
+        $this->sharedClient->status->get($status);
     }
 }
