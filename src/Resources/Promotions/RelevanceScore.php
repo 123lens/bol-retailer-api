@@ -8,5 +8,5 @@ use Illuminate\Support\Collection;
 class RelevanceScore extends BaseResource
 {
     public $countryCode;
-    public $relevanceScores;
+    public $relevanceScore;
 }

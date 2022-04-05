@@ -9,7 +9,7 @@ class Campaign extends BaseResource
     public $startDateTime;
     public $endDateTime;
 
-    public function setStartDateTime($value): self
+    public function setStartDateTimeAttribute($value): self
     {
         if (!$value instanceof \DateTime) {
             $value = new \DateTime($value);
@@ -20,7 +20,7 @@ class Campaign extends BaseResource
         return $this;
     }
 
-    public function setEndDateTime($value): self
+    public function setEndDateTimeAttribute($value): self
     {
         if (!$value instanceof \DateTime) {
             $value = new \DateTime($value);

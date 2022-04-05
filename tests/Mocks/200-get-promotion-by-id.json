@@ -1,0 +1,18 @@
+{
+  "promotionId" : "533736",
+  "title" : "Test Promotion",
+  "startDateTime" : "2021-09-10T00:00:00+02:00",
+  "endDateTime" : "2022-01-01T00:00:00+01:00",
+  "countries" : [ {
+    "countryCode" : "NL"
+  }, {
+    "countryCode" : "BE"
+  } ],
+  "promotionType" : "PRICE_OFF",
+  "retailerSpecificPromotion" : false,
+  "campaign" : {
+    "name" : "Deals",
+    "startDateTime" : "2021-07-01T00:00:00+02:00",
+    "endDateTime" : "2022-02-01T00:00:00+01:00"
+  }
+}

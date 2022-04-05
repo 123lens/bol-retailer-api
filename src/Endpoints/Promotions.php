@@ -12,14 +12,14 @@ class Promotions extends BaseEndpoint
      * Get Promotions
      *
      * @see https://api.bol.com/retailer/public/redoc/v7/retailer.html#operation/get-promotions
-     * @param string|null $promotionType
+     * @param array $promotionTypes
      * @param int $page
      * @return Collection
      */
-    public function list(string $promotionType = 'AWARENESS', int $page = 1): Collection
+    public function list(array $promotionTypes, int $page = 1): Collection
     {
         $parameters = collect([
-            'promotion-type' => $promotionType,
+            'promotion-type' => $promotionTypes,
             'page' => $page,
         ])->reject(function ($value) {
             return empty($value);
@@ -77,7 +77,7 @@ class Promotions extends BaseEndpoint
 
         $collection = new Collection();
 
-        collect($response->promotions)->each(function ($item) use ($collection) {
+        collect($response->products)->each(function ($item) use ($collection) {
             $collection->push(new Product($item));
         });
 
