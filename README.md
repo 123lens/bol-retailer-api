@@ -1817,6 +1817,34 @@ Not yet implemented
 
 ---
 
+## Promotions
+
+### List Promotions
+```php
+$promotions = $this->client->promotions->list([
+    'PRICE_OFF',
+    'AWARENESS'
+]);
+print_r($promotions);
+```
+
+### Get Promotion By Id
+```php
+$id = 1234;
+$promotion = $this->client->promotions->get($id);
+print_r($promotion);
+```
+
+### List Promotion Products
+```php
+$id = 1234;
+$products = $this->client->promotions->products($id);
+print_r($products);
+```
+
+---
+
+
 ## Replenishments
 
 ### Get replenishments

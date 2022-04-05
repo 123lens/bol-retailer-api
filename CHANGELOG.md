@@ -4,6 +4,8 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
 
+- Prepped release `v7`
+- Added endpoint `promotions`
 --
 
 ### [v6.0.0] - 2022-03-30
