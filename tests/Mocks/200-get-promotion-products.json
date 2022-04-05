@@ -1,0 +1,13 @@
+{
+  "products" : [ {
+    "ean" : "4005808940127",
+    "relevanceScores" : [ {
+      "countryCode" : "NL",
+      "relevanceScore" : 13
+    }, {
+      "countryCode" : "BE",
+      "relevanceScore" : 12
+    } ],
+    "maximumPrice" : 13.76
+  } ]
+}

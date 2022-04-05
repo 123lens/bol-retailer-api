@@ -1,0 +1,35 @@
+{
+  "promotions" : [ {
+    "promotionId" : "544289",
+    "title" : "FuturePromoTest",
+    "startDateTime" : "2021-04-24T00:00:00+02:00",
+    "endDateTime" : "2021-05-20T00:00:00+02:00",
+    "countries" : [ {
+      "countryCode" : "NL"
+    }, {
+      "countryCode" : "BE"
+    } ],
+    "promotionType" : "AWARENESS",
+    "retailerSpecificPromotion" : false,
+    "campaign" : {
+      "name" : "Deals",
+      "startDateTime" : "2013-07-01T00:00:00+02:00"
+    }
+  }, {
+    "promotionId" : "544242",
+    "title" : "Korting op TEST",
+    "startDateTime" : "2021-04-23T00:00:00+02:00",
+    "endDateTime" : "2021-05-07T00:00:00+02:00",
+    "countries" : [ {
+      "countryCode" : "NL"
+    }, {
+      "countryCode" : "BE"
+    } ],
+    "promotionType" : "PRICE_OFF",
+    "retailerSpecificPromotion" : false,
+    "campaign" : {
+      "name" : "CampaignForSDDTest",
+      "startDateTime" : "2020-08-21T00:00:00+02:00"
+    }
+  } ]
+}

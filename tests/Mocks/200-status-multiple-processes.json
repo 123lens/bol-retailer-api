@@ -1,6 +1,6 @@
 {
   "processStatuses" : [ {
-    "id" : 1,
+    "processStatusId" : 1,
     "entityId" : "555551",
     "eventType" : "CONFIRM_SHIPMENT",
     "description" : "This is a mocked process status.",
@@ -12,7 +12,7 @@
       "method" : "GET"
     } ]
   }, {
-    "id" : 2,
+    "processStatusId" : 2,
     "entityId" : "555552",
     "eventType" : "CANCEL_ORDER",
     "description" : "This is a mocked process status.",

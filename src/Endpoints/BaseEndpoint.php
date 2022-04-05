@@ -1,6 +1,7 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
+use Budgetlens\BolRetailerApi\ApiClient;
 use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
 use Budgetlens\BolRetailerApi\Client;
 use Budgetlens\BolRetailerApi\Exceptions\RateLimitException;
@@ -12,7 +13,7 @@ abstract class BaseEndpoint
     /** @var \Budgetlens\BolRetailerApi\Client */
     protected $apiClient;
 
-    public function __construct(Client $client)
+    public function __construct(ApiClient $client)
     {
         $this->apiClient = $client;
 
@@ -64,7 +65,7 @@ abstract class BaseEndpoint
         array $requestHeaders = []
     ) {
         $response = $this->apiClient->performHttpCall($httpMethod, $apiMethod, $httpBody, $requestHeaders);
-
+//        die($response->getBody()->getContents());
         // hit a rate limit ?
         if ($response->getStatusCode() === 429) {
             $retryAfter = collect($response->getHeader('Retry-After'))->first();

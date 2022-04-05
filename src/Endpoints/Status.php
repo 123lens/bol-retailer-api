@@ -113,9 +113,9 @@ class Status extends BaseEndpoint
         // check if ids contains ProcessStatus resource.
         $items = collect($ids)->map(function ($item) {
             if ($item instanceof ProcessStatus) {
-                return ['id' => $item->id];
+                return ['processStatusId' => $item->processStatusId];
             }
-            return ['id' => $item];
+            return ['processStatusId' => $item];
         })->all();
 
         $response = $this->performApiCall(

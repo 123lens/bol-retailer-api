@@ -1,5 +1,5 @@
 <?php
-namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
+namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints\RetailerApi;
 
 use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
@@ -20,7 +20,7 @@ class TransportTest extends TestCase
 
         $status = $this->client->transports->addInformation($transportId, $transporterCode, $trackAndTrace);
         $this->assertInstanceOf(ProcessStatus::class, $status);
-        $this->assertSame('1', $status->processStatusId);
+        $this->assertSame(1, $status->processStatusId);
         $this->assertSame('358612589', $status->entityId);
         $this->assertSame('CHANGE_TRANSPORT', $status->eventType);
         $this->assertSame('PENDING', $status->status);

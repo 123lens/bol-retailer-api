@@ -1,5 +1,5 @@
 {
-  "id" : 2,
+  "processStatusId" : 2,
   "entityId" : "555552",
   "eventType" : "CANCEL_ORDER",
   "description" : "This is a mocked process status.",

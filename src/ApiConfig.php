@@ -17,9 +17,20 @@ class ApiConfig implements Config
         return getenv('CLIENT_SECRET');
     }
 
+    /**
+     * @note: As of v7 decprecated!
+     * @return string
+     */
     public function getEndpoint(): string
     {
         return 'https://api.bol.com/retailer';
+    }
+
+    public function getTestMode(): bool
+    {
+        $testMode = getenv('TEST_MODE');
+
+        return (bool) $testMode ?? false;
     }
 
     public function getMiddleware(): array

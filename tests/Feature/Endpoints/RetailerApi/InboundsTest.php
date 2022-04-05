@@ -1,5 +1,5 @@
 <?php
-namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
+namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints\RetailerApi;
 
 use Budgetlens\BolRetailerApi\Resources\Inbound;
 use Budgetlens\BolRetailerApi\Resources\InboundPackinglist;

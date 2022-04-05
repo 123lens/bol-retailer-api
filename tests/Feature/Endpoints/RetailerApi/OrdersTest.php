@@ -1,5 +1,5 @@
 <?php
-namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints;
+namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints\RetailerApi;
 
 use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
 use Budgetlens\BolRetailerApi\Exceptions\ValidationException;

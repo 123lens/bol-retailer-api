@@ -5,7 +5,11 @@ interface Config
 {
     public function getClientId(): string;
     public function getClientSecret(): string;
-    public function getEndpoint(): string;
+    /**
+     * @note: Per v7 deprecated
+        public function getEndpoint(): string;
+     */
+    public function getTestMode(): bool;
     public function getMiddleware(): array;
     public function cacheToken(): bool;
     public function getTimeout(): int;
