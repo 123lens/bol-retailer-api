@@ -8,6 +8,7 @@ use Budgetlens\BolRetailerApi\Endpoints\Insights;
 use Budgetlens\BolRetailerApi\Endpoints\Inventory;
 use Budgetlens\BolRetailerApi\Endpoints\Invoices;
 use Budgetlens\BolRetailerApi\Endpoints\Offers;
+use Budgetlens\BolRetailerApi\Endpoints\Promotions;
 use Budgetlens\BolRetailerApi\Endpoints\Replenishments;
 use Budgetlens\BolRetailerApi\Endpoints\Returns;
 use Budgetlens\BolRetailerApi\Endpoints\Shipments;
@@ -45,6 +46,9 @@ class Client extends BaseClient implements ApiClient
     public $status;
 
     // product-content
+
+    /** @var Promotions */
+    public $promotions;
 
     /** @var  Replenishments */
     public $replenishments;
@@ -84,6 +88,7 @@ class Client extends BaseClient implements ApiClient
         $this->inventory = new Inventory($this);
         $this->invoices = new Invoices($this);
         $this->inbounds = new Inbounds($this);
+        $this->promotions = new Promotions($this);
         $this->subscriptions = new Subscriptions($this);
         $this->transports = new Transports($this);
     }
