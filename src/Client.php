@@ -17,7 +17,7 @@ use Budgetlens\BolRetailerApi\Endpoints\Subscriptions;
 use Budgetlens\BolRetailerApi\Endpoints\Transports;
 use Budgetlens\BolRetailerApi\Endpoints\Orders;
 
-class Client extends BaseClient
+class Client extends BaseClient implements ApiClient
 {
     protected $endpoint = 'https://api.bol.com/retailer';
     protected $endpointTest = 'https://api.bol.com/retailer-demo';
