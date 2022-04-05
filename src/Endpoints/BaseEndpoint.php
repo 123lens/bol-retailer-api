@@ -1,6 +1,7 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
+use Budgetlens\BolRetailerApi\ApiClient;
 use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;
 use Budgetlens\BolRetailerApi\Client;
 use Budgetlens\BolRetailerApi\Exceptions\RateLimitException;
@@ -12,7 +13,7 @@ abstract class BaseEndpoint
     /** @var \Budgetlens\BolRetailerApi\Client */
     protected $apiClient;
 
-    public function __construct(Client $client)
+    public function __construct(ApiClient $client)
     {
         $this->apiClient = $client;
 
