@@ -3,7 +3,7 @@ namespace Budgetlens\BolRetailerApi;
 
 use Budgetlens\BolRetailerApi\Endpoints\Status;
 
-class SharedClient extends BaseClient
+class SharedClient extends BaseClient implements ApiClient
 {
     protected $endpoint = 'https://api.bol.com/shared';
     protected $endpointTest = 'https://api.bol.com/shared-demo';
