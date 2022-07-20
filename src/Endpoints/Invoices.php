@@ -119,11 +119,11 @@ class Invoices extends BaseEndpoint
     {
         switch ($format) {
             case 'pdf':
-                return 'application/vnd.retailer.v5+pdf';
+                return 'application/vnd.retailer.v6+pdf';
             case 'xml':
-                return 'application/vnd.retailer.v5+xml';
+                return 'application/vnd.retailer.v6+xml';
             default:
-                return 'application/vnd.retailer.v5+json';
+                return 'application/vnd.retailer.v6+json';
         }
     }
 }
