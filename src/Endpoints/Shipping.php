@@ -12,7 +12,7 @@ class Shipping extends BaseEndpoint
     /**
      * Create Shipping Label
      *
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/post-shipping-label
+     * @see https://api.bol.com/retailer/public/redoc/v6#operation/post-shipping-label
      * @param Order $order
      * @param string $shippingLabelOfferId
      * @return ProcessStatus
@@ -33,7 +33,7 @@ class Shipping extends BaseEndpoint
 
     /**
      * Retrieve delivery Options
-     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/shipping-labels.html
+     * @see https://api.bol.com/retailer/public/Retailer-API/v6/functional/shipping-labels.html
      * @param Order $order
      * @return Collection
      */
@@ -73,7 +73,7 @@ class Shipping extends BaseEndpoint
             "shipping-labels/{$id}",
             null,
             [
-                'Accept' => 'application/vnd.retailer.v5+pdf'
+                'Accept' => 'application/vnd.retailer.v6+pdf'
             ]
         );
         return new Label([

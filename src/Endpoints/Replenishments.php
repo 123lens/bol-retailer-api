@@ -34,7 +34,7 @@ class Replenishments extends BaseEndpoint
     /**
      * Get Replenishments
      *
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-replenishments
+     * @see https://api.bol.com/retailer/public/redoc/v6#operation/get-replenishments
      * @param string|null $reference
      * @param string|null $eancode
      * @param \DateTime|null $startDate
@@ -92,7 +92,7 @@ class Replenishments extends BaseEndpoint
 
     /**
      * Get Replenishment by Id
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-replenishment
+     * @see https://api.bol.com/retailer/public/redoc/v6#operation/get-replenishment
      * @param string $replenishmentId
      * @return Replenishment
      */
@@ -108,7 +108,7 @@ class Replenishments extends BaseEndpoint
 
     /**
      * Create Replenishment
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/post-replenishment
+     * @see https://api.bol.com/retailer/public/redoc/v6#operation/post-replenishment
      * @param Replenishment $inbound
      * @return ProcessStatus
      */
@@ -125,7 +125,7 @@ class Replenishments extends BaseEndpoint
 
     /**
      * Retrieve available pickup timeslots
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/post-pickup-time-slots
+     * @see https://api.bol.com/retailer/public/redoc/v6#operation/post-pickup-time-slots
      * @param Address $address
      * @param int $numberOfLoadCarriers
      * @return Collection
@@ -158,7 +158,7 @@ class Replenishments extends BaseEndpoint
 
     /**
      * Retrieve delivery dates
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-delivery-dates
+     * @see https://api.bol.com/retailer/public/redoc/v6#operation/get-delivery-dates
      * @return Collection
      */
     public function deliveryDates(): Collection
@@ -184,7 +184,7 @@ class Replenishments extends BaseEndpoint
 
     /**
      * Get Product Labels
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/post-product-labels
+     * @see https://api.bol.com/retailer/public/redoc/v6#operation/post-product-labels
      * @param array $products
      * @param string $format
      * @return ProductLabels
@@ -209,8 +209,8 @@ class Replenishments extends BaseEndpoint
             "replenishments/product-labels",
             $payload,
             [
-                'Content-Type' => 'application/vnd.retailer.v5+json',
-                'Accept' => 'application/vnd.retailer.v5+pdf'
+                'Content-Type' => 'application/vnd.retailer.v6+json',
+                'Accept' => 'application/vnd.retailer.v6+pdf'
             ]
         );
 
@@ -222,7 +222,7 @@ class Replenishments extends BaseEndpoint
 
     /**
      * Update Replenishment
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/put-replenishment
+     * @see https://api.bol.com/retailer/public/redoc/v6#operation/put-replenishment
      * @param Replenishment $inbound
      * @return ProcessStatus
      */
@@ -243,7 +243,7 @@ class Replenishments extends BaseEndpoint
 
     /**
      * Update Replenishment
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/put-replenishment
+     * @see https://api.bol.com/retailer/public/redoc/v6#operation/put-replenishment
      * @param string $replenishmentId
      * @param string $labelType
      * @return CarrierLabels
@@ -257,7 +257,7 @@ class Replenishments extends BaseEndpoint
             ]),
             null,
             [
-                'Accept' => 'application/vnd.retailer.v5+pdf'
+                'Accept' => 'application/vnd.retailer.v6+pdf'
             ]
         );
 
@@ -269,7 +269,7 @@ class Replenishments extends BaseEndpoint
 
     /**
      * Get Picklist
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-pick-list
+     * @see https://api.bol.com/retailer/public/redoc/v6#operation/get-pick-list
      * @param string $replenishmentId
      * @return Picklist
      */
@@ -280,7 +280,7 @@ class Replenishments extends BaseEndpoint
             "replenishments/{$replenishmentId}/pick-list",
             null,
             [
-                'Accept' => 'application/vnd.retailer.v5+pdf'
+                'Accept' => 'application/vnd.retailer.v6+pdf'
             ]
         );
 

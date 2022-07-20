@@ -7,7 +7,7 @@ class Transports extends BaseEndpoint
 {
     /**
      * Add transport information
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/add-transport-information-by-transport-id
+     * @see https://api.bol.com/retailer/public/redoc/v6#operation/add-transport-information-by-transport-id
      * @param string $transportId
      * @param string $transporterCode
      * @param string $trackAndTrace
