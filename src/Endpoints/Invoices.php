@@ -19,7 +19,7 @@ class Invoices extends BaseEndpoint
 
     /**
      * Get All Invoices
-     * @see https://api.bol.com/retailer/public/redoc/v5#tag/Invoices
+     * @see https://api.bol.com/retailer/public/redoc/v6#tag/Invoices
      * @param \DateTime|null $periodStartDate
      * @param \DateTime|null $periodEndDate
      * @return InvoiceResource

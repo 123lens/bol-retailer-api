@@ -11,7 +11,7 @@ class Returns extends BaseEndpoint
     /**
      * Get Returns
      *
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-returns
+     * @see https://api.bol.com/retailer/public/redoc/v6#operation/get-returns
      * @param string|null $reference
      * @param string|null $eancode
      * @param \DateTime|null $startDate
@@ -50,7 +50,7 @@ class Returns extends BaseEndpoint
 
     /**
      * Get Return by Id
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-return
+     * @see https://api.bol.com/retailer/public/redoc/v6#operation/get-return
      * @param string $returnId
      * @return ReturnsResource
      */
@@ -66,7 +66,7 @@ class Returns extends BaseEndpoint
 
     /**
      * Create Return
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/create-return
+     * @see https://api.bol.com/retailer/public/redoc/v6#operation/create-return
      * @param string $orderItemId
      * @param int $quantity
      * @param string $handlingResult
@@ -94,7 +94,7 @@ class Returns extends BaseEndpoint
 
     /**
      * Handle Return
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/handle-return
+     * @see https://api.bol.com/retailer/public/redoc/v6#operation/handle-return
      * @param string $rmaId
      * @param int $quantity
      * @param string $handlingResult
