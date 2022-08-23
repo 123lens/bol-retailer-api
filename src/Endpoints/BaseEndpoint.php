@@ -73,6 +73,7 @@ abstract class BaseEndpoint
 
 
         $directResponseHeaders = [
+            'text/csv;charset=UTF-8',
             'application/vnd.retailer.v4+pdf;charset=UTF-8',
             'application/vnd.retailer.v4+csv;charset=UTF-8',
             'application/vnd.retailer.v4+xml;charset=UTF-8',
