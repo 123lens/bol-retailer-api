@@ -1,4 +1,5 @@
 <?php
+
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
 use Illuminate\Support\Collection;
@@ -6,10 +7,9 @@ use Budgetlens\BolRetailerApi\Resources\Inventory as InventoryResource;
 
 class Inventory extends BaseEndpoint
 {
-
     /**
      * Retrieve Inventory
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-inventory
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-inventory
      * @param string|null $quantity
      * @param string|null $stock
      * @param string|null $state
