@@ -9,13 +9,8 @@ class Commissions extends BaseEndpoint
     /**
      * Get Commissions
      *
-     * @see https://api.bol.com/retailer/public/redoc/v5#tag/Commissions
-     * @param string|null $reference
-     * @param string|null $bsku
-     * @param \DateTime|null $creationStartDate
-     * @param \DateTime|null $creationEndDate
-     * @param string|null $state
-     * @param int $page
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-commissions
+     * @param array $commissionQueries
      * @return Collection
      */
     public function list(
@@ -44,7 +39,7 @@ class Commissions extends BaseEndpoint
 
     /**
      * Get Commission by Eancode
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-commission
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-commission
      * @param string $eancode
      * @param float $unitPrice price
      * @param string $condition
