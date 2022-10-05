@@ -132,7 +132,7 @@ class Offers extends BaseEndpoint
      */
     public function getUnpublishedExport(string $id): Collection
     {
-        $this->setApiVersionHeader('application/vnd.retailer.v5+csv');
+        $this->setApiVersionHeader('application/vnd.retailer.v8+csv');
 
         $response = $this->performApiCall(
             'GET',
