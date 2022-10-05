@@ -1,4 +1,5 @@
 <?php
+
 namespace Budgetlens\BolRetailerApi\Resources;
 
 use Illuminate\Support\Collection;
@@ -13,6 +14,7 @@ class Offer extends BaseResource
     public $unknownProductTitle;
     public $pricing;
     public $stock;
+    public $correctedStock;
     public $fulfilment;
     public $mutationDateTime;
     public $store;
@@ -108,6 +110,18 @@ class Offer extends BaseResource
         }
 
         $this->stock = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set Corrected Stock
+     * @param $value
+     * @return $this
+     */
+    public function setCorrectedStockAttribute($value): self
+    {
+        $this->correctedStock = (int) $value;
 
         return $this;
     }

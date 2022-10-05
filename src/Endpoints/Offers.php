@@ -1,4 +1,5 @@
 <?php
+
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
 use Budgetlens\BolRetailerApi\Resources\Condition;
@@ -10,10 +11,173 @@ use Illuminate\Support\Collection;
 
 class Offers extends BaseEndpoint
 {
+    /**
+     * Create new offer
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/post-offer
+     * @param Offer $offer
+     * @return ProcessStatus
+     */
+    public function create(Offer $offer): ProcessStatus
+    {
+        $response = $this->performApiCall(
+            'POST',
+            'offers',
+            $offer->toJson()
+        );
+
+        return new ProcessStatus(collect($response));
+    }
+
+    /**
+     * Request Offers Export
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/post-offer-export
+     * @param string $format
+     * @return ProcessStatus
+     */
+    public function requestExport(string $format = 'CSV'): ProcessStatus
+    {
+        $response = $this->performApiCall(
+            'POST',
+            'offers/export',
+            json_encode([
+                'format' => $format
+            ])
+        );
+
+        return new ProcessStatus(collect($response));
+    }
+
+    /**
+     * Retrieve CSV Export
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-offer-export
+     * Columns/headers:
+     * offerId,ean,conditionName,conditionCategory,conditionComment,bundlePricesPrice,fulfilmentDeliveryCode,
+     * stockAmount,onHoldByRetailer,fulfilmentType,mutationDateTime,referenceCode,correctedStockAmount
+     * @param string $id
+     * @return Collection
+     */
+    public function getExport(string $id): Collection
+    {
+        $this->setApiVersionHeader('application/vnd.retailer.v8+csv');
+
+        $response = $this->performApiCall(
+            'GET',
+            "offers/export/{$id}"
+        );
+
+        $lines = collect(explode("\n", $response))->reject(function ($line) {
+            return empty($line);
+        });
+
+        // shift first line
+        $lines->shift();
+
+        $collection = new Collection();
+
+        $lines->each(function ($item) use ($collection) {
+            $cols = explode(",", $item);
+            $collection->push(new Offer([
+                'offerId' => $cols[0],
+                'ean' => $cols[1],
+                'condition' => new Condition([
+                    'name' => $cols[2],
+                    'category' => $cols[3],
+                    'comment' => $cols[4]
+                ]),
+                'price' => $cols[5],
+                'fulfilment' => new Fulfilment([
+                    'method' => $cols[9],
+                    'deliveryCode' => $cols[6],
+                ]),
+                'stock' => $cols[7],
+                'correctedStock' => $cols[12],
+                'onHoldByRetailer' => $cols[8],
+                'mutationDateTime' => $cols[10],
+            ]));
+        });
+
+        return $collection;
+    }
+
+    /**
+     * Request Unpublished Offers Export
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/post-unpublished-offer-report
+     * @param string $format
+     * @return ProcessStatus
+     */
+    public function requestUnpublishedExport(string $format = 'CSV'): ProcessStatus
+    {
+        $response = $this->performApiCall(
+            'POST',
+            'offers/unpublished',
+            json_encode([
+                'format' => 'CSV'
+            ]),
+            [
+                'Accept' => 'application/vnd.retailer.v8+json',
+                'Content-Type' => 'application/vnd.retailer.v8+json',
+            ]
+        );
+
+        return new ProcessStatus(collect($response));
+    }
+
+    /**
+     * Retrieve Upublished Offers CSV Export
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-unpublished-offer-report
+     * Columns/headers:
+     * offerId,ean,notPublishableReason,notPublishableReasonDescription
+     * @param string $id
+     * @return Collection
+     */
+    public function getUnpublishedExport(string $id): Collection
+    {
+        $this->setApiVersionHeader('application/vnd.retailer.v5+csv');
+
+        $response = $this->performApiCall(
+            'GET',
+            "offers/unpublished/{$id}",
+            null,
+            [
+                'Accept' => 'application/vnd.retailer.v8+csv',
+                'Content-Type' => 'application/vnd.retailer.v8+csv',
+            ]
+        );
+
+        $lines = collect(explode("\n", $response))->reject(function ($line) {
+            return empty($line);
+        })->map(function ($item) {
+            return explode(",", $item);
+        });
+
+        // shift first line
+        $headers = $lines->shift();
+
+        // apply headers to columns
+        $items = collect(Arr::replaceKeyWithNames($lines->all(), $headers));
+
+        $collection = new Collection();
+
+        $items->each(function ($item) use ($collection) {
+            $collection->push(new Offer([
+                'offerId' => $item['offerId'] ?? null,
+                'ean' => $item['ean'] ?? null,
+                'notPublishableReasons' => [
+                    [
+                        'code' => $item['notPublishableReason'] ?? null,
+                        'description' => $item['notPublishableReasonDescription'] ?? null
+                    ]
+                ]
+            ]));
+        });
+
+        return $collection;
+    }
+
 
     /**
      * Retrieve offer by Offer ID
-     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/offers.html#_get_offer
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-offer
      * @param string|Offer $offerId
      * @return Offer
      */
@@ -32,25 +196,8 @@ class Offers extends BaseEndpoint
     }
 
     /**
-     * Create new offer
-     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/offers.html#_create_new_offer
-     * @param Offer $offer
-     * @return ProcessStatus
-     */
-    public function create(Offer $offer): ProcessStatus
-    {
-        $response = $this->performApiCall(
-            'POST',
-            'offers',
-            $offer->toJson()
-        );
-
-        return new ProcessStatus(collect($response));
-    }
-
-    /**
      * Update Offer
-     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/offers.html#_update_offer
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/put-offer
      * @param Offer $offer
      * @return ProcessStatus
      */
@@ -76,7 +223,7 @@ class Offers extends BaseEndpoint
 
     /**
      * Delete Offer
-     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/offers.html#_delete_offer
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/delete-offer
      * @param string|Offer $offerId
      * @return ProcessStatus
      */
@@ -96,7 +243,7 @@ class Offers extends BaseEndpoint
 
     /**
      * Update Offer Price
-     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/offers.html#_update_offer_price
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/update-offer-price
      * @param Offer $offer
      * @return ProcessStatus
      */
@@ -126,7 +273,7 @@ class Offers extends BaseEndpoint
 
     /**
      * Update Offer Stock
-     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/offers.html#_update_offer_stock
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/update-offer-stock
      * @param Offer $offer
      * @return ProcessStatus
      */
@@ -142,147 +289,5 @@ class Offers extends BaseEndpoint
         );
 
         return new ProcessStatus(collect($response));
-    }
-
-    /**
-     * Request Offers Export
-     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/offers.html#_offers_export_api_endpoints
-     * @param string $format
-     * @return ProcessStatus
-     */
-    public function requestExport(string $format = 'CSV'): ProcessStatus
-    {
-        $response = $this->performApiCall(
-            'POST',
-            'offers/export',
-            json_encode([
-                'format' => $format
-            ])
-        );
-
-        return new ProcessStatus(collect($response));
-    }
-
-    /**
-     * Request Unpublished Offers Export
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/post-unpublished-offer-report
-     * @param string $format
-     * @return ProcessStatus
-     */
-    public function requestUnpublishedExport(string $format = 'CSV'): ProcessStatus
-    {
-        $response = $this->performApiCall(
-            'POST',
-            'offers/unpublished',
-            json_encode([
-                'format' => 'CSV'
-            ]),
-            [
-                'Accept' => 'application/vnd.retailer.v6+json',
-                'Content-Type' => 'application/vnd.retailer.v6+json',
-            ]
-        );
-
-        return new ProcessStatus(collect($response));
-    }
-
-    /**
-     * Retrieve CSV Export
-     * Columns/headers:
-     * offerId,ean,conditionName,conditionCategory,conditionComment,bundlePricesPrice,fulfilmentDeliveryCode,
-     * stockAmount,onHoldByRetailer,fulfilmentType,mutationDateTime,referenceCode
-     * @param string $id
-     * @return Collection
-     */
-    public function getExport(string $id): Collection
-    {
-        $this->setApiVersionHeader('application/vnd.retailer.v5+csv');
-
-        $response = $this->performApiCall(
-            'GET',
-            "offers/export/{$id}"
-        );
-
-        $lines = collect(explode("\n", $response))->reject(function ($line) {
-            return empty($line);
-        });
-        // shift first line
-        $lines->shift();
-
-        $collection = new Collection();
-
-        $lines->each(function ($item) use ($collection) {
-            $cols = explode(",", $item);
-            $collection->push(new Offer([
-                'offerId' => $cols[0],
-                'ean' => $cols[1],
-                'condition' => new Condition([
-                    'name' => $cols[2],
-                    'category' => $cols[3],
-                    'comment' => $cols[4]
-                ]),
-                'price' => $cols[5],
-                'fulfilment' => new Fulfilment([
-                    'method' => $cols[9],
-                    'deliveryCode' => $cols[6],
-                ]),
-                'stock' => $cols[7],
-                'onHoldByRetailer' => $cols[8],
-                'mutationDateTime' => $cols[10],
-            ]));
-        });
-
-        return $collection;
-    }
-
-    /**
-     * Retrieve Upublished Offers CSV Export
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/post-unpublished-offer-report
-     * Columns/headers:
-     * offerId,ean,notPublishableReason,notPublishableReasonDescription
-     * @param string $id
-     * @return Collection
-     */
-    public function getUnpublishedExport(string $id): Collection
-    {
-        $this->setApiVersionHeader('application/vnd.retailer.v5+csv');
-
-        $response = $this->performApiCall(
-            'GET',
-            "offers/unpublished/{$id}",
-            null,
-            [
-                'Accept' => 'application/vnd.retailer.v6+csv',
-                'Content-Type' => 'application/vnd.retailer.v6+csv',
-            ]
-        );
-
-        $lines = collect(explode("\n", $response))->reject(function ($line) {
-            return empty($line);
-        })->map(function ($item) {
-            return explode(",", $item);
-        });
-        // shift first line
-        $headers = $lines->shift();
-
-        // apply headers to columns
-        $items = collect(Arr::replaceKeyWithNames($lines->all(), $headers));
-
-        $collection = new Collection();
-
-        $items->each(function ($item) use ($collection) {
-            $collection->push(new Offer([
-                'offerId' => $item['offerId'] ?? null,
-                'ean' => $item['ean'] ?? null,
-                'notPublishableReasons' => [
-                    [
-                        'code' => $item['notPublishableReason'] ?? null,
-                        'description' => $item['notPublishableReasonDescription'] ?? null
-                    ]
-                ]
-            ]));
-        });
-
-        return $collection;
     }
 }
