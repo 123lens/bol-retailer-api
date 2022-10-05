@@ -1,4 +1,5 @@
 <?php
+
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
