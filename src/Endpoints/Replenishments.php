@@ -206,10 +206,6 @@ class Replenishments extends BaseEndpoint
         $collection = new Collection();
 
         $destinations = $response->productDestinations ?? null;
-        echo "<pre>";
-        print_r($destinations);
-        exit;
-
 
         if (!is_null($destinations)) {
             collect($destinations)->each(function ($item) use ($collection) {

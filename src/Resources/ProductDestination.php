@@ -19,6 +19,18 @@ class ProductDestination extends BaseResource
         return $this;
     }
 
+    public function setEansAttribute($value): self
+    {
+        $items = [];
+
+        foreach ($value as $item) {
+            $items[] = $item->ean;
+        }
+
+        $this->eans = collect($items);
+
+        return $this;
+    }
 //    public function toArray(): array
 //    {
 //        return collect(parent::toArray())

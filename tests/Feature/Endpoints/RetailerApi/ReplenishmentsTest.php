@@ -8,6 +8,7 @@ use Budgetlens\BolRetailerApi\Resources\InboundPackinglist;
 use Budgetlens\BolRetailerApi\Resources\InboundProductLabels;
 use Budgetlens\BolRetailerApi\Resources\InboundShippingLabel;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
+use Budgetlens\BolRetailerApi\Resources\ProductDestination;
 use Budgetlens\BolRetailerApi\Resources\Replenishment;
 use Budgetlens\BolRetailerApi\Resources\Timeslot;
 use Budgetlens\BolRetailerApi\Resources\Transporter;
@@ -216,6 +217,32 @@ class ReplenishmentsTest extends TestCase
         $labels = $this->client->replenishments->productLabels($products, LabelFormat::AVERY_J8159);
 
         $this->assertInstanceOf(Replenishment\ProductLabels::class, $labels);
+    }
+
+    public function canRequestProductDestinations()
+    {
+
+    }
+
+    /** @test */
+    public function canGetProductDestinations()
+    {
+        $this->useMock('200-get-product-destinations.json');
+
+        $id = '6f0d7145-543e-4320-afb7-f43dd69b04dc';
+        $destinations = $this->client->replenishments->getProductDestinations($id);
+        $this->assertInstanceOf(Collection::class, $destinations);
+        $this->assertInstanceOf(ProductDestination::class, $destinations->first());
+        $this->assertInstanceOf(Replenishment\Warehouse::class, $destinations->first()->destinationWarehouse);
+        $warehouse = $destinations->first()->destinationWarehouse;
+        $this->assertSame('Mechie Trommelenweg', $warehouse->streetName);
+        $this->assertSame(1, $warehouse->houseNumber);
+        $this->assertSame('5145ND', $warehouse->zipCode);
+        $this->assertSame('Waalwijk', $warehouse->city);
+        $this->assertSame('NL', $warehouse->countryCode);
+        $this->assertSame('t.a.v. bol.com', $warehouse->attentionOf);
+        $this->assertInstanceOf(Collection::class, $destinations->first()->eans);
+        $this->assertSame('9789077024485', $destinations->first()->eans->first());
     }
 
     /** @test */
