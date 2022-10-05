@@ -1,4 +1,5 @@
 <?php
+
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
 use Budgetlens\BolRetailerApi\Resources\Shipment;
@@ -9,7 +10,8 @@ class Shipments extends BaseEndpoint
 {
     /**
      * List All Shipments
-     * @param string $fulfilmentMethod
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-shipments
+     * @param string|null $fulfilmentMethod
      * @param string|null $orderId
      * @param int $page
      * @return Collection
@@ -44,7 +46,7 @@ class Shipments extends BaseEndpoint
 
     /**
      * Get Shipment By Id
-     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/orders-shipments.html#_retrieve_a_single_shipment
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-shipment
      * @param string $id
      * @return Shipment
      */
