@@ -1,4 +1,5 @@
 <?php
+
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
 use Budgetlens\BolRetailerApi\Resources\Order;
@@ -12,20 +13,31 @@ class Orders extends BaseEndpoint
 {
     /**
      * Get Orders
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-orders
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-orders
      * @param string $fulfillmentMethod
-     * @param string $status (ALL or OPEN)
+     * @param string $status (ALL, SHIPPED or OPEN)
+     * @param int $changeIntervalMinute - To filter on the period in minutes during which the latest
+     *                                      change was performed on an order item. (<= 2800)
+     * @param \DateTime $latestChangeDate -  To filter on the date on which the latest change was performed on an
+     *                                      order item. Up to 3 months of history is supported.
      * @param int $page
      * @return Collection
      */
-    public function getOrders(string $fulfillmentMethod = 'FBR', string $status = 'ALL', int $page = 1): Collection
-    {
+    public function getOrders(
+        string $fulfillmentMethod = 'FBR',
+        string $status = 'ALL',
+        int $changeIntervalMinute = 0,
+        ?\DateTime $latestChangeDate = null,
+        int $page = 1
+    ): Collection {
         $query = collect([
             'fulfilment-method' => $fulfillmentMethod,
             'status' => $status,
+            'change-interval-minute' => $changeIntervalMinute,
+            'latest-change-date' => !is_null($latestChangeDate) ? $latestChangeDate->format('Y-m-d') : null,
             'page' => $page
         ])->reject(function ($value) {
-            return empty($value);
+            return empty($value) || (int) $value === 0;
         })->all();
 
         $response = $this->performApiCall(
@@ -58,24 +70,35 @@ class Orders extends BaseEndpoint
     }
 
     /**
-     * Retrieve a single order
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-order
-     * @param string $id
-     * @return OrderResource
+     * Cancel Order Item
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/cancel-order-item
+     * @param string $orderItemId
+     * @param string $reasonCode
+     * @return ProcessStatus
      */
-    public function get(string $id): OrderResource
-    {
+    public function cancelOrderItem(
+        string $orderItemId,
+        string $reasonCode = CancelReasonCodes::DEFAULT
+    ): ProcessStatus {
+        $payload = collect([
+            'orderItems' => [
+                'orderItemId' => $orderItemId,
+                'reasonCode' => $reasonCode
+            ]
+        ]);
+
         $response = $this->performApiCall(
-            'GET',
-            "orders/{$id}"
+            'PUT',
+            'orders/cancellation',
+            json_encode($payload->all())
         );
 
-        return new OrderResource(collect($response));
+        return new ProcessStatus(collect($response));
     }
 
     /**
      * Ship Order Item
-     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/orders-shipments.html#_ship_order_item
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/ship-order-item
      * @param string $orderItemId
      * @param string|null $shipmentReference
      * @param string|null $shipmentLabelId
@@ -113,29 +136,18 @@ class Orders extends BaseEndpoint
     }
 
     /**
-     * Cancel Order Item
-     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/orders-shipments.html#_cancel_order_item
-     * @param string $orderItemId
-     * @param string $reasonCode
-     * @return ProcessStatus
+     * Retrieve a single order
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-order
+     * @param string $id
+     * @return OrderResource
      */
-    public function cancelOrderItem(
-        string $orderItemId,
-        string $reasonCode = CancelReasonCodes::DEFAULT
-    ): ProcessStatus {
-        $payload = collect([
-            'orderItems' => [
-                'orderItemId' => $orderItemId,
-                'reasonCode' => $reasonCode
-            ]
-        ]);
-
+    public function get(string $id): OrderResource
+    {
         $response = $this->performApiCall(
-            'PUT',
-            'orders/cancellation',
-            json_encode($payload->all())
+            'GET',
+            "orders/{$id}"
         );
 
-        return new ProcessStatus(collect($response));
+        return new OrderResource(collect($response));
     }
 }
