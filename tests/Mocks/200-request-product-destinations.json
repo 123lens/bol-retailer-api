@@ -1,0 +1,14 @@
+{
+  "processStatusId":"1",
+  "eventType":"REQUEST_PRODUCT_DESTINATIONS",
+  "description":"Request the product destination for one or more products.",
+  "status":"PENDING",
+  "createTimestamp":"2022-10-05T16:38:29+02:00",
+  "links":[
+    {
+      "rel":"self",
+      "href":"https://api.bol.com/shared-demo/process-status/1",
+      "method":"GET"
+    }
+  ]
+}

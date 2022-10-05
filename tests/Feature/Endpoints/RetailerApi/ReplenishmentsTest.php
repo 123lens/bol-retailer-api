@@ -222,6 +222,8 @@ class ReplenishmentsTest extends TestCase
     /** @test */
     public function canRequestProductDestinations()
     {
+        $this->useMock('200-request-product-destinations.json');
+
         $status = $this->client->replenishments->productDestinations([
             '9781529105100',
             '9318478007195',
