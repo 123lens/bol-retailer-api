@@ -22,10 +22,10 @@ abstract class BaseClient
     const HTTP_STATUS_NO_CONTENT = 204;
 
     /** @var string - default user agent string */
-    const USER_AGENT = "Budgetlens/BolRetailerApi/V7.0.0";
+    const USER_AGENT = "Budgetlens/BolRetailerApi/V8.0.0";
 
     /** @var string */
-    public $apiVersionHeader = 'application/vnd.retailer.v7+json';
+    public $apiVersionHeader = 'application/vnd.retailer.v8+json';
 
     /** @var Config  */
     private $config;
