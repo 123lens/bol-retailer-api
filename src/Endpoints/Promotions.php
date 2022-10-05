@@ -1,4 +1,5 @@
 <?php
+
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
 use Budgetlens\BolRetailerApi\Resources\Commission;
@@ -11,7 +12,7 @@ class Promotions extends BaseEndpoint
     /**
      * Get Promotions
      *
-     * @see https://api.bol.com/retailer/public/redoc/v7/retailer.html#operation/get-promotions
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-promotions
      * @param array $promotionTypes
      * @param int $page
      * @return Collection
@@ -41,7 +42,7 @@ class Promotions extends BaseEndpoint
 
     /**
      * Get Promotion By ID
-     * @see https://api.bol.com/retailer/public/redoc/v7/retailer.html#operation/get-promotion
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-promotion
      * @param string $id
      * @return Promotion
      */
@@ -57,12 +58,12 @@ class Promotions extends BaseEndpoint
 
     /**
      * Gets a paginated list of all products that are present within a promotion.
-     * @see https://api.bol.com/retailer/public/redoc/v7/retailer.html#operation/get-products
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-products
      * @param string $id
-     * @param $page
+     * @param int $page
      * @return Collection
      */
-    public function products(string $id, $page = 1)
+    public function products(string $id, int $page = 1)
     {
         $parameters = collect([
             'page' => $page,
