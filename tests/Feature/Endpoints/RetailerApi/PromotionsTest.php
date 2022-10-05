@@ -1,13 +1,12 @@
 <?php
+
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints\RetailerApi;
 
-use Budgetlens\BolRetailerApi\Resources\Commission;
 use Budgetlens\BolRetailerApi\Resources\Country;
 use Budgetlens\BolRetailerApi\Resources\Promotion;
 use Budgetlens\BolRetailerApi\Resources\Promotions\Campaign;
 use Budgetlens\BolRetailerApi\Resources\Promotions\Product;
 use Budgetlens\BolRetailerApi\Resources\Promotions\RelevanceScore;
-use Budgetlens\BolRetailerApi\Resources\Reduction;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
 use Illuminate\Support\Collection;
 
