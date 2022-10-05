@@ -1,4 +1,5 @@
 <?php
+
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints\RetailerApi;
 
 use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
@@ -220,7 +221,7 @@ class OffersTest extends TestCase
     /** @test */
     public function getOffersExport()
     {
-        $this->useMock('200-offers-export.csv', 200, ['Content-Type' => 'application/vnd.retailer.v4+csv;charset=UTF-8']);
+        $this->useMock('200-offers-export.csv', 200, ['Content-Type' => 'application/vnd.retailer.v8+csv;charset=UTF-8']);
         $id = '73985e00-d461-4461-80e7-d3fea8d23ef4';
         $offers = $this->client->offers->getExport($id);
 
@@ -232,6 +233,7 @@ class OffersTest extends TestCase
         $this->assertInstanceOf(Condition::class, $offers->first()->condition);
         $this->assertInstanceOf(Pricing::class, $offers->first()->pricing);
         $this->assertInstanceOf(Stock::class, $offers->first()->stock);
+        $this->assertSame(4, $offers->first()->correctedStock);
         $this->assertInstanceOf(Fulfilment::class, $offers->first()->fulfilment);
         $this->assertInstanceOf(\DateTime::class, $offers->first()->mutationDateTime);
     }
@@ -252,7 +254,7 @@ class OffersTest extends TestCase
     /** @test */
     public function getUnpublishedOffersExport()
     {
-        $this->useMock('200-unpublished-offers-export.csv', 200, ['Content-Type' => 'application/vnd.retailer.v4+csv;charset=UTF-8']);
+        $this->useMock('200-unpublished-offers-export.csv', 200, ['Content-Type' => 'application/vnd.retailer.v8+csv;charset=UTF-8']);
 
         $offers = $this->client->offers->getUnpublishedExport('3c343f0e-c189-49cc-ae46-da33b3d47ee6');
         $this->assertInstanceOf(Collection::class, $offers);
@@ -262,8 +264,6 @@ class OffersTest extends TestCase
         $this->assertSame('PRICE_NOT_COMPETITIVE', $offers->first()->notPublishableReasons->first()->code);
         $this->assertSame('Price too high', $offers->first()->notPublishableReasons->first()->description);
     }
-
-
 
     /** @test */
     public function missingEancodeThrowsAValidationException()

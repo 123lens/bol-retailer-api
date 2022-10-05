@@ -1,4 +1,5 @@
 <?php
+
 namespace Budgetlens\BolRetailerApi\Resources;
 
 use Illuminate\Support\Collection;
