@@ -2,7 +2,6 @@
 
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
-use Budgetlens\BolRetailerApi\Resources\Commission;
 use Budgetlens\BolRetailerApi\Resources\Promotion;
 use Budgetlens\BolRetailerApi\Resources\Promotions\Product;
 use Illuminate\Support\Collection;
