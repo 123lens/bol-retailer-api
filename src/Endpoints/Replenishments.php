@@ -1,8 +1,10 @@
 <?php
+
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
 use Budgetlens\BolRetailerApi\Resources\Address;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
+use Budgetlens\BolRetailerApi\Resources\ProductDestination;
 use Budgetlens\BolRetailerApi\Resources\Replenishment;
 use Budgetlens\BolRetailerApi\Resources\Replenishment\ProductLabels;
 use Budgetlens\BolRetailerApi\Resources\Replenishment\Picklist;
@@ -13,7 +15,7 @@ use Illuminate\Support\Collection;
 
 class Replenishments extends BaseEndpoint
 {
-    private $availableStates = [
+    private array $availableStates = [
         ReplenishState::ANNOUNCED,
         ReplenishState::IN_TRANSIT,
         ReplenishState::ARRIVED_AT_WH,
@@ -22,7 +24,7 @@ class Replenishments extends BaseEndpoint
         ReplenishState::DONE
     ];
 
-    private $availableProductLabelFormat = [
+    private array $availableProductLabelFormat = [
         LabelFormat::AVERY_3474,
         LabelFormat::AVERY_J8159,
         LabelFormat::AVERY_J8160,
@@ -33,23 +35,22 @@ class Replenishments extends BaseEndpoint
 
     /**
      * Get Replenishments
-     *
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-replenishments
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-replenishments
      * @param string|null $reference
      * @param string|null $eancode
      * @param \DateTime|null $startDate
      * @param \DateTime|null $endDate
-     * @param string|null $state
+     * @param array $states
      * @param int $page
      * @return Collection
      */
     public function list(
-        string    $reference = null,
-        string    $eancode = null,
+        string $reference = null,
+        string $eancode = null,
         \DateTime $startDate = null,
         \DateTime $endDate = null,
-        array     $states = [],
-        int       $page = 1
+        array $states = [],
+        int $page = 1
     ): Collection {
         foreach ($states as $state) {
             if (!in_array($state, $this->availableStates)) {
@@ -91,25 +92,9 @@ class Replenishments extends BaseEndpoint
     }
 
     /**
-     * Get Replenishment by Id
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-replenishment
-     * @param string $replenishmentId
-     * @return Replenishment
-     */
-    public function get(string $replenishmentId): Replenishment
-    {
-        $response = $this->performApiCall(
-            'GET',
-            "replenishments/{$replenishmentId}"
-        );
-
-        return new Replenishment(collect($response));
-    }
-
-    /**
      * Create Replenishment
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/post-replenishment
-     * @param Replenishment $inbound
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/post-replenishment
+     * @param Replenishment $replenishment
      * @return ProcessStatus
      */
     public function create(Replenishment $replenishment): ProcessStatus
@@ -124,8 +109,34 @@ class Replenishments extends BaseEndpoint
     }
 
     /**
+     * Retrieve list of available delivery dates
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-delivery-dates
+     * @return Collection
+     */
+    public function deliveryDates(): Collection
+    {
+        $response = $this->performApiCall(
+            'GET',
+            'replenishments/delivery-dates',
+        );
+
+        $collection = new Collection();
+
+        $deliveryDates = $response->deliveryDates ?? null;
+        if (!is_null($deliveryDates)) {
+            collect($deliveryDates)->each(function ($item) use ($collection) {
+                $collection->push(new Replenishment\DeliveryDate([
+                    'date' => $item
+                ]));
+            });
+        }
+
+        return $collection;
+    }
+
+    /**
      * Retrieve available pickup timeslots
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/post-pickup-time-slots
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/post-pickup-time-slots
      * @param Address $address
      * @param int $numberOfLoadCarriers
      * @return Collection
@@ -157,25 +168,50 @@ class Replenishments extends BaseEndpoint
     }
 
     /**
-     * Retrieve delivery dates
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-delivery-dates
-     * @return Collection
+     * Requests a list of product destinations by EANs.
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/post-request-product-destinations
+     * @param array $eancodes
+     * @return ProcessStatus
      */
-    public function deliveryDates(): Collection
+    public function productDestinations(array $eancodes): ProcessStatus
+    {
+        $payload = [];
+
+        foreach ($eancodes as $ean) {
+            $payload[] = ['ean' => $ean];
+        }
+
+        $response = $this->performApiCall(
+            'POST',
+            "replenishments/product-destinations",
+            collect([
+                'eans' => $payload
+            ])
+        );
+
+        return new ProcessStatus(collect($response));
+    }
+
+    /**
+     * Gets the product destinations for one or more products by product destinations id.
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-product-destinations
+     * @param string $id
+     * @return void
+     */
+    public function getProductDestinations(string $id)
     {
         $response = $this->performApiCall(
             'GET',
-            'replenishments/delivery-dates',
+            "replenishments/product-destinations/{$id}",
         );
 
         $collection = new Collection();
 
-        $deliveryDates = $response->deliveryDates ?? null;
-        if (!is_null($deliveryDates)) {
-            collect($deliveryDates)->each(function ($item) use ($collection) {
-                $collection->push(new Replenishment\DeliveryDate([
-                    'date' => $item
-                ]));
+        $destinations = $response->productDestinations ?? null;
+
+        if (!is_null($destinations)) {
+            collect($destinations)->each(function ($item) use ($collection) {
+                $collection->push(new ProductDestination($item));
             });
         }
 
@@ -184,7 +220,7 @@ class Replenishments extends BaseEndpoint
 
     /**
      * Get Product Labels
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/post-product-labels
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/post-product-labels
      * @param array $products
      * @param string $format
      * @return ProductLabels
@@ -209,8 +245,8 @@ class Replenishments extends BaseEndpoint
             "replenishments/product-labels",
             $payload,
             [
-                'Content-Type' => 'application/vnd.retailer.v5+json',
-                'Accept' => 'application/vnd.retailer.v5+pdf'
+                'Content-Type' => 'application/vnd.retailer.v8+json',
+                'Accept' => 'application/vnd.retailer.v8+pdf'
             ]
         );
 
@@ -221,9 +257,25 @@ class Replenishments extends BaseEndpoint
     }
 
     /**
+     * Get Replenishment by Id
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-replenishment
+     * @param string $replenishmentId
+     * @return Replenishment
+     */
+    public function get(string $replenishmentId): Replenishment
+    {
+        $response = $this->performApiCall(
+            'GET',
+            "replenishments/{$replenishmentId}"
+        );
+
+        return new Replenishment(collect($response));
+    }
+
+    /**
      * Update Replenishment
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/put-replenishment
-     * @param Replenishment $inbound
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/put-replenishment
+     * @param Replenishment $replenishment
      * @return ProcessStatus
      */
     public function update(Replenishment $replenishment): ProcessStatus
@@ -242,8 +294,8 @@ class Replenishments extends BaseEndpoint
     }
 
     /**
-     * Update Replenishment
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/put-replenishment
+     * Retrieve the load carrier labels.
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-load-carrier-labels
      * @param string $replenishmentId
      * @param string $labelType
      * @return CarrierLabels
@@ -269,7 +321,7 @@ class Replenishments extends BaseEndpoint
 
     /**
      * Get Picklist
-     * @see https://api.bol.com/retailer/public/redoc/v5#operation/get-pick-list
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-pick-list
      * @param string $replenishmentId
      * @return Picklist
      */

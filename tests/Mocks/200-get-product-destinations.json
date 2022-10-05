@@ -1,0 +1,38 @@
+{
+  "productDestinations":[
+    {
+      "destinationWarehouse":{
+        "address":{
+          "streetName":"Mechie Trommelenweg",
+          "houseNumber":1,
+          "zipCode":"5145ND",
+          "city":"Waalwijk",
+          "countryCode":"NL",
+          "attentionOf":"t.a.v. bol.com"
+        }
+      },
+      "eans":[
+        {
+          "ean":"9789077024485"
+        }
+      ]
+    },
+    {
+      "destinationWarehouse":{
+        "address":{
+          "streetName":"Divisiedok",
+          "houseNumber":1,
+          "zipCode":"3439JM",
+          "city":"Nieuwegein",
+          "countryCode":"NL",
+          "attentionOf":"t.a.v. bol.com"
+        }
+      },
+      "eans":[
+        {
+          "ean":"9318478007195"
+        }
+      ]
+    }
+  ]
+}

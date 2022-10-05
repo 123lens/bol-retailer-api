@@ -1,21 +1,15 @@
 <?php
+
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints\RetailerApi;
 
-use Budgetlens\BolRetailerApi\Client;
 use Budgetlens\BolRetailerApi\Resources\Address;
-use Budgetlens\BolRetailerApi\Resources\Inbound;
-use Budgetlens\BolRetailerApi\Resources\InboundPackinglist;
-use Budgetlens\BolRetailerApi\Resources\InboundProductLabels;
-use Budgetlens\BolRetailerApi\Resources\InboundShippingLabel;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
+use Budgetlens\BolRetailerApi\Resources\ProductDestination;
 use Budgetlens\BolRetailerApi\Resources\Replenishment;
-use Budgetlens\BolRetailerApi\Resources\Timeslot;
-use Budgetlens\BolRetailerApi\Resources\Transporter;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
 use Budgetlens\BolRetailerApi\Types\LabelFormat;
 use Budgetlens\BolRetailerApi\Types\ReplenishState;
 use Budgetlens\BolRetailerApi\Types\TransportState;
-use Cassandra\Date;
 use Illuminate\Support\Collection;
 
 class ReplenishmentsTest extends TestCase
@@ -216,6 +210,43 @@ class ReplenishmentsTest extends TestCase
         $labels = $this->client->replenishments->productLabels($products, LabelFormat::AVERY_J8159);
 
         $this->assertInstanceOf(Replenishment\ProductLabels::class, $labels);
+    }
+
+    /** @test */
+    public function canRequestProductDestinations()
+    {
+        $this->useMock('200-request-product-destinations.json');
+
+        $status = $this->client->replenishments->productDestinations([
+            '9781529105100',
+            '9318478007195',
+        ]);
+        $this->assertInstanceOf(ProcessStatus::class, $status);
+        $this->assertSame(1, $status->processStatusId);
+        $this->assertSame('REQUEST_PRODUCT_DESTINATIONS', $status->eventType);
+        $this->assertSame('PENDING', $status->status);
+        $this->assertInstanceOf(\DateTime::class, $status->createTimestamp);
+    }
+
+    /** @test */
+    public function canGetProductDestinations()
+    {
+        $this->useMock('200-get-product-destinations.json');
+
+        $id = '6f0d7145-543e-4320-afb7-f43dd69b04dc';
+        $destinations = $this->client->replenishments->getProductDestinations($id);
+        $this->assertInstanceOf(Collection::class, $destinations);
+        $this->assertInstanceOf(ProductDestination::class, $destinations->first());
+        $this->assertInstanceOf(Replenishment\Warehouse::class, $destinations->first()->destinationWarehouse);
+        $warehouse = $destinations->first()->destinationWarehouse;
+        $this->assertSame('Mechie Trommelenweg', $warehouse->streetName);
+        $this->assertSame(1, $warehouse->houseNumber);
+        $this->assertSame('5145ND', $warehouse->zipCode);
+        $this->assertSame('Waalwijk', $warehouse->city);
+        $this->assertSame('NL', $warehouse->countryCode);
+        $this->assertSame('t.a.v. bol.com', $warehouse->attentionOf);
+        $this->assertInstanceOf(Collection::class, $destinations->first()->eans);
+        $this->assertSame('9789077024485', $destinations->first()->eans->first());
     }
 
     /** @test */
