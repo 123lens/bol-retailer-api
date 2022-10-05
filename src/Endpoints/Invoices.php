@@ -1,4 +1,5 @@
 <?php
+
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
 use Budgetlens\BolRetailerApi\Exceptions\InvalidFormatException;
@@ -19,7 +20,7 @@ class Invoices extends BaseEndpoint
 
     /**
      * Get All Invoices
-     * @see https://api.bol.com/retailer/public/redoc/v5#tag/Invoices
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-invoices
      * @param \DateTime|null $periodStartDate
      * @param \DateTime|null $periodEndDate
      * @return InvoiceResource
@@ -43,7 +44,15 @@ class Invoices extends BaseEndpoint
         return new InvoiceResource(collect($response));
     }
 
-    public function get(string $invoiceId, $format = 'json')
+    /**
+     * Get Invoice by ID
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-invoice
+     * @param string $invoiceId
+     * @param string $format
+     * @return InvoicePDF|InvoiceXML|InvoiceDetailed
+     * @throws InvalidFormatException
+     */
+    public function get(string $invoiceId, string $format = 'json')
     {
         if (!in_array($format, $this->availableFormats)) {
             throw new InvalidFormatException();
@@ -57,6 +66,7 @@ class Invoices extends BaseEndpoint
                 'Accept' => $this->getAcceptHeader($format)
             ]
         );
+
         switch ($format) {
             case 'xml':
                 return new InvoiceXML([
@@ -73,7 +83,15 @@ class Invoices extends BaseEndpoint
         }
     }
 
-    public function getSpecification(string $invoiceId, $format = 'json'): Collection
+    /**
+     * Get Invoice Specification by ID
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-invoice-specification
+     * @param string $invoiceId
+     * @param string $format
+     * @return Collection
+     * @throws InvalidFormatException
+     */
+    public function getSpecification(string $invoiceId, string $format = 'json'): Collection
     {
         if (!in_array($format, $this->availableFormats)) {
             throw new InvalidFormatException();
@@ -119,11 +137,11 @@ class Invoices extends BaseEndpoint
     {
         switch ($format) {
             case 'pdf':
-                return 'application/vnd.retailer.v5+pdf';
+                return 'application/vnd.retailer.v8+pdf';
             case 'xml':
-                return 'application/vnd.retailer.v5+xml';
+                return 'application/vnd.retailer.v8+xml';
             default:
-                return 'application/vnd.retailer.v5+json';
+                return 'application/vnd.retailer.v8+json';
         }
     }
 }
