@@ -1,7 +1,7 @@
 <?php
+
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints\RetailerApi;
 
-use Budgetlens\BolRetailerApi\Resources\Commission;
 use Budgetlens\BolRetailerApi\Resources\Insight;
 use Budgetlens\BolRetailerApi\Resources\Insights\Country;
 use Budgetlens\BolRetailerApi\Resources\Insights\ForeCast;
@@ -11,7 +11,6 @@ use Budgetlens\BolRetailerApi\Resources\Insights\PerformanceDetail;
 use Budgetlens\BolRetailerApi\Resources\Insights\Search\RelatedTerm;
 use Budgetlens\BolRetailerApi\Resources\Insights\SearchTerm;
 use Budgetlens\BolRetailerApi\Resources\PerformanceIndicator;
-use Budgetlens\BolRetailerApi\Resources\Reduction;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
 use Illuminate\Support\Collection;
 
