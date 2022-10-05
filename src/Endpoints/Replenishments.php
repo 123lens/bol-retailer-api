@@ -2,7 +2,6 @@
 
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
-use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
 use Budgetlens\BolRetailerApi\Resources\Address;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\ProductDestination;
