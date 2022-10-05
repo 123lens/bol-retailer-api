@@ -2,6 +2,7 @@
 
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
+use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
 use Budgetlens\BolRetailerApi\Resources\Address;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\ProductDestination;
@@ -175,16 +176,18 @@ class Replenishments extends BaseEndpoint
      */
     public function productDestinations(array $eancodes): ProcessStatus
     {
-        $payload = collect([
-            'eans' => $eancodes,
-        ])->reject(function ($value) {
-            return is_countable($value) && !count($value);
-        });
+        $payload = [];
+
+        foreach ($eancodes as $ean) {
+            $payload[] = ['ean' => $ean];
+        }
 
         $response = $this->performApiCall(
             'POST',
             "replenishments/product-destinations",
-            $payload
+            collect([
+                'eans' => $payload
+            ])
         );
 
         return new ProcessStatus(collect($response));

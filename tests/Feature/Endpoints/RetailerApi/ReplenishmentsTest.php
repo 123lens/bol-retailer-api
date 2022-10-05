@@ -219,9 +219,18 @@ class ReplenishmentsTest extends TestCase
         $this->assertInstanceOf(Replenishment\ProductLabels::class, $labels);
     }
 
+    /** @test */
     public function canRequestProductDestinations()
     {
-
+        $status = $this->client->replenishments->productDestinations([
+            '9781529105100',
+            '9318478007195',
+        ]);
+        $this->assertInstanceOf(ProcessStatus::class, $status);
+        $this->assertSame(1, $status->processStatusId);
+        $this->assertSame('REQUEST_PRODUCT_DESTINATIONS', $status->eventType);
+        $this->assertSame('PENDING', $status->status);
+        $this->assertInstanceOf(\DateTime::class, $status->createTimestamp);
     }
 
     /** @test */
