@@ -1,4 +1,5 @@
 <?php
+
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
@@ -10,6 +11,7 @@ class Subscriptions extends BaseEndpoint
 {
     /**
      * List Subscriptions
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-push-notification-subscriptions
      * @return Collection
      */
     public function list(): Collection
@@ -29,22 +31,8 @@ class Subscriptions extends BaseEndpoint
     }
 
     /**
-     * Get Subscription By ID
-     * @param string $id
-     * @return Subscription
-     */
-    public function get(string $id): Subscription
-    {
-        $response = $this->performApiCall(
-            'GET',
-            "subscriptions/{$id}"
-        );
-
-        return new Subscription(collect($response));
-    }
-
-    /**
      * Create subscription
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/post-push-notification-subscription
      * @param array $resources
      * @param string $url
      * @return ProcessStatus
@@ -66,7 +54,61 @@ class Subscriptions extends BaseEndpoint
     }
 
     /**
+     * Get Signature public keys
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-subscription-keys
+     * @return Collection
+     */
+    public function getSignatureKeys(): Collection
+    {
+        $response = $this->performApiCall(
+            'GET',
+            "subscriptions/signature-keys"
+        );
+
+        $collection = new Collection();
+
+        collect($response->signatureKeys)->each(function ($item) use ($collection) {
+            $collection->push(new SignatureKey($item));
+        });
+
+        return $collection;
+    }
+
+    /**
+     * Test Push Notification
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/post-test-push-notification
+     * @param string $id
+     * @return ProcessStatus
+     */
+    public function test(string $id): ProcessStatus
+    {
+        $response = $this->performApiCall(
+            'POST',
+            "subscriptions/test/{$id}"
+        );
+
+        return new ProcessStatus(collect($response));
+    }
+
+    /**
+     * Get Subscription By ID
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-push-notification-subscription
+     * @param string $id
+     * @return Subscription
+     */
+    public function get(string $id): Subscription
+    {
+        $response = $this->performApiCall(
+            'GET',
+            "subscriptions/{$id}"
+        );
+
+        return new Subscription(collect($response));
+    }
+
+    /**
      * Update subscription
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/put-push-notification-subscription
      * @param string $id
      * @param array $resources
      * @param string $url
@@ -90,6 +132,7 @@ class Subscriptions extends BaseEndpoint
 
     /**
      * Delete subscription
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/delete-push-notification-subscription
      * @param string $id
      * @return ProcessStatus
      */
@@ -101,40 +144,5 @@ class Subscriptions extends BaseEndpoint
         );
 
         return new ProcessStatus(collect($response));
-    }
-
-    /**
-     * Test Push Notification
-     * @param string $id
-     * @return ProcessStatus
-     */
-    public function test(string $id): ProcessStatus
-    {
-        $response = $this->performApiCall(
-            'POST',
-            "subscriptions/test/{$id}"
-        );
-
-        return new ProcessStatus(collect($response));
-    }
-
-    /**
-     * Get Signature public keys
-     * @return Collection
-     */
-    public function getSignatureKeys(): Collection
-    {
-        $response = $this->performApiCall(
-            'GET',
-            "subscriptions/signature-keys"
-        );
-
-        $collection = new Collection();
-
-        collect($response->signatureKeys)->each(function ($item) use ($collection) {
-            $collection->push(new SignatureKey($item));
-        });
-
-        return $collection;
     }
 }
