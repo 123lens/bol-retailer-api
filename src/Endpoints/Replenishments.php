@@ -309,7 +309,7 @@ class Replenishments extends BaseEndpoint
             ]),
             null,
             [
-                'Accept' => 'application/vnd.retailer.v5+pdf'
+                'Accept' => 'application/vnd.retailer.v8+pdf'
             ]
         );
 
@@ -332,7 +332,7 @@ class Replenishments extends BaseEndpoint
             "replenishments/{$replenishmentId}/pick-list",
             null,
             [
-                'Accept' => 'application/vnd.retailer.v5+pdf'
+                'Accept' => 'application/vnd.retailer.v8+pdf'
             ]
         );
 
