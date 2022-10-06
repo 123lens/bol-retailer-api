@@ -65,7 +65,7 @@ abstract class BaseEndpoint
         array $requestHeaders = []
     ) {
         $response = $this->apiClient->performHttpCall($httpMethod, $apiMethod, $httpBody, $requestHeaders);
-//        die($response->getBody()->getContents());
+        die($response->getBody()->getContents());
         // hit a rate limit ?
         if ($response->getStatusCode() === 429) {
             $retryAfter = collect($response->getHeader('Retry-After'))->first();

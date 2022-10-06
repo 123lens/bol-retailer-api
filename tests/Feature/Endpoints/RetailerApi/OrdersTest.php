@@ -25,6 +25,7 @@ class OrdersTest extends TestCase
         $this->useMock('200-get-all-orders.json');
 
         $orders = $this->client->orders->getOrders();
+
         $this->assertInstanceOf(Collection::class, $orders);
         $this->assertInstanceOf(Order::class, $orders->first());
         $this->assertNotNull($orders->first()->orderId);
@@ -33,18 +34,27 @@ class OrdersTest extends TestCase
         $this->assertTrue(count($orders->first()->orderItems) > 0);
         $this->assertSame('1043946570', $orders->first()->orderId);
         $this->assertInstanceOf(Collection::class, $orders->first()->orderItems);
-        $this->assertInstanceOf(Order\OrderItem::class, $orders->first()->orderItems->first());
-        $this->assertSame('6042823871', $orders->first()->orderItems->first()->orderItemId);
-        $this->assertSame('8717418510749', $orders->first()->orderItems->first()->ean);
-        $this->assertSame(3, $orders->first()->orderItems->first()->quantity);
-        $this->assertSame(3, $orders->first()->orderItems->first()->quantityShipped);
-        $this->assertSame(0, $orders->first()->orderItems->first()->quantityCancelled);
+
+        // get first order item as shorthand
+        $orderItem = $orders->first()->orderItems->first();
+
+        $this->assertInstanceOf(Order\OrderItem::class, $orderItem);
+        $this->assertInstanceOf(Fulfilment::class, $orderItem->fulfilment);
+        $this->assertSame('6042823871', $orderItem->orderItemId);
+        $this->assertSame(false, $orderItem->cancellationRequest);
+        $this->assertSame('FBR', $orderItem->fulfilment->method);
+        $this->assertSame('OPEN', $orderItem->fulfilment->status);
+        $this->assertInstanceOf(\DateTime::class, $orderItem->latestChangedDateTime);
+        $this->assertSame('8717418510749', $orderItem->ean);
+        $this->assertSame(3, $orderItem->quantity);
+        $this->assertSame(3, $orderItem->quantityShipped);
+        $this->assertSame(0, $orderItem->quantityCancelled);
     }
 
     /** @test */
     public function getOpenFbrOrders()
     {
-        $this->useMock('200-orders.json');
+//        $this->useMock('200-orders.json');
 
         $orders = $this->client->orders->getOpenOrders();
         $this->assertInstanceOf(Order::class, $orders->first());
