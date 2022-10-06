@@ -13,6 +13,7 @@ class Fulfilment extends BaseResource
     public $expiryDate;
     public $pickUpPoints;
     public $timeFrameType;
+    public $status;
 
     public function __construct($attributes = [])
     {
