@@ -37,6 +37,7 @@
       "cancellationRequest":false,
       "fulfilment":{
         "method":"FBB",
+        "distributionParty":"RETAILER",
         "latestDeliveryDate":"2018-04-22",
         "expiryDate":"2018-04-25",
         "timeFrameType":"REGULAR"
@@ -53,13 +54,15 @@
       "quantityShipped":1,
       "quantityCancelled":0,
       "unitPrice":19.99,
-      "commission":2.21
+      "commission":2.21,
+      "latestChangedDateTime":"2019-04-30T16:47:32+02:00"
     },
     {
       "orderItemId":"6107771546",
       "cancellationRequest":false,
       "fulfilment":{
         "method":"FBB",
+        "distributionParty":"RETAILER",
         "latestDeliveryDate":"2018-01-16",
         "expiryDate":"2018-01-16",
         "timeFrameType":"REGULAR"
@@ -76,7 +79,8 @@
       "quantityShipped":1,
       "quantityCancelled":0,
       "unitPrice":32.98,
-      "commission":6.38
+      "commission":6.38,
+      "latestChangedDateTime":"2019-04-30T16:47:32+02:00"
     }
   ]
 }

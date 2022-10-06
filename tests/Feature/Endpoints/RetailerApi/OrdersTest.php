@@ -54,20 +54,36 @@ class OrdersTest extends TestCase
     /** @test */
     public function getOpenFbrOrders()
     {
-//        $this->useMock('200-orders.json');
+        $this->useMock('200-orders-fbr.json');
 
         $orders = $this->client->orders->getOpenOrders();
+
         $this->assertInstanceOf(Order::class, $orders->first());
         $this->assertNotNull($orders->first()->orderId);
         $this->assertNotNull($orders->first()->orderPlacedDateTime);
         $this->assertInstanceOf(\DateTime::class, $orders->first()->orderPlacedDateTime);
         $this->assertTrue(count($orders->first()->orderItems) > 0);
+
+        // get first order item as shorthand
+        $orderItem = $orders->first()->orderItems->first();
+
+        $this->assertInstanceOf(Order\OrderItem::class, $orderItem);
+        $this->assertInstanceOf(Fulfilment::class, $orderItem->fulfilment);
+        $this->assertSame('6042823871', $orderItem->orderItemId);
+        $this->assertSame(false, $orderItem->cancellationRequest);
+        $this->assertSame('FBR', $orderItem->fulfilment->method);
+        $this->assertSame('OPEN', $orderItem->fulfilment->status);
+        $this->assertInstanceOf(\DateTime::class, $orderItem->latestChangedDateTime);
+        $this->assertSame('8717418510749', $orderItem->ean);
+        $this->assertSame(3, $orderItem->quantity);
+        $this->assertSame(3, $orderItem->quantityShipped);
+        $this->assertSame(0, $orderItem->quantityCancelled);
     }
 
     /** @test */
     public function getOpenFbbOrders()
     {
-        $this->useMock('200-orders.json');
+        $this->useMock('200-orders-fbb.json');
 
         $orders = $this->client->orders->getOpenOrders('fbb');
         $this->assertInstanceOf(Order::class, $orders->first());
@@ -75,14 +91,42 @@ class OrdersTest extends TestCase
         $this->assertNotNull($orders->first()->orderPlacedDateTime);
         $this->assertInstanceOf(\DateTime::class, $orders->first()->orderPlacedDateTime);
         $this->assertTrue(count($orders->first()->orderItems) > 0);
+
+        // get first order item as shorthand
+        $orderItem = $orders->first()->orderItems->first();
+
+        $this->assertInstanceOf(Order\OrderItem::class, $orderItem);
+        $this->assertInstanceOf(Fulfilment::class, $orderItem->fulfilment);
+        $this->assertSame('6107989317', $orderItem->orderItemId);
+        $this->assertSame(false, $orderItem->cancellationRequest);
+        $this->assertSame('FBB', $orderItem->fulfilment->method);
+        $this->assertSame('OPEN', $orderItem->fulfilment->status);
+        $this->assertInstanceOf(\DateTime::class, $orderItem->latestChangedDateTime);
+        $this->assertSame('8717418510749', $orderItem->ean);
+        $this->assertSame(2, $orderItem->quantity);
+        $this->assertSame(1, $orderItem->quantityShipped);
+        $this->assertSame(1, $orderItem->quantityCancelled);
     }
 
     /** @test */
     public function getOpenFbrOrdersWithPaging()
     {
-        $this->useMock('200-orders.json');
+        $this->useMock('200-orders-fbr.json');
 
         $orders = $this->client->orders->getOpenOrders('FBR', 3);
+        $this->assertInstanceOf(Order::class, $orders->first());
+        $this->assertNotNull($orders->first()->orderId);
+        $this->assertNotNull($orders->first()->orderPlacedDateTime);
+        $this->assertInstanceOf(\DateTime::class, $orders->first()->orderPlacedDateTime);
+        $this->assertTrue(count($orders->first()->orderItems) > 0);
+    }
+
+    /** @test */
+    public function getOpenFbbOrdersWithPaging()
+    {
+        $this->useMock('200-orders-fbb.json');
+
+        $orders = $this->client->orders->getOpenOrders('FBB', 3);
         $this->assertInstanceOf(Order::class, $orders->first());
         $this->assertNotNull($orders->first()->orderId);
         $this->assertNotNull($orders->first()->orderPlacedDateTime);
@@ -129,6 +173,7 @@ class OrdersTest extends TestCase
         $this->assertInstanceOf(Collection::class, $order->orderItems);
         $this->assertCount(2, $order->orderItems);
         $this->assertInstanceOf(Order\OrderItem::class, $order->orderItems->first());
+        $this->assertInstanceOf(\DateTime::class, $order->orderItems->first()->latestChangedDateTime);
         $this->assertNotNull($order->orderItems->first()->orderItemId);
         $this->assertSame('6107771545', $order->orderItems->first()->orderItemId);
         $this->assertIsBool($order->orderItems->first()->cancellationRequest);

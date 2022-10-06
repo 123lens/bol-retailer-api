@@ -26,18 +26,18 @@ class Orders extends BaseEndpoint
     public function getOrders(
         string $fulfillmentMethod = 'FBR',
         string $status = 'ALL',
-        int $changeIntervalMinute = 0,
+        ?int $changeIntervalMinute = null,
         ?\DateTime $latestChangeDate = null,
         int $page = 1
     ): Collection {
         $query = collect([
-            'fulfilment-method' => $fulfillmentMethod,
-            'status' => $status,
+            'fulfilment-method' => strtoupper($fulfillmentMethod),
+            'status' => strtoupper($status),
             'change-interval-minute' => $changeIntervalMinute,
             'latest-change-date' => !is_null($latestChangeDate) ? $latestChangeDate->format('Y-m-d') : null,
             'page' => $page
         ])->reject(function ($value) {
-            return empty($value) || (int) $value === 0;
+            return empty($value);
         })->all();
 
         $response = $this->performApiCall(
@@ -66,7 +66,7 @@ class Orders extends BaseEndpoint
      */
     public function getOpenOrders(string $fulfillmentMethod = 'FBR', int $page = 1)
     {
-        return $this->getOrders($fulfillmentMethod, 'OPEN', $page);
+        return $this->getOrders($fulfillmentMethod, 'OPEN', null, null, $page);
     }
 
     /**
