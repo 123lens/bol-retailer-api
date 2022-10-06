@@ -1,4 +1,5 @@
 <?php
+
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
 use Budgetlens\BolRetailerApi\Exceptions\ProcessStillPendingException;
@@ -67,24 +68,8 @@ class Status extends BaseEndpoint
     }
 
     /**
-     * Get Process status by id
-     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/process-status.html
-     * @param string $id
-     * @return ProcessStatus
-     */
-    public function getById(string $id): ProcessStatus
-    {
-        $response = $this->performApiCall(
-            'GET',
-            "process-status/{$id}"
-        );
-
-        return new ProcessStatus(collect($response));
-    }
-
-    /**
      * Retrieve Process status by entitiyId & eventyType
-     * @see https://api.bol.com/retailer/public/Retailer-API/v5/functional/process-status.html
+     * @see https://api.bol.com/retailer/public/redoc/v8/shared.html#operation/get-process-status-entity-id
      * @param string $id
      * @param string $eventType
      * @param int $page
@@ -103,8 +88,10 @@ class Status extends BaseEndpoint
         return new ProcessStatusCollection(collect($response));
     }
 
+
     /**
      * Get process statusses for batch of processes
+     * @see https://api.bol.com/retailer/public/redoc/v8/shared.html#operation/get-process-status-bulk
      * @param array $ids
      * @return ProcessStatusCollection
      */
@@ -127,5 +114,21 @@ class Status extends BaseEndpoint
         );
 
         return new ProcessStatusCollection(collect($response));
+    }
+
+    /**
+     * Get Process status by id
+     * @see https://api.bol.com/retailer/public/redoc/v8/shared.html#operation/get-process-status
+     * @param string $id
+     * @return ProcessStatus
+     */
+    public function getById(string $id): ProcessStatus
+    {
+        $response = $this->performApiCall(
+            'GET',
+            "process-status/{$id}"
+        );
+
+        return new ProcessStatus(collect($response));
     }
 }
