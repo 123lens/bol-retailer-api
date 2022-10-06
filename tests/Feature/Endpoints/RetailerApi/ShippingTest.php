@@ -3,6 +3,7 @@
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints\RetailerApi;
 
 use Budgetlens\BolRetailerApi\Resources\DeliveryOption;
+use Budgetlens\BolRetailerApi\Resources\HandoverDetails;
 use Budgetlens\BolRetailerApi\Resources\Label;
 use Budgetlens\BolRetailerApi\Resources\Order;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
@@ -33,8 +34,10 @@ class ShippingTest extends TestCase
         $this->assertSame('PARCEL', $options->first()->labelType);
         $this->assertSame(441, $options->first()->labelPrice->totalPrice);
         $this->assertSame('10 kg', $options->first()->packageRestrictions->maxWeight);
-        $this->assertSame(true, $options->first()->handoverDetails->meetsCustomerExpectation);
+        $this->assertInstanceOf(HandoverDetails::class, $options->first()->handoverDetails);
         $this->assertInstanceOf(\DateTime::class, $options->first()->handoverDetails->latestHandoverDateTime);
+        $this->assertInstanceOf(\DateTime::class, $options->first()->handoverDetails->earliestHandoverDateTime);
+        $this->assertSame(true, $options->first()->handoverDetails->meetsCustomerExpectation);
     }
 
     /** @test */
