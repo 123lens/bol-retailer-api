@@ -10,7 +10,11 @@ class OrderItem extends BaseResource
 {
     public $orderItemId;
     public $cancellationRequest;
+    // fulfilment is set when retrieving order-details
     public $fulfilment;
+    // fulfilmentMethod & fulfilmentStatus are set when retrieving list of orders ...
+    // we're using fulfilment, so cast attributes to fulfilment
+    public $latestChangedDateTime;
     public $offer;
     public $product;
     public $ean;
@@ -26,6 +30,18 @@ class OrderItem extends BaseResource
 
         return $this;
     }
+
+    public function setLatestChangedDateTimeAttribute($value): self
+    {
+        if (!$value instanceof \DateTime) {
+            $value = new \DateTime($value);
+        }
+
+        $this->latestChangedDateTime = $value;
+
+        return $this;
+    }
+
     public function setFulfilmentAttribute($value): self
     {
         if (!$value instanceof Fulfilment) {
@@ -33,6 +49,32 @@ class OrderItem extends BaseResource
         }
 
         $this->fulfilment = $value;
+
+        return $this;
+    }
+
+    public function setFulfilmentMethodAttribute($value): self
+    {
+        if (is_null($this->fulfilment)) {
+            $this->setFulfilmentAttribute([
+                'method' => $value
+            ]);
+        } else {
+            $this->fulfilment->method = $value;
+        }
+
+        return $this;
+    }
+
+    public function setFulfilmentStatusAttribute($value): self
+    {
+        if (is_null($this->fulfilment)) {
+            $this->setFulfilmentAttribute([
+                'status' => $value
+            ]);
+        } else {
+            $this->fulfilment->status = $value;
+        }
 
         return $this;
     }
