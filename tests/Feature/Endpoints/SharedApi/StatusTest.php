@@ -1,4 +1,5 @@
 <?php
+
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints\SharedApi;
 
 use Budgetlens\BolRetailerApi\Exceptions\BolRetailerException;

@@ -1,7 +1,7 @@
 <?php
 namespace Budgetlens\BolRetailerApi;
 
-use Budgetlens\BolRetailerApi\Endpoints\Status;
+use Budgetlens\BolRetailerApi\Endpoints\SharedAPI\Status;
 
 class SharedClient extends BaseClient implements ApiClient
 {

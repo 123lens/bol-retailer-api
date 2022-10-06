@@ -1,11 +1,13 @@
 <?php
 
-namespace Budgetlens\BolRetailerApi\Endpoints;
+namespace Budgetlens\BolRetailerApi\Endpoints\SharedAPI;
 
+use Budgetlens\BolRetailerApi\Endpoints\BaseEndpoint;
 use Budgetlens\BolRetailerApi\Exceptions\ProcessStillPendingException;
 use Budgetlens\BolRetailerApi\Exceptions\RateLimitException;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatusCollection;
+use function collect;
 
 class Status extends BaseEndpoint
 {

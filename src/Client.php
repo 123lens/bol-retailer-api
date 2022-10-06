@@ -1,22 +1,21 @@
 <?php
 namespace Budgetlens\BolRetailerApi;
 
-use Budgetlens\BolRetailerApi\Contracts\Config;
 use Budgetlens\BolRetailerApi\Endpoints\Commissions;
 use Budgetlens\BolRetailerApi\Endpoints\Inbounds;
 use Budgetlens\BolRetailerApi\Endpoints\Insights;
 use Budgetlens\BolRetailerApi\Endpoints\Inventory;
 use Budgetlens\BolRetailerApi\Endpoints\Invoices;
 use Budgetlens\BolRetailerApi\Endpoints\Offers;
+use Budgetlens\BolRetailerApi\Endpoints\Orders;
 use Budgetlens\BolRetailerApi\Endpoints\Promotions;
 use Budgetlens\BolRetailerApi\Endpoints\Replenishments;
 use Budgetlens\BolRetailerApi\Endpoints\Returns;
+use Budgetlens\BolRetailerApi\Endpoints\SharedAPI\Status;
 use Budgetlens\BolRetailerApi\Endpoints\Shipments;
 use Budgetlens\BolRetailerApi\Endpoints\Shipping;
-use Budgetlens\BolRetailerApi\Endpoints\Status;
 use Budgetlens\BolRetailerApi\Endpoints\Subscriptions;
 use Budgetlens\BolRetailerApi\Endpoints\Transports;
-use Budgetlens\BolRetailerApi\Endpoints\Orders;
 
 class Client extends BaseClient implements ApiClient
 {
