@@ -140,6 +140,13 @@ class OrderItem extends BaseResource
                     ->forget('product')
                     ->put('product', $this->product->toArray());
             })
+            ->map(function ($item) {
+                if ($item instanceof \DateTime) {
+                    return $item->format('c');
+                }
+
+                return $item;
+            })
             ->reject(function ($value) {
                 return is_null($value);
             })
