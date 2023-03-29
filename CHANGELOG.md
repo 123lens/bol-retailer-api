@@ -4,6 +4,8 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
 
+## [v8.1.2] - 2023-03-29
+
 ### Changes
 - Refactored getDeliveryInfo, to ignore other fields in orderItems except `orderItemId`
 
@@ -70,8 +72,9 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 ### Initial release
 
 
-## Release comparisons
-
+[v8.1.2]: https://github.com/123lens/bol-retailer-api/compare/v8.1.1...v8.1.2
+[v8.1.1]: https://github.com/123lens/bol-retailer-api/compare/v8.0.1...v8.1.1
+[v8.1.0]: https://github.com/123lens/bol-retailer-api/compare/v8.0.2...v8.1.0
 [v8.0.2]: https://github.com/123lens/bol-retailer-api/compare/v8.0.1...v8.0.2
 [v8.0.1]: https://github.com/123lens/bol-retailer-api/compare/v8.0.0...v8.0.1
 [v8.0.0]: https://github.com/123lens/bol-retailer-api/compare/v6.0.4...v8.0.0
