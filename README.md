@@ -1736,7 +1736,210 @@ print_r($order);
 ```
 
 ```php
-// todo: fix response
+Budgetlens\BolRetailerApi\Resources\Order Object
+(
+    [orderId] => 1042823870
+    [pickUpPoint] => 
+    [shipmentDetails] => Budgetlens\BolRetailerApi\Resources\Address Object
+        (
+            [pickupPointName] => 
+            [salutation] => MALE
+            [firstName] => Hans
+            [surname] => de Grote
+            [streetName] => Skywalkerstraat
+            [houseNumber] => 199
+            [houseNumberExtension] => 
+            [extraAddressInformation] => 
+            [zipCode] => 1234AB
+            [city] => PLATOONDORP
+            [countryCode] => NL
+            [email] => 27zoytzc3crf2r6bctxfa3m2mrjbci@verkopen.test2.bol.com
+            [language] => nl
+            [company] => 
+            [vatNumber] => 
+            [kvkNumber] => 
+            [orderReference] => 
+            [attentionOf] => 
+            [deliveryPhoneNumber] => 
+        )
+
+    [billingDetails] => Budgetlens\BolRetailerApi\Resources\Address Object
+        (
+            [pickupPointName] => 
+            [salutation] => MALE
+            [firstName] => Pieter
+            [surname] => Post
+            [streetName] => Skywalkerstraat
+            [houseNumber] => 21
+            [houseNumberExtension] => X
+            [extraAddressInformation] => Extra informatie
+            [zipCode] => 1234AB
+            [city] => PLATOONDORP
+            [countryCode] => NL
+            [email] => 2yldzdi2wjcf5ir4sycq7lufqpytxy@verkopen.test2.bol.com
+            [language] => 
+            [company] => Pieter Post
+            [vatNumber] => NL123456789B01
+            [kvkNumber] => 99887766
+            [orderReference] => Mijn order ref
+            [attentionOf] => 
+            [deliveryPhoneNumber] => 
+        )
+
+    [orderPlacedDateTime] => DateTime Object
+        (
+            [date] => 2019-04-30 16:47:32.000000
+            [timezone_type] => 1
+            [timezone] => +02:00
+        )
+
+    [orderItems] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\Order\OrderItem Object
+                        (
+                            [orderItemId] => 6107771545
+                            [cancellationRequest] => 
+                            [fulfilment] => Budgetlens\BolRetailerApi\Resources\Fulfilment Object
+                                (
+                                    [method] => FBB
+                                    [deliveryCode] => 
+                                    [distributionParty] => RETAILER
+                                    [latestDeliveryDate] => DateTime Object
+                                        (
+                                            [date] => 2018-04-22 00:00:00.000000
+                                            [timezone_type] => 1
+                                            [timezone] => +00:00
+                                        )
+
+                                    [exactDeliveryDate] => 
+                                    [expiryDate] => DateTime Object
+                                        (
+                                            [date] => 2018-04-25 00:00:00.000000
+                                            [timezone_type] => 1
+                                            [timezone] => +00:00
+                                        )
+
+                                    [pickUpPoints] => 
+                                    [timeFrameType] => REGULAR
+                                    [status] => 
+                                )
+
+                            [latestChangedDateTime] => DateTime Object
+                                (
+                                    [date] => 2019-04-30 16:47:32.000000
+                                    [timezone_type] => 1
+                                    [timezone] => +02:00
+                                )
+
+                            [offer] => Budgetlens\BolRetailerApi\Resources\Offer Object
+                                (
+                                    [ean] => 
+                                    [offerId] => 8f1183e3-de98-c92f-e053-3590612a63b7
+                                    [reference] => MijnOffer0021
+                                    [condition] => 
+                                    [onHoldByRetailer] => 
+                                    [unknownProductTitle] => 
+                                    [pricing] => 
+                                    [stock] => 
+                                    [correctedStock] => 
+                                    [fulfilment] => 
+                                    [mutationDateTime] => 
+                                    [store] => 
+                                    [notPublishableReasons] => 
+                                )
+
+                            [product] => Budgetlens\BolRetailerApi\Resources\Product Object
+                                (
+                                    [ean] => 8785056370398
+                                    [title] => Star Wars Prequel Trilogy
+                                    [announcedQuantity] => 
+                                )
+
+                            [ean] => 
+                            [quantity] => 1
+                            [quantityShipped] => 1
+                            [quantityCancelled] => 0
+                            [unitPrice] => 19.99
+                            [commission] => 2.21
+                        )
+
+                    [1] => Budgetlens\BolRetailerApi\Resources\Order\OrderItem Object
+                        (
+                            [orderItemId] => 6107771546
+                            [cancellationRequest] => 
+                            [fulfilment] => Budgetlens\BolRetailerApi\Resources\Fulfilment Object
+                                (
+                                    [method] => FBB
+                                    [deliveryCode] => 
+                                    [distributionParty] => RETAILER
+                                    [latestDeliveryDate] => DateTime Object
+                                        (
+                                            [date] => 2018-01-16 00:00:00.000000
+                                            [timezone_type] => 1
+                                            [timezone] => +00:00
+                                        )
+
+                                    [exactDeliveryDate] => 
+                                    [expiryDate] => DateTime Object
+                                        (
+                                            [date] => 2018-01-16 00:00:00.000000
+                                            [timezone_type] => 1
+                                            [timezone] => +00:00
+                                        )
+
+                                    [pickUpPoints] => 
+                                    [timeFrameType] => REGULAR
+                                    [status] => 
+                                )
+
+                            [latestChangedDateTime] => DateTime Object
+                                (
+                                    [date] => 2019-04-30 16:47:32.000000
+                                    [timezone_type] => 1
+                                    [timezone] => +02:00
+                                )
+
+                            [offer] => Budgetlens\BolRetailerApi\Resources\Offer Object
+                                (
+                                    [ean] => 
+                                    [offerId] => 8f6485e3-de66-c08f-e053-8602590a63b4
+                                    [reference] => MijnOffer1121
+                                    [condition] => 
+                                    [onHoldByRetailer] => 
+                                    [unknownProductTitle] => 
+                                    [pricing] => 
+                                    [stock] => 
+                                    [correctedStock] => 
+                                    [fulfilment] => 
+                                    [mutationDateTime] => 
+                                    [store] => 
+                                    [notPublishableReasons] => 
+                                )
+
+                            [product] => Budgetlens\BolRetailerApi\Resources\Product Object
+                                (
+                                    [ean] => 8717418510749
+                                    [title] => Star Wars - The happy family 2
+                                    [announcedQuantity] => 
+                                )
+
+                            [ean] => 
+                            [quantity] => 1
+                            [quantityShipped] => 1
+                            [quantityCancelled] => 0
+                            [unitPrice] => 32.98
+                            [commission] => 6.38
+                        )
+
+                )
+
+            [escapeWhenCastingToString:protected] => 
+        )
+
+    [orderHash] => cb4058f1a52a36dce2180a7a9fca021a
+)
 ```
 
 
