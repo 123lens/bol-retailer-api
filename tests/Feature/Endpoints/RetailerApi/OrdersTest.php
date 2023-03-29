@@ -33,6 +33,7 @@ class OrdersTest extends TestCase
         $this->assertInstanceOf(\DateTime::class, $orders->first()->orderPlacedDateTime);
         $this->assertTrue(count($orders->first()->orderItems) > 0);
         $this->assertSame('1043946570', $orders->first()->orderId);
+        $this->assertSame('217a5e27aba44dc943b02e17782fcbb0', $orders->first()->orderHash);
         $this->assertInstanceOf(Collection::class, $orders->first()->orderItems);
 
         // get first order item as shorthand
