@@ -144,6 +144,7 @@ class OrdersTest extends TestCase
         $this->assertInstanceOf(Order::class, $order);
         $this->assertNotNull($order->orderId);
         $this->assertSame('1042823870', $order->orderId);
+        $this->assertSame('cb4058f1a52a36dce2180a7a9fca021a', $order->orderHash);
         $this->assertInstanceOf(Address::class, $order->shipmentDetails);
         $this->assertSame('MALE', $order->shipmentDetails->salutation);
         $this->assertSame('Hans', $order->shipmentDetails->firstName);
