@@ -4,6 +4,11 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
 
+## [v8.1.0] - 2023-03-29
+
+### Added 
+- Added `OrderHash` to Order resource
+
 ## [v8.0.2] - 2022-10-11
 
 ### Changes
