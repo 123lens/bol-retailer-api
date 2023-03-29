@@ -4,6 +4,11 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
 
+## [v8.1.1] - 2023-03-29
+
+### Changes
+- New release with correct requirement for illuminate/collections
+
 ## [v8.1.0] - 2023-03-29
 
 ### Added 
