@@ -1579,6 +1579,8 @@ print_r($status);
 
 ### Get Orders
 
+**Note** `orderHash` is a md5 hash of each property in `OrderItem`
+
 ``` php
 // all 
 $orders = $client->orders->getOpenOrders();
@@ -1628,7 +1630,7 @@ Illuminate\Support\Collection Object
                                 )
 
                         )
-
+                    [orderHash] => 217a5e27aba44dc943b02e17782fcbb0
                 )
 
             [1] => Budgetlens\BolRetailerApi\Resources\Order Object
@@ -1677,11 +1679,10 @@ Illuminate\Support\Collection Object
                                 )
 
                         )
-
+                    [orderHash] => 217a5e27aba44dc943b02e17782fcbb1
                 )
 
         )
-
 )
 ```
 
