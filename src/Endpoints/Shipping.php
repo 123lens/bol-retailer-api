@@ -43,7 +43,9 @@ class Shipping extends BaseEndpoint
             'POST',
             'shipping-labels/delivery-options',
             json_encode([
-                'orderItems' => $order->orderItems->toArray()
+                'orderItems' => $order->orderItems->map(function ($item) {
+                    return ['orderItemId' => $item->orderItemId];
+                })->toArray()
             ])
         );
 

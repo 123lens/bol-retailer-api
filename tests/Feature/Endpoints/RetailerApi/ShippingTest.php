@@ -20,7 +20,8 @@ class ShippingTest extends TestCase
         $order = new Order([
             'orderItems' => [
                 [
-                    'orderItemId' => 2095052647
+                    'orderItemId' => 2095052647,
+                    'cancellationRequest' => false,
                 ]
             ]
         ]);
