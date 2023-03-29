@@ -12,6 +12,7 @@ class Order extends BaseResource
     public $billingDetails;
     public $orderPlacedDateTime;
     public $orderItems;
+    public $orderHash;
 
     public function __construct($attributes = [])
     {
@@ -76,8 +77,14 @@ class Order extends BaseResource
 
         $this->orderItems = $items;
 
+        // set order hash
+        $this->orderHash = md5($items->map(function ($item) {
+            return $item->toArray();
+        })->flatten()->implode(","));
+
         return $this;
     }
+
 
     public function toArray(): array
     {
