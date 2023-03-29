@@ -4,6 +4,9 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
 
+### Changes
+- Refactored getDeliveryInfo, to ignore other fields in orderItems except `orderItemId`
+
 ## [v8.1.1] - 2023-03-29
 
 ### Changes
