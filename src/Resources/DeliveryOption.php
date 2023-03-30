@@ -20,6 +20,17 @@ class DeliveryOption extends BaseResource
         parent::__construct($attributes);
     }
 
+    public function setValidUntilDateAttribute($value): self
+    {
+        if (!$value instanceof \DateTime) {
+            $value = new \DateTime($value);
+        }
+
+        $this->validUntilDate = $value;
+
+        return $this;
+    }
+
     public function setRecommendedAttribute($value): self
     {
         $this->recommended = (bool) $value;
