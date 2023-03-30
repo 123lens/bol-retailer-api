@@ -4,7 +4,7 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
 
-## [v8.1.5] - 2023-03-30
+## [v8.2.0] - 2023-03-30
 
 ### Changes
 - `DeliveryOption` => Cast `validUntilDate` to `DateTime()`
@@ -87,7 +87,7 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 ### Initial release
 
 
-[v8.1.5]: https://github.com/123lens/bol-retailer-api/compare/v8.1.4...v8.1.5
+[v8.2.0]: https://github.com/123lens/bol-retailer-api/compare/v8.1.4...v8.2.0
 [v8.1.4]: https://github.com/123lens/bol-retailer-api/compare/v8.1.3...v8.1.4
 [v8.1.3]: https://github.com/123lens/bol-retailer-api/compare/v8.1.2...v8.1.3
 [v8.1.2]: https://github.com/123lens/bol-retailer-api/compare/v8.1.1...v8.1.2
