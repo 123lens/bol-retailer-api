@@ -22,12 +22,21 @@ class ShippingTest extends TestCase
                 [
                     'orderItemId' => 2095052647,
                     'cancellationRequest' => false,
+                    'fulfilment' => [
+                        'method' => 'FBR'
+                    ]
+                ],
+                [
+                    'orderItemId' => 2095052648,
+                    'cancellationRequest' => false,
+                    'fulfilment' => [
+                        'method' => 'FBB'
+                    ]
                 ]
             ]
         ]);
 
         $options = $this->client->shipping->getDeliveryOptions($order);
-
         $this->assertInstanceOf(Collection::class, $options);
         $this->assertCount(2, $options);
         $this->assertInstanceOf(DeliveryOption::class, $options->first());

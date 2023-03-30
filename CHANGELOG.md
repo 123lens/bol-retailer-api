@@ -4,6 +4,9 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
 
+### Changes
+- Refactored getDeliveryInfo, to ignore fulfilment FBB
+
 ## [v8.1.2] - 2023-03-29
 
 ### Changes
