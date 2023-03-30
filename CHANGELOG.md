@@ -4,6 +4,9 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
 
+### Changes
+- `DeliveryOption` => Cast `validUntilDate` to `DateTime()`
+
 ## [v8.1.4] - 2023-03-30
 
 ### Changes
