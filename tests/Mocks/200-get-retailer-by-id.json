@@ -1,0 +1,20 @@
+{
+  "retailerId":"8493657",
+  "displayName":"RETAILER123",
+  "registrationDate":"2022-06-17",
+  "topRetailer":false,
+  "ratingMethod":"THREE_MONTHS",
+  "retailerRating":{
+    "retailerRating":9.1,
+    "productInformationRating":9.6,
+    "deliveryTimeRating":9.4,
+    "shippingRating":9.4
+  },
+  "retailerReview":{
+    "totalReviewCount":14,
+    "approvalPercentage":88,
+    "positiveReviewCount":13,
+    "neutralReviewCount":1,
+    "negativeReviewCount":0
+  }
+}
