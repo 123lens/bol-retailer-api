@@ -60,4 +60,37 @@ class ProductsTest extends TestCase
         $this->assertSame('6946785108736', $result->products->first()->eans->get(1));
         $this->assertSame('RELEVANCE', $result->sort);
     }
+
+    /** @test */
+    public function getProductsListBySearchTermBelgium()
+    {
+        $this->useMock('200-list-products-by-search-term-belgium.json');
+
+        $request = (new ListProductsRequest([
+            'countryCode' => 'BE',
+            'searchTerm' => 'LEGO',
+            'filterRanges' => [
+                [
+                    'rangeId' => 'RATING',
+                    'min' => 1,
+                    'max' => 4
+                ]
+            ],
+            "sort" => "RELEVANCE",
+        ]))->addHeader('Accept-Language', 'nl-BE');
+        $result = $this->client->products->list($request);
+
+        $this->assertInstanceOf(ProductList::class, $result);
+        $this->assertCount(2, $result->products);
+        $this->assertInstanceOf(Product::class, $result->products->first());
+        $this->assertCount(1, $result->products->first()->eans);
+        $this->assertSame("LEGO Marvel Super Heroes 2 - Switch", $result->products->first()->title);
+        $this->assertCount(3, $result->products->get(1)->eans);
+        $this->assertSame('5051888111673', $result->products->get(1)->eans->get(0));
+        $this->assertSame('5051888079454', $result->products->get(1)->eans->get(1));
+        $this->assertSame('5051895082645', $result->products->get(1)->eans->get(2));
+        $this->assertSame('RELEVANCE', $result->sort);
+    }
+
+
 }
