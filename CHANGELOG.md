@@ -4,6 +4,10 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
 
+### Changes
+- Drop php7 support
+- Updated composer package dependencies
+
 ## [v8.2.0] - 2023-03-30
 
 ### Changes
