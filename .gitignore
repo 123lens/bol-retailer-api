@@ -7,6 +7,7 @@ docs
 phpunit.xml
 vendor
 .phpunit.result.cache
+.phpunit.cache/
 src/Cache/token.cache
 # keep gitkeeps
 !/**/.gitkeep
