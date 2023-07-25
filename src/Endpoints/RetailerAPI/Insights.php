@@ -1,7 +1,7 @@
 <?php
-namespace Budgetlens\BolRetailerApi\Endpoints;
+namespace Budgetlens\BolRetailerApi\Endpoints\RetailerAPI;
 
-use Budgetlens\BolRetailerApi\Resources\Commission;
+use Budgetlens\BolRetailerApi\Endpoints\BaseEndpoint;
 use Budgetlens\BolRetailerApi\Resources\Insight;
 use Budgetlens\BolRetailerApi\Resources\Insights\ForeCast;
 use Budgetlens\BolRetailerApi\Resources\Insights\SearchTerm;
@@ -13,7 +13,7 @@ class Insights extends BaseEndpoint
     /**
      * Get Offer Insights
      *
-     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-offer-insights
+     * @see https://api.bol.com/retailer/public/redoc/v9/retailer.html#operation/get-offer-insights
      * @param string $offerId
      * @param string $period
      * @param int $numberOfPeriods
