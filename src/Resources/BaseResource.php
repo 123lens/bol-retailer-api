@@ -20,20 +20,6 @@ abstract class BaseResource implements Arrayable, Jsonable, JsonSerializable
     }
 
     /**
-     * Fill object
-     * @param $attributes
-     * @return $this
-     */
-    public function fill($attributes): self
-    {
-        collect($attributes)->each(function ($value, $key) {
-            $this->setAttribute($key, $value);
-        });
-
-        return $this;
-    }
-
-    /**
      * Json Serialize
      * @return array
      */

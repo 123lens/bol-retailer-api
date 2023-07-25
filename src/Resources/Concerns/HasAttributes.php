@@ -6,6 +6,20 @@ use Budgetlens\BolRetailerApi\Support\Str;
 trait HasAttributes
 {
     /**
+     * Fill object
+     * @param $attributes
+     * @return $this
+     */
+    public function fill($attributes): self
+    {
+        collect($attributes)->each(function ($value, $key) {
+            $this->setAttribute($key, $value);
+        });
+
+        return $this;
+    }
+
+    /**
      * Convert the recource's attributes to an array.
      *
      * @return array
