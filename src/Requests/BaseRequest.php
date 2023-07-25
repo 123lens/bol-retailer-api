@@ -6,10 +6,13 @@ use Budgetlens\BolRetailerApi\Contracts\Arrayable;
 use Budgetlens\BolRetailerApi\Contracts\Jsonable;
 use Budgetlens\BolRetailerApi\Contracts\Request;
 use Budgetlens\BolRetailerApi\Exceptions\JsonEncodingException;
+use Budgetlens\BolRetailerApi\Resources\Concerns\HasAttributes;
 use JsonSerializable;
 
 abstract class BaseRequest implements Request, Arrayable, Jsonable, JsonSerializable
 {
+    use HasAttributes;
+
     private $headers = [];
     /**
      * BaseResource constructor.
@@ -28,7 +31,7 @@ abstract class BaseRequest implements Request, Arrayable, Jsonable, JsonSerializ
 
     public function getHeaders(): array
     {
-        return [];
+        return $this->headers;
     }
 
     public function addHeader(string $name, mixed $value): self
@@ -54,6 +57,7 @@ abstract class BaseRequest implements Request, Arrayable, Jsonable, JsonSerializ
     public function toArray(): array
     {
         return collect($this->attributesToArray())
+            ->except('headers')
             ->reject(function ($value) {
                 return $value === null;
             })
