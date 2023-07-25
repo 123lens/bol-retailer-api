@@ -16,7 +16,7 @@ class Retailer extends BaseResource
 
     public null | RetailerReview $retailerReview;
 
-    public function setRregistrationDateAttribute($value): self
+    public function setRegistrationDateAttribute($value): self
     {
         $this->registrationDate = new \DateTimeImmutable($value);
 
@@ -30,7 +30,7 @@ class Retailer extends BaseResource
         return $this;
     }
 
-    public function setRretailerRatingAttribute($value): self
+    public function setRetailerRatingAttribute($value): self
     {
         $this->retailerRating = new RetailerRating($value);
 
@@ -39,7 +39,7 @@ class Retailer extends BaseResource
 
     public function setRetailerReviewAttribute($value): self
     {
-        $this->retailerRating = new RetailerReview($value);
+        $this->retailerReview = new RetailerReview($value);
 
         return $this;
     }
