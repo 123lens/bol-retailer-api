@@ -4,6 +4,9 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+- Added Get Retailer By ID
+
 ### Changes
 - Drop php7 support
 - Updated composer package dependencies

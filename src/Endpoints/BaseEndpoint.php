@@ -87,6 +87,9 @@ abstract class BaseEndpoint
             'application/vnd.retailer.v8+pdf;charset=UTF-8',
             'application/vnd.retailer.v8+csv;charset=UTF-8',
             'application/vnd.retailer.v8+xml;charset=UTF-8',
+            'application/vnd.retailer.v9+pdf;charset=UTF-8',
+            'application/vnd.retailer.v9+csv;charset=UTF-8',
+            'application/vnd.retailer.v9+xml;charset=UTF-8',
         ];
 
         if (in_array(collect($response->getHeader('Content-Type'))->first(), $directResponseHeaders)) {

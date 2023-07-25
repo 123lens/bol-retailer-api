@@ -2687,6 +2687,52 @@ Budgetlens\BolRetailerApi\Resources\Replenishment\Picklist Object
 
 --- 
 
+## Retailers
+
+### Retrieve a retailer by its id
+```php
+$retailerId = '8493657';
+$retailer = $client->retailers->get($retailerId);
+print_r($retailer);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\Retailer Object
+(
+    [retailerId] => 8493657
+    [displayName] => RETAILER123
+    [registrationDate] => DateTimeImmutable Object
+        (
+            [date] => 2022-06-17 00:00:00.000000
+            [timezone_type] => 3
+            [timezone] => UTC
+        )
+
+    [topRetailer] => 
+    [ratingMethod] => THREE_MONTHS
+    [retailerRating] => Budgetlens\BolRetailerApi\Resources\Retailer\RetailerRating Object
+        (
+            [retailerRating] => 9.1
+            [productInformationRating] => 9.6
+            [deliveryTimeRating] => 9.4
+            [shippingRating] => 9.4
+        )
+
+    [retailerReview] => Budgetlens\BolRetailerApi\Resources\Retailer\RetailerReview Object
+        (
+            [totalReviewCount] => 14
+            [approvalPercentage] => 88
+            [positiveReviewCount] => 13
+            [neutralReviewCount] => 1
+            [negativeReviewCount] => 0
+        )
+
+)
+```
+
+--- 
+
+
 ## Returns
 
 ### Get All unhandled FBB Returns
