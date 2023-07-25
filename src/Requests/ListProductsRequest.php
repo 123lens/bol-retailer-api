@@ -1,8 +1,7 @@
 <?php
 
-namespace Budgetlens\BolRetailerApi\Requests\Products;
+namespace Budgetlens\BolRetailerApi\Requests;
 
-use Budgetlens\BolRetailerApi\Requests\BaseRequest;
 use Budgetlens\BolRetailerApi\Resources\Concerns\HasAttributes;
 
 class ListProductsRequest extends BaseRequest

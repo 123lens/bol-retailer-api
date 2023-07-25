@@ -3,10 +3,9 @@
 namespace Budgetlens\BolRetailerApi\Endpoints\RetailerAPI;
 
 use Budgetlens\BolRetailerApi\Endpoints\BaseEndpoint;
-use Budgetlens\BolRetailerApi\Requests\Products\ListProductsRequest;
+use Budgetlens\BolRetailerApi\Requests\ListProductsRequest;
 use Budgetlens\BolRetailerApi\Resources\ProductList;
 use Budgetlens\BolRetailerApi\Resources\Retailer;
-use Illuminate\Support\Collection;
 
 class Products extends BaseEndpoint
 {
