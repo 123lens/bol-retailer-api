@@ -10,6 +10,7 @@ use Budgetlens\BolRetailerApi\Endpoints\Orders;
 use Budgetlens\BolRetailerApi\Endpoints\Promotions;
 use Budgetlens\BolRetailerApi\Endpoints\Replenishments;
 use Budgetlens\BolRetailerApi\Endpoints\RetailerAPI\Insights;
+use Budgetlens\BolRetailerApi\Endpoints\RetailerAPI\Products;
 use Budgetlens\BolRetailerApi\Endpoints\RetailerAPI\Retailers;
 use Budgetlens\BolRetailerApi\Endpoints\Returns;
 use Budgetlens\BolRetailerApi\Endpoints\SharedAPI\Status;
@@ -45,7 +46,8 @@ class Client extends BaseClient implements ApiClient
     /** @var  Status */
     public $status;
 
-    // product-content
+    /** @var Products|null  */
+    public null | Products $products;
 
     /** @var Promotions */
     public $promotions;
@@ -83,6 +85,7 @@ class Client extends BaseClient implements ApiClient
         $this->insights = new Insights($this);
         $this->orders = new Orders($this);
         $this->offers = new Offers($this);
+        $this->products = new Products($this);
         $this->status = new Status($this);
         $this->replenishments = new Replenishments($this);
         $this->retailers = new Retailers($this);
