@@ -51,7 +51,7 @@ class Insights extends BaseEndpoint
 
     /**
      * Get Performance Indicators
-     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-performance-indicators
+     * @see https://api.bol.com/retailer/public/redoc/v9/retailer.html#operation/get-performance-indicators
      * @param string $year
      * @param string $week
      * @param array $indicators
@@ -83,7 +83,7 @@ class Insights extends BaseEndpoint
 
     /**
      * Get Sales Forecast
-     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-sales-forecast
+     * @see https://api.bol.com/retailer/public/redoc/v9/retailer.html#operation/get-sales-forecast
      * @param string $offerId
      * @param int $weeks
      * @return ForeCast
@@ -107,7 +107,7 @@ class Insights extends BaseEndpoint
 
     /**
      * Get Search Terms
-     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-search-terms
+     * @see https://api.bol.com/retailer/public/redoc/v9/retailer.html#operation/get-search-terms
      * @param string $term
      * @param string $period
      * @param int $numberOfPeriods
