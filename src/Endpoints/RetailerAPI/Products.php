@@ -15,7 +15,8 @@ class Products extends BaseEndpoint
         $response = $this->performApiCall(
             'POST',
             "products/list",
-            $request->toJson()
+            $request->toJson(),
+            $request->getHeaders()
         );
 
         $result = $response ?? null;
