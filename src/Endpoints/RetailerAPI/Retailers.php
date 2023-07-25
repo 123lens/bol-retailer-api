@@ -4,18 +4,16 @@ namespace Budgetlens\BolRetailerApi\Endpoints\RetailerAPI;
 
 use Budgetlens\BolRetailerApi\Endpoints\BaseEndpoint;
 use Budgetlens\BolRetailerApi\Resources\Retailer;
-use Illuminate\Support\Collection;
 
 class Retailers extends BaseEndpoint
 {
     public function get(
-        string $retailerId,
-    ): Collection {
+        string | int $retailerId,
+    ): Retailer {
         $response = $this->performApiCall(
             'GET',
             "retailers/{$retailerId}"
         );
-
         return new Retailer(collect($response));
     }
 }
