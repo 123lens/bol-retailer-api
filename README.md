@@ -2015,7 +2015,211 @@ print_r($status);
 // todo: fix response
 ```
 
+## Products
 
+### Get Product List
+Retrieve a product list filterd on range and accept language fr-BE
+
+```php
+$request = (new ListProductsRequest([
+    'countryCode' => 'BE',
+    'categoryId' => 38386,
+    'searchTerm' => 'STICKERS',
+    'filterRanges' => [
+        [
+            'rangeId' => 'RATING',
+            'min' => 1,
+            'max' => 4
+        ]
+    ],
+]))->addHeader('Accept-Language', 'fr-BE');
+
+$result = $this->client->products->list($request);
+print_r($result);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\ProductList Object
+(
+    [products] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\Product Object
+                        (
+                            [ean] => 
+                            [eans] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => 9343929000678
+                                        )
+
+                                    [escapeWhenCastingToString:protected] => 
+                                )
+
+                            [title] => Fille avec ballon, autocollant de voiture
+                            [announcedQuantity] => 
+                        )
+
+                    [1] => Budgetlens\BolRetailerApi\Resources\Product Object
+                        (
+                            [ean] => 
+                            [eans] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => 8020912014300
+                                        )
+
+                                    [escapeWhenCastingToString:protected] => 
+                                )
+
+                            [title] => Stickers muraux étoiles FRA1108
+                            [announcedQuantity] => 
+                        )
+
+                )
+
+            [escapeWhenCastingToString:protected] => 
+        )
+
+    [sort] => POPULARITY
+)
+```
+
+### Get Product List Filters
+Get product list filters for category 'Hobby & Creatief' that has category id 10505.
+
+```php
+$request = new ListProductsRequest([
+    'countryCode' => 'NL',
+    'categoryId' => 10505,
+]);
+
+$result = $this->client->products->listFilters($request);
+print_r($result);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\FiltersList Object
+(
+    [categoryData] => Budgetlens\BolRetailerApi\Resources\Filters\Category Object
+        (
+            [categoryName] => Categorieën
+            [categoryValues] => Illuminate\Support\Collection Object
+                (
+                    [items:protected] => Array
+                        (
+                            [0] => Budgetlens\BolRetailerApi\Resources\Filters\CategoryValue Object
+                                (
+                                    [categoryValueId] => 38386
+                                    [categoryValueName] => Stickers & Tapes
+                                )
+
+                            [1] => Budgetlens\BolRetailerApi\Resources\Filters\CategoryValue Object
+                                (
+                                    [categoryValueId] => 10508
+                                    [categoryValueName] => Textiel & Handwerken
+                                )
+
+                        )
+
+                    [escapeWhenCastingToString:protected] => 
+                )
+
+        )
+
+    [filterRanges] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\Filters\FilterRange Object
+                        (
+                            [rangeId] => PRICE
+                            [rangeName] => Prijs
+                            [min] => 0.99
+                            [max] => 4599
+                            [unit] => EUR
+                        )
+
+                    [1] => Budgetlens\BolRetailerApi\Resources\Filters\FilterRange Object
+                        (
+                            [rangeId] => RATING
+                            [rangeName] => Beoordeling
+                            [min] => 0
+                            [max] => 5
+                            [unit] => sterren
+                        )
+
+                )
+
+            [escapeWhenCastingToString:protected] => 
+        )
+
+    [filters] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\Filters\Filter Object
+                        (
+                            [filterName] => Meest populair bij
+                            [filterValues] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Filters\FilterValue Object
+                                                (
+                                                    [filterValueId] => 8071
+                                                    [filterValueName] => Volwassenen
+                                                )
+
+                                            [1] => Budgetlens\BolRetailerApi\Resources\Filters\FilterValue Object
+                                                (
+                                                    [filterValueId] => 8069
+                                                    [filterValueName] => Jongens en meisjes
+                                                )
+
+                                        )
+
+                                    [escapeWhenCastingToString:protected] => 
+                                )
+
+                        )
+
+                    [1] => Budgetlens\BolRetailerApi\Resources\Filters\Filter Object
+                        (
+                            [filterName] => Leeftijd
+                            [filterValues] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Filters\FilterValue Object
+                                                (
+                                                    [filterValueId] => 4268583885
+                                                    [filterValueName] => 13 jaar en ouder
+                                                )
+
+                                            [1] => Budgetlens\BolRetailerApi\Resources\Filters\FilterValue Object
+                                                (
+                                                    [filterValueId] => 4268583884
+                                                    [filterValueName] => 9-12 jaar
+                                                )
+
+                                        )
+
+                                    [escapeWhenCastingToString:protected] => 
+                                )
+
+                        )
+
+                )
+
+            [escapeWhenCastingToString:protected] => 
+        )
+
+)
+```
 ## Product Content
 Not yet implemented
 
