@@ -7,7 +7,9 @@ use Budgetlens\BolRetailerApi\Requests\ListProductsRequest;
 use Budgetlens\BolRetailerApi\Resources\FiltersList;
 use Budgetlens\BolRetailerApi\Resources\Product\Asset;
 use Budgetlens\BolRetailerApi\Resources\ProductList;
+use Budgetlens\BolRetailerApi\Resources\Subscription;
 use Budgetlens\BolRetailerApi\Support\Str;
+use Illuminate\Support\Collection;
 
 class Products extends BaseEndpoint
 {
@@ -55,7 +57,7 @@ class Products extends BaseEndpoint
         return null;
     }
 
-    public function getAssets(string $eancode, null | string $usage = null): Asset
+    public function getAssets(string $eancode, null | string $usage = null): Collection
     {
         $parameters = collect([
             'usage' => $usage
@@ -66,9 +68,15 @@ class Products extends BaseEndpoint
 
         $response = $this->performApiCall(
             'GET',
-            "products/{$eancode}" . $this->buildQueryString($parameters)
+            "products/{$eancode}/assets" . $this->buildQueryString($parameters)
         );
 
-        return new Asset(collect($response));
+        $collection = new Collection();
+
+        collect($response->assets)->each(function ($item) use ($collection) {
+            $collection->push(new Asset($item));
+        });
+
+        return $collection;
     }
 }
