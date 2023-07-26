@@ -10,7 +10,6 @@ use Budgetlens\BolRetailerApi\Resources\Product\Asset;
 use Budgetlens\BolRetailerApi\Resources\Product\CompetingOffer;
 use Budgetlens\BolRetailerApi\Resources\ProductList;
 use Budgetlens\BolRetailerApi\Resources\ProductPlacement;
-use Budgetlens\BolRetailerApi\Resources\Subscription;
 use Budgetlens\BolRetailerApi\Support\Str;
 use Illuminate\Support\Collection;
 
