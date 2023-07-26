@@ -33,6 +33,7 @@ class ProductsTest extends TestCase
         ]))->addHeader('Accept-Language', 'fr-BE');
 
         $result = $this->client->products->list($request);
+
         $this->assertInstanceOf(ProductList::class, $result);
         $this->assertCount(2, $result->products);
         $this->assertInstanceOf(Product::class, $result->products->first());
