@@ -104,9 +104,47 @@ class ProductsTest extends TestCase
         $this->useMock('200-list-products-filters-for-category.json');
 
         $request = new ListProductsRequest([
+            'countryCode' => 'NL',
+            'categoryId' => 10505,
+        ]);
+
+        $result = $this->client->products->listFilters($request);
+
+        $this->assertInstanceOf(FiltersList::class, $result);
+        $this->assertInstanceOf(Category::class, $result->categoryData);
+        $this->assertSame('Categorieën', $result->categoryData->categoryName);
+        $this->assertInstanceOf(Collection::class, $result->categoryData->categoryValues);
+        $this->assertCount(2, $result->categoryData->categoryValues);
+        $this->assertSame('38386', $result->categoryData->categoryValues->first()->categoryValueId);
+        $this->assertSame('Stickers & Tapes', $result->categoryData->categoryValues->first()->categoryValueName);
+        $this->assertInstanceOf(Collection::class, $result->filterRanges);
+        $this->assertCount(2, $result->filterRanges);
+        $this->assertInstanceOf(FilterRange::class, $result->filterRanges->first());
+        $this->assertSame('PRICE', $result->filterRanges->first()->rangeId);
+        $this->assertSame('Prijs', $result->filterRanges->first()->rangeName);
+        $this->assertSame(0.99, $result->filterRanges->first()->min);
+        $this->assertSame(4599, $result->filterRanges->first()->max);
+        $this->assertSame('EUR', $result->filterRanges->first()->unit);
+        $this->assertInstanceOf(Collection::class, $result->filters);
+        $this->assertCount(2, $result->filters);
+        $this->assertInstanceOf(Filter::class, $result->filters->first());
+        $this->assertSame('Meest populair bij', $result->filters->first()->filterName);
+        $this->assertInstanceOf(Collection::class, $result->filters->first()->filterValues);
+        $this->assertCount(2, $result->filters->first()->filterValues);
+        $this->assertInstanceOf(FilterValue::class, $result->filters->first()->filterValues->first());
+        $this->assertSame('8071', $result->filters->first()->filterValues->first()->filterValueId);
+        $this->assertSame('Volwassenen', $result->filters->first()->filterValues->first()->filterValueName);
+    }
+
+
+    /** @test */
+    public function getProductListFiltersForSearchTerm()
+    {
+        $this->useMock('200-list-products-filters-for-search-term.json');
+
+        $request = new ListProductsRequest([
             'countryCode' => 'BE',
             'searchTerm' => 'lego',
-            "sort" => "RELEVANCE",
         ]);
 
         $result = $this->client->products->listFilters($request);
@@ -136,4 +174,5 @@ class ProductsTest extends TestCase
         $this->assertSame('4279587082', $result->filters->first()->filterValues->first()->filterValueId);
         $this->assertSame('LEGO Star Wars', $result->filters->first()->filterValues->first()->filterValueName);
     }
+
 }

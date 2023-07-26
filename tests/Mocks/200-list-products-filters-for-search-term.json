@@ -3,12 +3,12 @@
     "categoryName":"Categorieën",
     "categoryValues":[
       {
-        "categoryValueId":"38386",
-        "categoryValueName":"Stickers & Tapes"
+        "categoryValueId":"7934",
+        "categoryValueName":"Speelgoed"
       },
       {
-        "categoryValueId":"10508",
-        "categoryValueName":"Textiel & Handwerken"
+        "categoryValueId":"8299",
+        "categoryValueName":"Boeken"
       }
     ]
   },
@@ -30,15 +30,15 @@
   ],
   "filters":[
     {
-      "filterName":"Meest populair bij",
+      "filterName":"Serie",
       "filterValues":[
         {
-          "filterValueId":"8071",
-          "filterValueName":"Volwassenen"
+          "filterValueId":"4279587082",
+          "filterValueName":"LEGO Star Wars"
         },
         {
-          "filterValueId":"8069",
-          "filterValueName":"Jongens en meisjes"
+          "filterValueId":"4279587092",
+          "filterValueName":"LEGO City"
         }
       ]
     },
@@ -46,12 +46,12 @@
       "filterName":"Leeftijd",
       "filterValues":[
         {
-          "filterValueId":"4268583885",
-          "filterValueName":"13 jaar en ouder"
-        },
-        {
           "filterValueId":"4268583884",
           "filterValueName":"9-12 jaar"
+        },
+        {
+          "filterValueId":"4279522808",
+          "filterValueName":"7-8 jaar"
         }
       ]
     }
