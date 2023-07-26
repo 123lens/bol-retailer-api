@@ -8,6 +8,7 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 - Added Get Retailer By ID
 - Added Products -> Get Product List
 - Added Products -> Get Product List Filters
+- Added Products -> Get Product Assets
 
 ### Changes
 - Drop php7 support

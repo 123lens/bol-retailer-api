@@ -175,4 +175,25 @@ class ProductsTest extends TestCase
         $this->assertSame('LEGO Star Wars', $result->filters->first()->filterValues->first()->filterValueName);
     }
 
+    /** @test */
+    public function getProductAssetsPrimaryImage()
+    {
+        $this->useMock('200-get-product-assets-primary-image.json');
+
+        $eancode = '5035223124276';
+        $result = $this->client->products->getAssets($eancode, 'PRIMARY');
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertCount(1, $result);
+        $this->assertInstanceOf(Product\Asset::class, $result->first());
+        $this->assertSame('PRIMARY', $result->first()->usage);
+        $this->assertSame(0, $result->first()->order);
+        $this->assertInstanceOf(Collection::class, $result->first()->variants);
+        $this->assertCount(2, $result->first()->variants);
+        $this->assertInstanceOf(Product\Assets\Variant::class, $result->first()->variants->first());
+        $this->assertSame('small', $result->first()->variants->first()->size);
+        $this->assertSame(250, $result->first()->variants->first()->width);
+        $this->assertSame(200, $result->first()->variants->first()->height);
+        $this->assertSame('image/jpeg', $result->first()->variants->first()->mimeType);
+        $this->assertSame('https://media.s-bol.com/mkjdlmV9w5R0/8lB005/250x200.jpg', $result->first()->variants->first()->url);
+    }
 }

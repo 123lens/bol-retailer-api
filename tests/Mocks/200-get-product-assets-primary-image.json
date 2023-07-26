@@ -1,0 +1,24 @@
+{
+  "assets":[
+    {
+      "usage":"PRIMARY",
+      "order":0,
+      "variants":[
+        {
+          "size":"small",
+          "width":250,
+          "height":200,
+          "mimeType":"image/jpeg",
+          "url":"https://media.s-bol.com/mkjdlmV9w5R0/8lB005/250x200.jpg"
+        },
+        {
+          "size":"medium",
+          "width":500,
+          "height":700,
+          "mimeType":"image/jpeg",
+          "url":"https://media.s-bol.com/mkjaskV9w5R0/8lB005/500x700.jpg"
+        }
+      ]
+    }
+  ]
+}
