@@ -1,0 +1,16 @@
+{
+  "offers":[
+    {
+      "offerId":"908b6d06-2067-4klf-8490-c21d0c233e61",
+      "retailerId":"8748934",
+      "countryCode":"BE",
+      "bestOffer":true,
+      "price":36.59,
+      "fulfilmentMethod":"FBR",
+      "condition":"MODERATE",
+      "ultimateOrderTime":"19:00",
+      "minDeliveryDate":"2022-05-18",
+      "maxDeliveryDate":"2022-05-23"
+    }
+  ]
+}
