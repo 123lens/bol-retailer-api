@@ -2,6 +2,7 @@
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints\RetailerApi;
 
 use Budgetlens\BolRetailerApi\Requests\ListProductsRequest;
+use Budgetlens\BolRetailerApi\Requests\ProductPlacementRequest;
 use Budgetlens\BolRetailerApi\Resources\Filters\Category;
 use Budgetlens\BolRetailerApi\Resources\Filters\Filter;
 use Budgetlens\BolRetailerApi\Resources\Filters\FilterRange;
@@ -9,6 +10,7 @@ use Budgetlens\BolRetailerApi\Resources\Filters\FilterValue;
 use Budgetlens\BolRetailerApi\Resources\FiltersList;
 use Budgetlens\BolRetailerApi\Resources\Product;
 use Budgetlens\BolRetailerApi\Resources\ProductList;
+use Budgetlens\BolRetailerApi\Resources\ProductPlacement;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
 use DateTimeImmutable;
 use Illuminate\Support\Collection;
@@ -252,4 +254,29 @@ class ProductsTest extends TestCase
         $this->assertSame('2022-10-21', $result->first()->maxDeliveryDate->format('Y-m-d'));
     }
 
+    /** @test */
+    public function getProductCategoriesAndUrlNL()
+    {
+        $this->useMock('200-get-product-url-and-categories-nl.json');
+
+        $result = $this->client->products->getPlacement(
+            (new ProductPlacementRequest([
+                'ean' => '4042448804839'
+            ]))
+                ->addQuery('countryCode', 'NL')
+                ->addHeader('Accept-Language', 'nl')
+        );
+        $this->assertInstanceOf(ProductPlacement::class, $result);
+        $this->assertInstanceOf(Collection::class, $result->categories);
+        $this->assertCount(1, $result->categories);
+        $this->assertSame('https://www.acc2.bol.com/nl/nl/p/tesa-afplakband-50m-x-19mm/9200000010397028/', $result->url);
+        $this->assertInstanceOf(Product\PlacementCategory::class, $result->categories->first());
+        $this->assertSame('13155', $result->categories->first()->categoryId);
+        $this->assertSame('Klussen', $result->categories->first()->categoryName);
+        $this->assertInstanceOf(Collection::class, $result->categories->first()->subcategories);
+        $this->assertCount(1, $result->categories->first()->subcategories);
+        $this->assertInstanceOf(Product\PlacementSubCategory::class, $result->categories->first()->subcategories->first());
+        $this->assertSame('13261', $result->categories->first()->subcategories->first()->id);
+        $this->assertSame('Verfspullen', $result->categories->first()->subcategories->first()->name);
+    }
 }
