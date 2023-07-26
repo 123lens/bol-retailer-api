@@ -12,6 +12,7 @@ use Budgetlens\BolRetailerApi\Resources\Product;
 use Budgetlens\BolRetailerApi\Resources\ProductIds;
 use Budgetlens\BolRetailerApi\Resources\ProductList;
 use Budgetlens\BolRetailerApi\Resources\ProductPlacement;
+use Budgetlens\BolRetailerApi\Resources\ProductRatings;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
 use DateTimeImmutable;
 use Illuminate\Support\Collection;
@@ -295,5 +296,22 @@ class ProductsTest extends TestCase
         $this->assertCount(2, $result->eans);
         $this->assertSame('8712836327641', $result->eans->get(0));
         $this->assertSame('8712836327658', $result->eans->get(1));
+    }
+
+    /** @test */
+    public function getProductRatingsByEan()
+    {
+        $this->useMock('200-get-product-ratings-by-eancode.json');
+
+        $eancode = '5030917181740';
+        $result = $this->client->products->getProductRatings($eancode);
+
+        $this->assertInstanceOf(ProductRatings::class, $result);
+        $this->assertCount(5, $result->ratings);
+        $this->assertInstanceOf(Product\ProductRating::class, $result->ratings->first());
+        $this->assertSame(5, $result->ratings->first()->rating);
+        $this->assertSame(488, $result->ratings->first()->count);
+        $this->assertSame(577, $result->getTotalVotes());
+        $this->assertSame(4.77, $result->getAverage());
     }
 }
