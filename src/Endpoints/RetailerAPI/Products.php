@@ -5,14 +5,14 @@ namespace Budgetlens\BolRetailerApi\Endpoints\RetailerAPI;
 use Budgetlens\BolRetailerApi\Endpoints\BaseEndpoint;
 use Budgetlens\BolRetailerApi\Requests\ListProductsRequest;
 use Budgetlens\BolRetailerApi\Resources\FiltersList;
+use Budgetlens\BolRetailerApi\Resources\Product\Asset;
 use Budgetlens\BolRetailerApi\Resources\ProductList;
-use Budgetlens\BolRetailerApi\Resources\Retailer;
 use Budgetlens\BolRetailerApi\Support\Str;
 
 class Products extends BaseEndpoint
 {
 
-    public function list(ListProductsRequest $request)
+    public function list(ListProductsRequest $request): null | ProductList
     {
         $response = $this->performApiCall(
             'POST',
@@ -30,7 +30,7 @@ class Products extends BaseEndpoint
         return null;
     }
 
-    public function listFilters(ListProductsRequest $request)
+    public function listFilters(ListProductsRequest $request): null | FiltersList
     {
         $parameters = collect($request->toArray())
             ->map(function ($data, $key) {
@@ -55,7 +55,7 @@ class Products extends BaseEndpoint
         return null;
     }
 
-    public function getAssets(string $eancode, null | string $usage = null)
+    public function getAssets(string $eancode, null | string $usage = null): Asset
     {
         $parameters = collect([
             'usage' => $usage
@@ -68,6 +68,7 @@ class Products extends BaseEndpoint
             'GET',
             "products/{$eancode}" . $this->buildQueryString($parameters)
         );
-        return new Retailer(collect($response));
+
+        return new Asset(collect($response));
     }
 }
