@@ -7,6 +7,7 @@ use Budgetlens\BolRetailerApi\Contracts\Jsonable;
 use Budgetlens\BolRetailerApi\Contracts\Request;
 use Budgetlens\BolRetailerApi\Exceptions\JsonEncodingException;
 use Budgetlens\BolRetailerApi\Resources\Concerns\HasAttributes;
+use Budgetlens\BolRetailerApi\Support\Str;
 use JsonSerializable;
 
 abstract class BaseRequest implements Request, Arrayable, Jsonable, JsonSerializable
@@ -45,6 +46,10 @@ abstract class BaseRequest implements Request, Arrayable, Jsonable, JsonSerializ
     public function getQuery(): array
     {
         return collect($this->queryParameters)
+            ->map(function ($data, $key) {
+                return [Str::snake($key, '-') => $data];
+            })
+            ->collapse()
             ->reject(function ($value) {
                 return $value === null;
             })
