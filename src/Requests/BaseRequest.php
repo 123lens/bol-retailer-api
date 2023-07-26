@@ -14,6 +14,8 @@ abstract class BaseRequest implements Request, Arrayable, Jsonable, JsonSerializ
     use HasAttributes;
 
     private $headers = [];
+    private $queryParameters = [];
+
     /**
      * BaseResource constructor.
      * @param array $attributes
@@ -23,6 +25,12 @@ abstract class BaseRequest implements Request, Arrayable, Jsonable, JsonSerializ
         $this->fill($attributes);
     }
 
+    public function addQuery(string $key, mixed $value): self
+    {
+        $this->queryParameters[$key] = $value;
+
+        return $this;
+    }
 
     public function getParameters(): array
     {
@@ -32,6 +40,15 @@ abstract class BaseRequest implements Request, Arrayable, Jsonable, JsonSerializ
     public function getHeaders(): array
     {
         return $this->headers;
+    }
+
+    public function getQuery(): array
+    {
+        return collect($this->queryParameters)
+            ->reject(function ($value) {
+                return $value === null;
+            })
+            ->all();
     }
 
     public function addHeader(string $name, mixed $value): self
