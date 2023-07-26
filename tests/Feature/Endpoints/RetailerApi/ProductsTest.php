@@ -196,4 +196,32 @@ class ProductsTest extends TestCase
         $this->assertSame('image/jpeg', $result->first()->variants->first()->mimeType);
         $this->assertSame('https://media.s-bol.com/mkjdlmV9w5R0/8lB005/250x200.jpg', $result->first()->variants->first()->url);
     }
+
+    /** @test */
+    public function getBestOfferSoldBe()
+    {
+        $this->useMock('200-get-product-best-offer-sold-be.json');
+
+        $result = $this->client->products->getCompetingOffers(
+            eancode: '5035223124276',
+            countryCode: 'BE',
+            bestOfferOnly: true,
+            condition: 'MODERATE'
+        );
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertCount(1, $result);
+        $this->assertInstanceOf(Product\CompetingOffer::class, $result->first());
+        $this->assertSame('908b6d06-2067-4klf-8490-c21d0c233e61', $result->first()->offerId);
+        $this->assertSame('8748934', $result->first()->retailerId);
+        $this->assertSame('BE', $result->first()->countryCode);
+        $this->assertSame(true, $result->first()->bestOffer);
+        $this->assertSame(36.59, $result->first()->price);
+        $this->assertSame('FBR', $result->first()->fulfilmentMethod);
+        $this->assertSame('MODERATE', $result->first()->condition);
+        $this->assertSame('19:00', $result->first()->ultimateOrderTime);
+        $this->assertInstanceOf(\DateTimeImmutable::class, $result->first()->minDeliveryDate);
+        $this->assertInstanceOf(\DateTimeImmutable::class, $result->first()->maxDeliveryDate);
+        $this->assertSame('2022-05-18', $result->first()->minDeliveryDate->format('Y-m-d'));
+        $this->assertSame('2022-05-23', $result->first()->maxDeliveryDate->format('Y-m-d'));
+    }
 }
