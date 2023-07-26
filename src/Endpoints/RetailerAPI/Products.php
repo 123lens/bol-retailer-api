@@ -8,6 +8,7 @@ use Budgetlens\BolRetailerApi\Requests\ProductPlacementRequest;
 use Budgetlens\BolRetailerApi\Resources\FiltersList;
 use Budgetlens\BolRetailerApi\Resources\Product\Asset;
 use Budgetlens\BolRetailerApi\Resources\Product\CompetingOffer;
+use Budgetlens\BolRetailerApi\Resources\ProductIds;
 use Budgetlens\BolRetailerApi\Resources\ProductList;
 use Budgetlens\BolRetailerApi\Resources\ProductPlacement;
 use Budgetlens\BolRetailerApi\Support\Str;
@@ -15,7 +16,6 @@ use Illuminate\Support\Collection;
 
 class Products extends BaseEndpoint
 {
-
     public function list(ListProductsRequest $request): null | ProductList
     {
         $response = $this->performApiCall(
@@ -126,6 +126,21 @@ class Products extends BaseEndpoint
 
         if (!is_null($result)) {
             return new ProductPlacement($result);
+        }
+
+        return null;
+    }
+
+    public function getProductIds(string $eancode): null | ProductIds
+    {
+        $response = $this->performApiCall(
+            'GET',
+            "products/{$eancode}/product-ids",
+        );
+        $result = $response ?? null;
+
+        if (!is_null($result)) {
+            return new ProductIds($result);
         }
 
         return null;

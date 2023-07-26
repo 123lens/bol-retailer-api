@@ -11,6 +11,7 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 - Added Products -> Get Product Assets
 - Added Products -> Get a list of competing offers by EAN
 - Added Products -> Get Product Placement
+- Added Products -> Get Product Ids By Eancode
 
 ### Changes
 - Drop php7 support

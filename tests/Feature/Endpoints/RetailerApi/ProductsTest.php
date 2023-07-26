@@ -9,6 +9,7 @@ use Budgetlens\BolRetailerApi\Resources\Filters\FilterRange;
 use Budgetlens\BolRetailerApi\Resources\Filters\FilterValue;
 use Budgetlens\BolRetailerApi\Resources\FiltersList;
 use Budgetlens\BolRetailerApi\Resources\Product;
+use Budgetlens\BolRetailerApi\Resources\ProductIds;
 use Budgetlens\BolRetailerApi\Resources\ProductList;
 use Budgetlens\BolRetailerApi\Resources\ProductPlacement;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
@@ -278,5 +279,21 @@ class ProductsTest extends TestCase
         $this->assertInstanceOf(Product\PlacementSubCategory::class, $result->categories->first()->subcategories->first());
         $this->assertSame('13261', $result->categories->first()->subcategories->first()->id);
         $this->assertSame('Verfspullen', $result->categories->first()->subcategories->first()->name);
+    }
+
+    /** @test */
+    public function getProductIdsByEancode()
+    {
+        $this->useMock('200-get-product-ids-by-eancode.json');
+
+        $eancode = '8712836327641';
+        $result = $this->client->products->getProductIds($eancode);
+
+        $this->assertInstanceOf(ProductIds::class, $result);
+        $this->assertSame('9200000045327288', $result->bolProductId);
+        $this->assertInstanceOf(Collection::class, $result->eans);
+        $this->assertCount(2, $result->eans);
+        $this->assertSame('8712836327641', $result->eans->get(0));
+        $this->assertSame('8712836327658', $result->eans->get(1));
     }
 }

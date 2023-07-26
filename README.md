@@ -2450,8 +2450,34 @@ Budgetlens\BolRetailerApi\Resources\ProductPlacement Object
 )
 ```
 
+### Get product ids by EAN
+
+Gets the bol product id and related EANs for the EAN 8712836327641.
 
 
+```php
+$eancode = '8712836327641';
+$result = $this->client->products->getProductIds($eancode);
+print_r($result);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\ProductIds Object
+(
+    [bolProductId] => 9200000045327288
+    [eans] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => 8712836327641
+                    [1] => 8712836327658
+                )
+
+            [escapeWhenCastingToString:protected] => 
+        )
+
+)
+```
 
 ---
 
