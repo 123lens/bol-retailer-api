@@ -1,7 +1,6 @@
 <?php
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints\RetailerApi;
 
-use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
 use Budgetlens\BolRetailerApi\Requests\ListProductsRequest;
 use Budgetlens\BolRetailerApi\Resources\Filters\Category;
 use Budgetlens\BolRetailerApi\Resources\Filters\Filter;
