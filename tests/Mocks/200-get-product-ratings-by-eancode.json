@@ -1,0 +1,24 @@
+{
+  "ratings":[
+    {
+      "rating":5,
+      "count":488
+    },
+    {
+      "rating":4,
+      "count":66
+    },
+    {
+      "rating":3,
+      "count":12
+    },
+    {
+      "rating":2,
+      "count":0
+    },
+    {
+      "rating":1,
+      "count":11
+    }
+  ]
+}
