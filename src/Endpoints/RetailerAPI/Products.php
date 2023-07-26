@@ -6,6 +6,7 @@ use Budgetlens\BolRetailerApi\Endpoints\BaseEndpoint;
 use Budgetlens\BolRetailerApi\Requests\ListProductsRequest;
 use Budgetlens\BolRetailerApi\Resources\FiltersList;
 use Budgetlens\BolRetailerApi\Resources\Product\Asset;
+use Budgetlens\BolRetailerApi\Resources\Product\CompetingOffer;
 use Budgetlens\BolRetailerApi\Resources\ProductList;
 use Budgetlens\BolRetailerApi\Resources\Subscription;
 use Budgetlens\BolRetailerApi\Support\Str;
@@ -75,6 +76,37 @@ class Products extends BaseEndpoint
 
         collect($response->assets)->each(function ($item) use ($collection) {
             $collection->push(new Asset($item));
+        });
+
+        return $collection;
+    }
+
+    public function getCompetingOffers(
+        string $eancode,
+        string $countryCode = "NL",
+        bool $bestOfferOnly = false,
+        string $condition = 'ALL',
+        int $page = 1,
+    ): Collection {
+        $parameters = collect([
+            'country-code' => $countryCode,
+            'best-offer-only' => $bestOfferOnly,
+            'condition' => $condition,
+            'page' => $page
+        ])
+            ->reject(function ($value) {
+                return is_null($value);
+            })->all();
+
+        $response = $this->performApiCall(
+            'GET',
+            "products/{$eancode}/offers" . $this->buildQueryString($parameters)
+        );
+
+        $collection = new Collection();
+
+        collect($response->offers)->each(function ($item) use ($collection) {
+            $collection->push(new CompetingOffer($item));
         });
 
         return $collection;

@@ -1,0 +1,28 @@
+{
+  "offers":[
+    {
+      "offerId":"228b6d06-2067-4cef-8447-c21d0c233e61",
+      "retailerId":"738903",
+      "countryCode":"NL",
+      "bestOffer":true,
+      "price":41.50,
+      "fulfilmentMethod":"FBB",
+      "condition":"NEW",
+      "ultimateOrderTime":"23:59",
+      "minDeliveryDate":"2022-10-20",
+      "maxDeliveryDate":"2022-10-21"
+    },
+    {
+      "offerId":"92b7c257-a977-5cf7-e053-3c82010a92f3",
+      "retailerId":"1448179",
+      "countryCode":"NL",
+      "bestOffer":false,
+      "price":48.45,
+      "fulfilmentMethod":"FBR",
+      "condition":"AS_GOOD",
+      "ultimateOrderTime":"00:00",
+      "minDeliveryDate":"2022-10-25",
+      "maxDeliveryDate":"2022-10-26"
+    }
+  ]
+}

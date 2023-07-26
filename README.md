@@ -2275,6 +2275,130 @@ Illuminate\Support\Collection Object
 )
 ```
 
+### Get best offers for items in sold in BE in MODERATE condition
+Retrieves only the best offer offers available in Belgium for a specific EAN. It will only return offers in moderate condition.
+
+```php
+$result = $this->client->products->getCompetingOffers(
+    eancode: '5035223124276',
+    countryCode: 'BE',
+    bestOfferOnly: true,
+    condition: 'MODERATE'
+);
+print_r($result);
+```
+
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => Budgetlens\BolRetailerApi\Resources\Product\CompetingOffer Object
+                (
+                    [offerId] => 908b6d06-2067-4klf-8490-c21d0c233e61
+                    [retailerId] => 8748934
+                    [countryCode] => BE
+                    [bestOffer] => 1
+                    [price] => 36.59
+                    [fulfilmentMethod] => FBR
+                    [condition] => MODERATE
+                    [ultimateOrderTime] => 19:00
+                    [minDeliveryDate] => DateTimeImmutable Object
+                        (
+                            [date] => 2022-05-18 00:00:00.000000
+                            [timezone_type] => 3
+                            [timezone] => UTC
+                        )
+
+                    [maxDeliveryDate] => DateTimeImmutable Object
+                        (
+                            [date] => 2022-05-23 00:00:00.000000
+                            [timezone_type] => 3
+                            [timezone] => UTC
+                        )
+
+                )
+
+        )
+
+    [escapeWhenCastingToString:protected] => 
+)
+```
+
+### Get ALL available offers for items sold in NL
+Retrieves all available offers available for for a specific EAN in The Netherlands. 
+It returns both new and second-hand offers.
+
+```php
+$result = $this->client->products->getCompetingOffers(
+    eancode: '9789463160315',
+);
+print_r($result);
+```
+
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => Budgetlens\BolRetailerApi\Resources\Product\CompetingOffer Object
+                (
+                    [offerId] => 228b6d06-2067-4cef-8447-c21d0c233e61
+                    [retailerId] => 738903
+                    [countryCode] => NL
+                    [bestOffer] => 1
+                    [price] => 41.5
+                    [fulfilmentMethod] => FBB
+                    [condition] => NEW
+                    [ultimateOrderTime] => 23:59
+                    [minDeliveryDate] => DateTimeImmutable Object
+                        (
+                            [date] => 2022-10-20 00:00:00.000000
+                            [timezone_type] => 3
+                            [timezone] => UTC
+                        )
+
+                    [maxDeliveryDate] => DateTimeImmutable Object
+                        (
+                            [date] => 2022-10-21 00:00:00.000000
+                            [timezone_type] => 3
+                            [timezone] => UTC
+                        )
+
+                )
+
+            [1] => Budgetlens\BolRetailerApi\Resources\Product\CompetingOffer Object
+                (
+                    [offerId] => 92b7c257-a977-5cf7-e053-3c82010a92f3
+                    [retailerId] => 1448179
+                    [countryCode] => NL
+                    [bestOffer] => 
+                    [price] => 48.45
+                    [fulfilmentMethod] => FBR
+                    [condition] => AS_GOOD
+                    [ultimateOrderTime] => 00:00
+                    [minDeliveryDate] => DateTimeImmutable Object
+                        (
+                            [date] => 2022-10-25 00:00:00.000000
+                            [timezone_type] => 3
+                            [timezone] => UTC
+                        )
+
+                    [maxDeliveryDate] => DateTimeImmutable Object
+                        (
+                            [date] => 2022-10-26 00:00:00.000000
+                            [timezone_type] => 3
+                            [timezone] => UTC
+                        )
+
+                )
+
+        )
+
+    [escapeWhenCastingToString:protected] => 
+)
+```
+
 
 
 ---
