@@ -2399,6 +2399,58 @@ Illuminate\Support\Collection Object
 )
 ```
 
+### Get product categories and URL in NL
+Gets a list of categories the product belongs to, and the URL to its page in The Netherlands.
+
+```php
+$result = $this->client->products->getPlacement(
+    (new ProductPlacementRequest([
+        'ean' => '4042448804839'
+    ]))
+        ->addQuery('countryCode', 'NL')
+        ->addHeader('Accept-Language', 'nl')
+);
+print_r($result);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\ProductPlacement Object
+(
+    [url] => https://www.acc2.bol.com/nl/nl/p/tesa-afplakband-50m-x-19mm/9200000010397028/
+    [categories] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\Product\PlacementCategory Object
+                        (
+                            [categoryId] => 13155
+                            [categoryName] => Klussen
+                            [subcategories] => Illuminate\Support\Collection Object
+                                (
+                                    [items:protected] => Array
+                                        (
+                                            [0] => Budgetlens\BolRetailerApi\Resources\Product\PlacementSubCategory Object
+                                                (
+                                                    [id] => 13261
+                                                    [name] => Verfspullen
+                                                )
+
+                                        )
+
+                                    [escapeWhenCastingToString:protected] => 
+                                )
+
+                        )
+
+                )
+
+            [escapeWhenCastingToString:protected] => 
+        )
+
+)
+```
+
+
 
 
 ---

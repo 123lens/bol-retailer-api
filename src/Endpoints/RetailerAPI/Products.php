@@ -4,11 +4,12 @@ namespace Budgetlens\BolRetailerApi\Endpoints\RetailerAPI;
 
 use Budgetlens\BolRetailerApi\Endpoints\BaseEndpoint;
 use Budgetlens\BolRetailerApi\Requests\ListProductsRequest;
+use Budgetlens\BolRetailerApi\Requests\ProductPlacementRequest;
 use Budgetlens\BolRetailerApi\Resources\FiltersList;
 use Budgetlens\BolRetailerApi\Resources\Product\Asset;
 use Budgetlens\BolRetailerApi\Resources\Product\CompetingOffer;
 use Budgetlens\BolRetailerApi\Resources\ProductList;
-use Budgetlens\BolRetailerApi\Resources\Subscription;
+use Budgetlens\BolRetailerApi\Resources\ProductPlacement;
 use Budgetlens\BolRetailerApi\Support\Str;
 use Illuminate\Support\Collection;
 
@@ -110,5 +111,23 @@ class Products extends BaseEndpoint
         });
 
         return $collection;
+    }
+
+    public function getPlacement(ProductPlacementRequest $request): null | ProductPlacement
+    {
+        $response = $this->performApiCall(
+            'GET',
+            "products/{$request->ean}/placement" . $this->buildQueryString($request->getQuery()),
+            null,
+            $request->getHeaders()
+        );
+
+        $result = $response ?? null;
+
+        if (!is_null($result)) {
+            return new ProductPlacement($result);
+        }
+
+        return null;
     }
 }

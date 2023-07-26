@@ -7,6 +7,7 @@ use Budgetlens\BolRetailerApi\Contracts\Jsonable;
 use Budgetlens\BolRetailerApi\Contracts\Request;
 use Budgetlens\BolRetailerApi\Exceptions\JsonEncodingException;
 use Budgetlens\BolRetailerApi\Resources\Concerns\HasAttributes;
+use Budgetlens\BolRetailerApi\Support\Str;
 use JsonSerializable;
 
 abstract class BaseRequest implements Request, Arrayable, Jsonable, JsonSerializable
@@ -14,6 +15,8 @@ abstract class BaseRequest implements Request, Arrayable, Jsonable, JsonSerializ
     use HasAttributes;
 
     private $headers = [];
+    private $queryParameters = [];
+
     /**
      * BaseResource constructor.
      * @param array $attributes
@@ -23,6 +26,12 @@ abstract class BaseRequest implements Request, Arrayable, Jsonable, JsonSerializ
         $this->fill($attributes);
     }
 
+    public function addQuery(string $key, mixed $value): self
+    {
+        $this->queryParameters[$key] = $value;
+
+        return $this;
+    }
 
     public function getParameters(): array
     {
@@ -32,6 +41,19 @@ abstract class BaseRequest implements Request, Arrayable, Jsonable, JsonSerializ
     public function getHeaders(): array
     {
         return $this->headers;
+    }
+
+    public function getQuery(): array
+    {
+        return collect($this->queryParameters)
+            ->map(function ($data, $key) {
+                return [Str::snake($key, '-') => $data];
+            })
+            ->collapse()
+            ->reject(function ($value) {
+                return $value === null;
+            })
+            ->all();
     }
 
     public function addHeader(string $name, mixed $value): self
