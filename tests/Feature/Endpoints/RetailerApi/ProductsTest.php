@@ -3,9 +3,15 @@ namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints\RetailerApi;
 
 use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
 use Budgetlens\BolRetailerApi\Requests\ListProductsRequest;
+use Budgetlens\BolRetailerApi\Resources\Filters\Category;
+use Budgetlens\BolRetailerApi\Resources\Filters\Filter;
+use Budgetlens\BolRetailerApi\Resources\Filters\FilterRange;
+use Budgetlens\BolRetailerApi\Resources\Filters\FilterValue;
+use Budgetlens\BolRetailerApi\Resources\FiltersList;
 use Budgetlens\BolRetailerApi\Resources\Product;
 use Budgetlens\BolRetailerApi\Resources\ProductList;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
+use Illuminate\Support\Collection;
 
 class ProductsTest extends TestCase
 {
@@ -92,5 +98,42 @@ class ProductsTest extends TestCase
         $this->assertSame('RELEVANCE', $result->sort);
     }
 
+    /** @test */
+    public function getProductListFiltersForCategory()
+    {
+        $this->useMock('200-list-products-filters-for-category.json');
 
+        $request = new ListProductsRequest([
+            'countryCode' => 'BE',
+            'searchTerm' => 'lego',
+            "sort" => "RELEVANCE",
+        ]);
+
+        $result = $this->client->products->listFilters($request);
+
+        $this->assertInstanceOf(FiltersList::class, $result);
+        $this->assertInstanceOf(Category::class, $result->categoryData);
+        $this->assertSame('Categorieën', $result->categoryData->categoryName);
+        $this->assertInstanceOf(Collection::class, $result->categoryData->categoryValues);
+        $this->assertCount(2, $result->categoryData->categoryValues);
+        $this->assertSame('7934', $result->categoryData->categoryValues->first()->categoryValueId);
+        $this->assertSame('Speelgoed', $result->categoryData->categoryValues->first()->categoryValueName);
+        $this->assertInstanceOf(Collection::class, $result->filterRanges);
+        $this->assertCount(2, $result->filterRanges);
+        $this->assertInstanceOf(FilterRange::class, $result->filterRanges->first());
+        $this->assertSame('PRICE', $result->filterRanges->first()->rangeId);
+        $this->assertSame('Prijs', $result->filterRanges->first()->rangeName);
+        $this->assertSame(0.99, $result->filterRanges->first()->min);
+        $this->assertSame(4599, $result->filterRanges->first()->max);
+        $this->assertSame('EUR', $result->filterRanges->first()->unit);
+        $this->assertInstanceOf(Collection::class, $result->filters);
+        $this->assertCount(2, $result->filters);
+        $this->assertInstanceOf(Filter::class, $result->filters->first());
+        $this->assertSame('Serie', $result->filters->first()->filterName);
+        $this->assertInstanceOf(Collection::class, $result->filters->first()->filterValues);
+        $this->assertCount(2, $result->filters->first()->filterValues);
+        $this->assertInstanceOf(FilterValue::class, $result->filters->first()->filterValues->first());
+        $this->assertSame('4279587082', $result->filters->first()->filterValues->first()->filterValueId);
+        $this->assertSame('LEGO Star Wars', $result->filters->first()->filterValues->first()->filterValueName);
+    }
 }
