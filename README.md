@@ -2454,7 +2454,6 @@ Budgetlens\BolRetailerApi\Resources\ProductPlacement Object
 
 Gets the bol product id and related EANs for the EAN 8712836327641.
 
-
 ```php
 $eancode = '8712836327641';
 $result = $this->client->products->getProductIds($eancode);
@@ -2476,6 +2475,72 @@ Budgetlens\BolRetailerApi\Resources\ProductIds Object
             [escapeWhenCastingToString:protected] => 
         )
 
+)
+```
+
+### Get product ratings by EAN
+
+Get the product rating and the underlying rating counts for a specific EAN.
+
+
+
+```php
+$eancode = '5030917181740';
+$result = $this->client->products->getProductRatings($eancode);
+print_r($result);
+print_r([
+    'totalVotes' => $result->getTotalVotes(),
+    'average' => $result->getAverage()
+]);
+```
+
+```php
+Budgetlens\BolRetailerApi\Resources\ProductRatings Object
+(
+    [ratings] => Illuminate\Support\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Budgetlens\BolRetailerApi\Resources\Product\ProductRating Object
+                        (
+                            [rating] => 5
+                            [count] => 488
+                        )
+
+                    [1] => Budgetlens\BolRetailerApi\Resources\Product\ProductRating Object
+                        (
+                            [rating] => 4
+                            [count] => 66
+                        )
+
+                    [2] => Budgetlens\BolRetailerApi\Resources\Product\ProductRating Object
+                        (
+                            [rating] => 3
+                            [count] => 12
+                        )
+
+                    [3] => Budgetlens\BolRetailerApi\Resources\Product\ProductRating Object
+                        (
+                            [rating] => 2
+                            [count] => 0
+                        )
+
+                    [4] => Budgetlens\BolRetailerApi\Resources\Product\ProductRating Object
+                        (
+                            [rating] => 1
+                            [count] => 11
+                        )
+
+                )
+
+            [escapeWhenCastingToString:protected] => 
+        )
+)
+
+Array
+(
+    [totalVotes] => 577
+    [average] => 4.77
 )
 ```
 
