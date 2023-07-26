@@ -1,15 +1,19 @@
 <?php
-namespace Budgetlens\BolRetailerApi\Resources;
+
+namespace Budgetlens\BolRetailerApi\Requests;
 
 use Budgetlens\BolRetailerApi\Contracts\Arrayable;
 use Budgetlens\BolRetailerApi\Contracts\Jsonable;
+use Budgetlens\BolRetailerApi\Contracts\Request;
 use Budgetlens\BolRetailerApi\Exceptions\JsonEncodingException;
+use Budgetlens\BolRetailerApi\Resources\Concerns\HasAttributes;
 use JsonSerializable;
 
-abstract class BaseResource implements Arrayable, Jsonable, JsonSerializable
+abstract class BaseRequest implements Request, Arrayable, Jsonable, JsonSerializable
 {
-    use Concerns\HasAttributes;
+    use HasAttributes;
 
+    private $headers = [];
     /**
      * BaseResource constructor.
      * @param array $attributes
@@ -17,6 +21,24 @@ abstract class BaseResource implements Arrayable, Jsonable, JsonSerializable
     public function __construct($attributes = [])
     {
         $this->fill($attributes);
+    }
+
+
+    public function getParameters(): array
+    {
+        return $this->toArray();
+    }
+
+    public function getHeaders(): array
+    {
+        return $this->headers;
+    }
+
+    public function addHeader(string $name, mixed $value): self
+    {
+        $this->headers[$name] = $value;
+
+        return $this;
     }
 
     /**
@@ -35,6 +57,7 @@ abstract class BaseResource implements Arrayable, Jsonable, JsonSerializable
     public function toArray(): array
     {
         return collect($this->attributesToArray())
+            ->except('headers')
             ->reject(function ($value) {
                 return $value === null;
             })
@@ -76,4 +99,5 @@ abstract class BaseResource implements Arrayable, Jsonable, JsonSerializable
     {
         $this->setAttribute($key, $value);
     }
+
 }

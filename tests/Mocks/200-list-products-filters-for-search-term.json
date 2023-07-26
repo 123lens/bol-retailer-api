@@ -1,0 +1,59 @@
+{
+  "categoryData":{
+    "categoryName":"Categorieën",
+    "categoryValues":[
+      {
+        "categoryValueId":"7934",
+        "categoryValueName":"Speelgoed"
+      },
+      {
+        "categoryValueId":"8299",
+        "categoryValueName":"Boeken"
+      }
+    ]
+  },
+  "filterRanges":[
+    {
+      "rangeId":"PRICE",
+      "rangeName":"Prijs",
+      "min":0.99,
+      "max":4599,
+      "unit":"EUR"
+    },
+    {
+      "rangeId":"RATING",
+      "rangeName":"Beoordeling",
+      "min":0,
+      "max":5,
+      "unit":"sterren"
+    }
+  ],
+  "filters":[
+    {
+      "filterName":"Serie",
+      "filterValues":[
+        {
+          "filterValueId":"4279587082",
+          "filterValueName":"LEGO Star Wars"
+        },
+        {
+          "filterValueId":"4279587092",
+          "filterValueName":"LEGO City"
+        }
+      ]
+    },
+    {
+      "filterName":"Leeftijd",
+      "filterValues":[
+        {
+          "filterValueId":"4268583884",
+          "filterValueName":"9-12 jaar"
+        },
+        {
+          "filterValueId":"4279522808",
+          "filterValueName":"7-8 jaar"
+        }
+      ]
+    }
+  ]
+}

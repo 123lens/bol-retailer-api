@@ -1,0 +1,59 @@
+{
+  "categoryData":{
+    "categoryName":"Categorieën",
+    "categoryValues":[
+      {
+        "categoryValueId":"38386",
+        "categoryValueName":"Stickers & Tapes"
+      },
+      {
+        "categoryValueId":"10508",
+        "categoryValueName":"Textiel & Handwerken"
+      }
+    ]
+  },
+  "filterRanges":[
+    {
+      "rangeId":"PRICE",
+      "rangeName":"Prijs",
+      "min":0.99,
+      "max":4599,
+      "unit":"EUR"
+    },
+    {
+      "rangeId":"RATING",
+      "rangeName":"Beoordeling",
+      "min":0,
+      "max":5,
+      "unit":"sterren"
+    }
+  ],
+  "filters":[
+    {
+      "filterName":"Meest populair bij",
+      "filterValues":[
+        {
+          "filterValueId":"8071",
+          "filterValueName":"Volwassenen"
+        },
+        {
+          "filterValueId":"8069",
+          "filterValueName":"Jongens en meisjes"
+        }
+      ]
+    },
+    {
+      "filterName":"Leeftijd",
+      "filterValues":[
+        {
+          "filterValueId":"4268583885",
+          "filterValueName":"13 jaar en ouder"
+        },
+        {
+          "filterValueId":"4268583884",
+          "filterValueName":"9-12 jaar"
+        }
+      ]
+    }
+  ]
+}

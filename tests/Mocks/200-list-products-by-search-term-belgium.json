@@ -1,0 +1,27 @@
+{
+  "products":[
+    {
+      "title":"LEGO Marvel Super Heroes 2 - Switch",
+      "eans":[
+        {
+          "ean":"5051888230589"
+        }
+      ]
+    },
+    {
+      "title":"LEGO: Harry Potter Jaren 5-7",
+      "eans":[
+        {
+          "ean":"5051888111673"
+        },
+        {
+          "ean":"5051888079454"
+        },
+        {
+          "ean":"5051895082645"
+        }
+      ]
+    }
+  ],
+  "sort":"RELEVANCE"
+}

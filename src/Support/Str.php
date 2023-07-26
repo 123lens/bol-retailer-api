@@ -23,4 +23,28 @@ class Str
     {
         return mb_strtoupper($value, 'UTF-8');
     }
+
+    public static function snake($value, $delimiter = '_')
+    {
+        $key = $value;
+
+        if (!ctype_lower($value)) {
+            $value = preg_replace('/\s+/u', '', ucwords($value));
+
+            $value = static::lower(preg_replace('/(.)(?=[A-Z])/u', "$1{$delimiter}", $value));
+        }
+
+        return $value;
+    }
+
+    /**
+     * Convert the given string to lower-case.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public static function lower($value)
+    {
+        return mb_strtolower($value, 'UTF-8');
+    }
 }

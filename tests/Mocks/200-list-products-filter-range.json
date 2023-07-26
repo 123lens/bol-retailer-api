@@ -1,0 +1,21 @@
+{
+  "products":[
+    {
+      "title":"Fille avec ballon, autocollant de voiture",
+      "eans":[
+        {
+          "ean":"9343929000678"
+        }
+      ]
+    },
+    {
+      "title":"Stickers muraux étoiles FRA1108",
+      "eans":[
+        {
+          "ean":"8020912014300"
+        }
+      ]
+    }
+  ],
+  "sort":"POPULARITY"
+}
