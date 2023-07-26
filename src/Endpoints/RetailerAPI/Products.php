@@ -8,9 +8,11 @@ use Budgetlens\BolRetailerApi\Requests\ProductPlacementRequest;
 use Budgetlens\BolRetailerApi\Resources\FiltersList;
 use Budgetlens\BolRetailerApi\Resources\Product\Asset;
 use Budgetlens\BolRetailerApi\Resources\Product\CompetingOffer;
+use Budgetlens\BolRetailerApi\Resources\Product\ProductRating;
 use Budgetlens\BolRetailerApi\Resources\ProductIds;
 use Budgetlens\BolRetailerApi\Resources\ProductList;
 use Budgetlens\BolRetailerApi\Resources\ProductPlacement;
+use Budgetlens\BolRetailerApi\Resources\ProductRatings;
 use Budgetlens\BolRetailerApi\Support\Str;
 use Illuminate\Support\Collection;
 
@@ -141,6 +143,20 @@ class Products extends BaseEndpoint
 
         if (!is_null($result)) {
             return new ProductIds($result);
+        }
+
+        return null;
+    }
+
+    public function getProductRatings(string $eancode): null | ProductRatings
+    {
+        $response = $this->performApiCall(
+            'GET',
+            "products/{$eancode}/ratings",
+        );
+
+        if (!is_null($response->ratings)) {
+            return new ProductRatings($response);
         }
 
         return null;
