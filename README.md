@@ -2220,6 +2220,66 @@ Budgetlens\BolRetailerApi\Resources\FiltersList Object
 
 )
 ```
+
+### Get Product Assets
+Get a the PRIMARY image for the specific EAN.
+
+```php
+$eancode = '5035223124276';
+$usage = 'PRIMARY';
+$result = $this->client->products->getAssets($eancode, $usage);
+print_r($result);
+```
+
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => Budgetlens\BolRetailerApi\Resources\Product\Asset Object
+                (
+                    [usage] => PRIMARY
+                    [order] => 0
+                    [variants] => Illuminate\Support\Collection Object
+                        (
+                            [items:protected] => Array
+                                (
+                                    [0] => Budgetlens\BolRetailerApi\Resources\Product\Assets\Variant Object
+                                        (
+                                            [size] => small
+                                            [width] => 250
+                                            [height] => 200
+                                            [mimeType] => image/jpeg
+                                            [url] => https://media.s-bol.com/mkjdlmV9w5R0/8lB005/250x200.jpg
+                                        )
+
+                                    [1] => Budgetlens\BolRetailerApi\Resources\Product\Assets\Variant Object
+                                        (
+                                            [size] => medium
+                                            [width] => 500
+                                            [height] => 700
+                                            [mimeType] => image/jpeg
+                                            [url] => https://media.s-bol.com/mkjaskV9w5R0/8lB005/500x700.jpg
+                                        )
+
+                                )
+
+                            [escapeWhenCastingToString:protected] => 
+                        )
+
+                )
+
+        )
+
+    [escapeWhenCastingToString:protected] => 
+)
+```
+
+
+
+---
+
+
 ## Product Content
 Not yet implemented
 
