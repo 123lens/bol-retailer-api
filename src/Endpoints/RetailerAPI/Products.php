@@ -32,7 +32,6 @@ class Products extends BaseEndpoint
 
     public function listFilters(ListProductsRequest $request)
     {
-
         $parameters = collect($request->toArray())
             ->map(function ($data, $key) {
                 return [Str::snake($key, '-') => $data];
@@ -56,12 +55,18 @@ class Products extends BaseEndpoint
         return null;
     }
 
-    public function get(
-        string | int $retailerId,
-    ): Retailer {
+    public function getAssets(string $eancode, null | string $usage = null)
+    {
+        $parameters = collect([
+            'usage' => $usage
+        ])
+            ->reject(function ($value) {
+                return is_null($value);
+            })->all();
+
         $response = $this->performApiCall(
             'GET',
-            "retailers/{$retailerId}"
+            "products/{$eancode}" . $this->buildQueryString($parameters)
         );
         return new Retailer(collect($response));
     }
