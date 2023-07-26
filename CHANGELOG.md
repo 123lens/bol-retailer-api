@@ -4,6 +4,8 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
 
+## [v9.0.0] - 2023-07-26
+
 ### Added
 - Added Get Retailer By ID
 - Added Products -> Get Product List
@@ -101,6 +103,7 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 ### Initial release
 
 
+[v9.0.0]: https://github.com/123lens/bol-retailer-api/compare/v8.2.0...v9.0.0
 [v8.2.0]: https://github.com/123lens/bol-retailer-api/compare/v8.1.4...v8.2.0
 [v8.1.4]: https://github.com/123lens/bol-retailer-api/compare/v8.1.3...v8.1.4
 [v8.1.3]: https://github.com/123lens/bol-retailer-api/compare/v8.1.2...v8.1.3
