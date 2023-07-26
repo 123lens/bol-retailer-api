@@ -83,9 +83,9 @@ class Products extends BaseEndpoint
 
     public function getCompetingOffers(
         string $eancode,
-        null | string $countryCode,
-        null | bool $bestOfferOnly,
-        null | string $condition,
+        string $countryCode = "NL",
+        bool $bestOfferOnly = false,
+        string $condition = 'ALL',
         int $page = 1,
     ): Collection {
         $parameters = collect([
