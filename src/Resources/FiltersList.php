@@ -9,9 +9,9 @@ use Illuminate\Support\Collection;
 
 class FiltersList extends BaseResource
 {
-    public $categoryData;
-    public $filterRanges;
-    public $filters;
+    public null | Category $categoryData;
+    public null | Collection $filterRanges;
+    public null | Collection $filters;
 
     public function setCategoryDataAttribute($value): self
     {
@@ -22,18 +22,25 @@ class FiltersList extends BaseResource
 
     public function setFilterRangesAttribute($value): self
     {
+        $items = [];
         foreach ($value as $item) {
-            $this->filterRanges[] = new FilterRange($item);
+            $items[] = new FilterRange($item);
         }
+
+        $this->filterRanges = collect($items);
 
         return $this;
     }
 
     public function setFiltersAttribute($value): self
     {
+        $items = [];
+
         foreach ($value as $filter) {
-            $this->filters[] = new Filter($filter);
+            $items[] = new Filter($filter);
         }
+
+        $this->filters = collect($items);
 
         return $this;
     }
