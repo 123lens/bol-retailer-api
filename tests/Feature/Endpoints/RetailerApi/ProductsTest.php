@@ -10,6 +10,7 @@ use Budgetlens\BolRetailerApi\Resources\FiltersList;
 use Budgetlens\BolRetailerApi\Resources\Product;
 use Budgetlens\BolRetailerApi\Resources\ProductList;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
+use DateTimeImmutable;
 use Illuminate\Support\Collection;
 
 class ProductsTest extends TestCase
@@ -219,9 +220,36 @@ class ProductsTest extends TestCase
         $this->assertSame('FBR', $result->first()->fulfilmentMethod);
         $this->assertSame('MODERATE', $result->first()->condition);
         $this->assertSame('19:00', $result->first()->ultimateOrderTime);
-        $this->assertInstanceOf(\DateTimeImmutable::class, $result->first()->minDeliveryDate);
-        $this->assertInstanceOf(\DateTimeImmutable::class, $result->first()->maxDeliveryDate);
+        $this->assertInstanceOf(DateTimeImmutable::class, $result->first()->minDeliveryDate);
+        $this->assertInstanceOf(DateTimeImmutable::class, $result->first()->maxDeliveryDate);
         $this->assertSame('2022-05-18', $result->first()->minDeliveryDate->format('Y-m-d'));
         $this->assertSame('2022-05-23', $result->first()->maxDeliveryDate->format('Y-m-d'));
     }
+
+    /** @test */
+    public function getAllAvailableOffersNL()
+    {
+        $this->useMock('200-get-product-all-offer-sold-nl.json');
+
+        $result = $this->client->products->getCompetingOffers(
+            eancode: '9789463160315',
+        );
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertCount(2, $result);
+        $this->assertInstanceOf(Product\CompetingOffer::class, $result->first());
+        $this->assertSame('228b6d06-2067-4cef-8447-c21d0c233e61', $result->first()->offerId);
+        $this->assertSame('738903', $result->first()->retailerId);
+        $this->assertSame('NL', $result->first()->countryCode);
+        $this->assertSame(true, $result->first()->bestOffer);
+        $this->assertSame(41.5, $result->first()->price);
+        $this->assertSame('FBB', $result->first()->fulfilmentMethod);
+        $this->assertSame('NEW', $result->first()->condition);
+        $this->assertSame('23:59', $result->first()->ultimateOrderTime);
+        $this->assertInstanceOf(DateTimeImmutable::class, $result->first()->minDeliveryDate);
+        $this->assertInstanceOf(DateTimeImmutable::class, $result->first()->maxDeliveryDate);
+        $this->assertSame('2022-10-20', $result->first()->minDeliveryDate->format('Y-m-d'));
+        $this->assertSame('2022-10-21', $result->first()->maxDeliveryDate->format('Y-m-d'));
+    }
+
 }
