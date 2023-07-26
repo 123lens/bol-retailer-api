@@ -9,6 +9,7 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 - Added Products -> Get Product List
 - Added Products -> Get Product List Filters
 - Added Products -> Get Product Assets
+- Added Products -> Get a list of competing offers by EAN
 
 ### Changes
 - Drop php7 support
