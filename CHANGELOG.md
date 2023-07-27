@@ -4,6 +4,8 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
 
+## [v9.0.2] - 2023-07-27
+
 ### Changes
 - Products: Check for correct return set for competing product offers
 - Products: Check for correct return set for product assets
@@ -112,6 +114,7 @@ Restored illuminate/collections requirements for versions: ^8.32 || ^v9.34
 ### Initial release
 
 
+[v9.0.2]: https://github.com/123lens/bol-retailer-api/compare/v9.0.1...v9.0.2
 [v9.0.1]: https://github.com/123lens/bol-retailer-api/compare/v9.0.0...v9.0.1
 [v9.0.0]: https://github.com/123lens/bol-retailer-api/compare/v8.2.0...v9.0.0
 [v8.2.0]: https://github.com/123lens/bol-retailer-api/compare/v8.1.4...v8.2.0
