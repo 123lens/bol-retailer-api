@@ -1,6 +1,6 @@
 {
     "name": "budgetlens/bol-retailer-api",
-    "version": "9.0.1",
+    "version": "9.0.2",
     "description": "Bol.com Retailer API client",
     "keywords": [
         "bol",
