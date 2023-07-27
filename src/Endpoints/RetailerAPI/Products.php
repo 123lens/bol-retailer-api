@@ -8,7 +8,6 @@ use Budgetlens\BolRetailerApi\Requests\ProductPlacementRequest;
 use Budgetlens\BolRetailerApi\Resources\FiltersList;
 use Budgetlens\BolRetailerApi\Resources\Product\Asset;
 use Budgetlens\BolRetailerApi\Resources\Product\CompetingOffer;
-use Budgetlens\BolRetailerApi\Resources\Product\ProductRating;
 use Budgetlens\BolRetailerApi\Resources\ProductIds;
 use Budgetlens\BolRetailerApi\Resources\ProductList;
 use Budgetlens\BolRetailerApi\Resources\ProductPlacement;
@@ -75,11 +74,15 @@ class Products extends BaseEndpoint
             "products/{$eancode}/assets" . $this->buildQueryString($parameters)
         );
 
+        $assets = $response->assets ?? null;
+
         $collection = new Collection();
 
-        collect($response->assets)->each(function ($item) use ($collection) {
-            $collection->push(new Asset($item));
-        });
+        if ($assets) {
+            collect($assets)->each(function ($item) use ($collection) {
+                $collection->push(new Asset($item));
+            });
+        }
 
         return $collection;
     }
@@ -106,11 +109,15 @@ class Products extends BaseEndpoint
             "products/{$eancode}/offers" . $this->buildQueryString($parameters)
         );
 
+        $offers = $response->offers ?? null;
+
         $collection = new Collection();
 
-        collect($response->offers)->each(function ($item) use ($collection) {
-            $collection->push(new CompetingOffer($item));
-        });
+        if ($offers) {
+            collect($offers)->each(function ($item) use ($collection) {
+                $collection->push(new CompetingOffer($item));
+            });
+        }
 
         return $collection;
     }
