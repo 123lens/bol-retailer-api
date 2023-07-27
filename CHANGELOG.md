@@ -4,6 +4,10 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
 
+### Changes
+- Products: Check for correct return set for competing product offers
+- Products: Check for correct return set for product assets
+
 ## [v9.0.1] - 2023-07-26
 
 ### Changes
