@@ -4,7 +4,6 @@ namespace Budgetlens\BolRetailerApi\Types;
 
 enum SubscriptionType: string
 {
-    const PROCESS_STATUS = "PROCESS_STATUS";
-    const SHIPMENT = "SHIPMENT";
-    const OFFER = "OFFER";
+    case WEBHOOK = "WEBHOOK";
+    case GCP_PUBSUB = "GCP_PUBSUB";
 }
