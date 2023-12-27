@@ -1,0 +1,14 @@
+{
+  "processStatusId":"1",
+  "eventType":"SEND_SUBSCRIPTION_TST_MSG",
+  "description":"Send a test push notification for configured subscription.",
+  "status":"PENDING",
+  "createTimestamp":"2023-12-27T15:34:33+01:00",
+  "links":[
+    {
+      "rel":"self",
+      "href":"https://api.bol.com/shared-demo/process-status/1",
+      "method":"GET"
+    }
+  ]
+}
