@@ -30,6 +30,8 @@ class SubscriptionsTest extends TestCase
     /** @test */
     public function getSubscriptionById()
     {
+        $this->useMock('200-get-subscription-by-id.json');
+
         $id = '1234';
         $subscription = $this->client->subscriptions->get($id);
 
