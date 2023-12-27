@@ -4,6 +4,8 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
 
+## [v10.0.0] - 2023-12-27
+
 ### Changes
 - Updated create/update subscription methods, added `SubscriptionType` & `Enabled`
 - Updated subscription unit tests 
@@ -118,6 +120,7 @@ Restored illuminate/collections requirements for versions: ^8.32 || ^v9.34
 ### Initial release
 
 
+[v10.0.0]: https://github.com/123lens/bol-retailer-api/compare/v9.0.2...v10.0.0
 [v9.0.2]: https://github.com/123lens/bol-retailer-api/compare/v9.0.1...v9.0.2
 [v9.0.1]: https://github.com/123lens/bol-retailer-api/compare/v9.0.0...v9.0.1
 [v9.0.0]: https://github.com/123lens/bol-retailer-api/compare/v8.2.0...v9.0.0
