@@ -120,6 +120,7 @@ class SubscriptionsTest extends TestCase
     /** @test */
     public function getSignatureKeys()
     {
+        $this->useMock('200-get-subscription-signature-keys.json');
         $keys = $this->client->subscriptions->getSignatureKeys();
         $this->assertInstanceOf(Collection::class, $keys);
         $this->assertCount(1, $keys);
