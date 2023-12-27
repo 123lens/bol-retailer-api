@@ -1,0 +1,15 @@
+{
+  "processStatusId":"1",
+  "entityId":"1234",
+  "eventType":"UPDATE_SUBSCRIPTION",
+  "description":"Update push notification subscription with id 1234.",
+  "status":"PENDING",
+  "createTimestamp":"2023-12-27T15:12:50+01:00",
+  "links":[
+    {
+      "rel":"self",
+      "href":"https://api.bol.com/shared-demo/process-status/1",
+      "method":"GET"
+    }
+  ]
+}
