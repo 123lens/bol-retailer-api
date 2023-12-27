@@ -2,7 +2,6 @@
 
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints\RetailerApi;
 
-use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\Subscription;
 use Budgetlens\BolRetailerApi\Resources\Subscriptions\SignatureKey;
@@ -16,9 +15,9 @@ class SubscriptionsTest extends TestCase
     /** @test */
     public function listSubscriptions()
     {
+        $this->useMock('200-list-subscriptions.json');
+
         $subscriptions = $this->client->subscriptions->list();
-        print_r($subscriptions);
-        exit;
         $this->assertInstanceOf(Collection::class, $subscriptions);
         $this->assertCount(1, $subscriptions);
         $this->assertInstanceOf(Subscription::class, $subscriptions->first());
