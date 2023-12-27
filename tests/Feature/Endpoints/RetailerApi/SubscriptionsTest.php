@@ -88,6 +88,8 @@ class SubscriptionsTest extends TestCase
     /** @test */
     public function deleteSubscription()
     {
+        $this->useMock('200-delete-subscription.json');
+
         $id = '1234';
 
         $status = $this->client->subscriptions->delete($id);
