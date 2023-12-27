@@ -1,0 +1,9 @@
+{
+  "signatureKeys":[
+    {
+      "id":"0",
+      "type":"RSA",
+      "publicKey":"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh5x6f/IexlWgo23VF9yH7zmRWEaFShAXyFoR3Flh0ZwSn8hZY+rR3zJt/FWKT6mcw51cFjNWGoi92FLLCsXq49TS+8T6z5/AqpS/cORzFndiaPeMN5k9nla9ECwWqizqoBWRFyg7tnP0GkbZF+rjLlAbUznisEItGcfu9rw4+CfulFTwA9CGxKUDNJOcihEkUflsMlGL2Stqs1Q54O2GTPlLX4KTn1z7Iy4E8IqSOm9Z7sEFHK/RR7sf6K3JsN/h3nR0+NN8o2OGCZ1z17OjSnWXbq1QDZIkN+PntEIW540Og0SHDshLAGxOeW0jw8tU/uKZMhR7lmmrabLjutk3NQIDAQAB"
+    }
+  ]
+}
