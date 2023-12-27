@@ -123,11 +123,18 @@ class Subscriptions extends BaseEndpoint
      * @param string $url
      * @return ProcessStatus
      */
-    public function update(string $id, array $resources, string $url): ProcessStatus
-    {
+    public function update(
+        string $id,
+        array $resources,
+        string $url,
+        SubscriptionType $subscriptionType,
+        bool $enabled = true
+    ): ProcessStatus {
         $subscription = new Subscription([
             'resources' => $resources,
-            'url' => $url
+            'url' => $url,
+            'subscriptionType' => $subscriptionType->value,
+            'enabled' => $enabled,
         ]);
 
         $response = $this->performApiCall(
