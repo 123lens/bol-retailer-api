@@ -104,6 +104,8 @@ class SubscriptionsTest extends TestCase
     /** @test */
     public function sendTestNotification()
     {
+        $this->useMock('200-send-test-subscription.json');
+
         $id = '54321';
 
         $status = $this->client->subscriptions->test($id);
