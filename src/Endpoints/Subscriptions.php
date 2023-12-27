@@ -5,13 +5,14 @@ namespace Budgetlens\BolRetailerApi\Endpoints;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\Subscription;
 use Budgetlens\BolRetailerApi\Resources\Subscriptions\SignatureKey;
+use Budgetlens\BolRetailerApi\Types\SubscriptionType;
 use Illuminate\Support\Collection;
 
 class Subscriptions extends BaseEndpoint
 {
     /**
      * List Subscriptions
-     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/get-push-notification-subscriptions
+     * @see https://api.bol.com/retailer/public/redoc/v10/retailer.html#operation/get-push-notification-subscriptions
      * @return Collection
      */
     public function list(): Collection
@@ -32,16 +33,24 @@ class Subscriptions extends BaseEndpoint
 
     /**
      * Create subscription
-     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/post-push-notification-subscription
+     * @see https://api.bol.com/retailer/public/redoc/v10/retailer.html#operation/post-push-notification-subscription
      * @param array $resources
      * @param string $url
+     * @param SubscriptionType $subscriptionType
+     * @param bool $enabled
      * @return ProcessStatus
      */
-    public function create(array $resources, string $url): ProcessStatus
-    {
+    public function create(
+        array $resources,
+        string $url,
+        SubscriptionType $subscriptionType,
+        bool $enabled = true
+    ): ProcessStatus {
         $subscription = new Subscription([
             'resources' => $resources,
-            'url' => $url
+            'url' => $url,
+            'subscriptionType' => $subscriptionType->value,
+            'enabled' => $enabled,
         ]);
 
         $response = $this->performApiCall(
@@ -114,11 +123,18 @@ class Subscriptions extends BaseEndpoint
      * @param string $url
      * @return ProcessStatus
      */
-    public function update(string $id, array $resources, string $url): ProcessStatus
-    {
+    public function update(
+        string $id,
+        array $resources,
+        string $url,
+        SubscriptionType $subscriptionType,
+        bool $enabled = true
+    ): ProcessStatus {
         $subscription = new Subscription([
             'resources' => $resources,
-            'url' => $url
+            'url' => $url,
+            'subscriptionType' => $subscriptionType->value,
+            'enabled' => $enabled,
         ]);
 
         $response = $this->performApiCall(

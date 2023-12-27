@@ -8,12 +8,12 @@ use Budgetlens\BolRetailerApi\Support\Arr;
 class ListProductsRequest extends BaseRequest
 {
     protected null | string $searchTerm;
-    protected  null | string $categoryId;
-    protected  null | string $sort;
+    protected null | string $categoryId;
+    protected null | string $sort;
     protected array $filterRanges = [];
     protected array $filterValues = [];
-    protected  string $countryCode = "NL";
-    protected  int $page = 1;
+    protected string $countryCode = "NL";
+    protected int $page = 1;
 
 
     public function setFilterRangesAttribute($value)

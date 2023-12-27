@@ -4,6 +4,10 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
 
+### Changes
+- Updated create/update subscription methods, added `SubscriptionType` & `Enabled`
+- Updated subscription unit tests 
+
 ## [v9.0.2] - 2023-07-27
 
 ### Changes

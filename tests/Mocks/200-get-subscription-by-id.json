@@ -1,0 +1,9 @@
+{
+  "id":"1234",
+  "resources":[
+    "PROCESS_STATUS"
+  ],
+  "url":"https://www.example.com/push",
+  "subscriptionType":"WEBHOOK",
+  "enabled":true
+}

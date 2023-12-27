@@ -22,4 +22,3 @@ class Filter extends BaseResource
         return $this;
     }
 }
-

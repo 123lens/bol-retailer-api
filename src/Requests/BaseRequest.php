@@ -121,5 +121,4 @@ abstract class BaseRequest implements Request, Arrayable, Jsonable, JsonSerializ
     {
         $this->setAttribute($key, $value);
     }
-
 }

@@ -7,6 +7,7 @@ use Budgetlens\BolRetailerApi\Resources\Subscription;
 use Budgetlens\BolRetailerApi\Resources\Subscriptions\SignatureKey;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
 use Budgetlens\BolRetailerApi\Types\SubscriptionResource;
+use Budgetlens\BolRetailerApi\Types\SubscriptionType;
 use Illuminate\Support\Collection;
 
 class SubscriptionsTest extends TestCase
@@ -14,6 +15,8 @@ class SubscriptionsTest extends TestCase
     /** @test */
     public function listSubscriptions()
     {
+        $this->useMock('200-list-subscriptions.json');
+
         $subscriptions = $this->client->subscriptions->list();
         $this->assertInstanceOf(Collection::class, $subscriptions);
         $this->assertCount(1, $subscriptions);
@@ -27,6 +30,8 @@ class SubscriptionsTest extends TestCase
     /** @test */
     public function getSubscriptionById()
     {
+        $this->useMock('200-get-subscription-by-id.json');
+
         $id = '1234';
         $subscription = $this->client->subscriptions->get($id);
 
@@ -40,10 +45,15 @@ class SubscriptionsTest extends TestCase
     /** @test */
     public function createSubscription()
     {
+        $this->useMock('200-create-subscription.json');
         $resources = [SubscriptionResource::PROCESS_STATUS];
         $url = 'https://www.example.com/push';
-        $status = $this->client->subscriptions->create($resources, $url);
-
+        $status = $this->client->subscriptions->create(
+            $resources,
+            $url,
+            SubscriptionType::WEBHOOK,
+            false
+        );
         $this->assertInstanceOf(ProcessStatus::class, $status);
         $this->assertSame(1, $status->processStatusId);
         $this->assertSame('CREATE_SUBSCRIPTION', $status->eventType);
@@ -54,11 +64,19 @@ class SubscriptionsTest extends TestCase
     /** @test */
     public function updateSubscription()
     {
+        $this->useMock('200-update-subscription.json');
+
         $id = '1234';
         $resources = [SubscriptionResource::PROCESS_STATUS];
         $url = 'https://www.example.com/push';
 
-        $status = $this->client->subscriptions->update($id, $resources, $url);
+        $status = $this->client->subscriptions->update(
+            $id,
+            $resources,
+            $url,
+            SubscriptionType::WEBHOOK,
+            false
+        );
 
         $this->assertInstanceOf(ProcessStatus::class, $status);
         $this->assertSame(1, $status->processStatusId);
@@ -70,6 +88,8 @@ class SubscriptionsTest extends TestCase
     /** @test */
     public function deleteSubscription()
     {
+        $this->useMock('200-delete-subscription.json');
+
         $id = '1234';
 
         $status = $this->client->subscriptions->delete($id);
@@ -84,6 +104,8 @@ class SubscriptionsTest extends TestCase
     /** @test */
     public function sendTestNotification()
     {
+        $this->useMock('200-send-test-subscription.json');
+
         $id = '54321';
 
         $status = $this->client->subscriptions->test($id);
@@ -98,6 +120,7 @@ class SubscriptionsTest extends TestCase
     /** @test */
     public function getSignatureKeys()
     {
+        $this->useMock('200-get-subscription-signature-keys.json');
         $keys = $this->client->subscriptions->getSignatureKeys();
         $this->assertInstanceOf(Collection::class, $keys);
         $this->assertCount(1, $keys);

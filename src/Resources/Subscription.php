@@ -6,6 +6,8 @@ class Subscription extends BaseResource
     public $id;
     public $resources;
     public $url;
+    public $subscriptionType;
+    public $enabled;
 
     public function setResourcesAttribute($value): self
     {

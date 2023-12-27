@@ -1,0 +1,14 @@
+{
+  "processStatusId":"1",
+  "eventType":"CREATE_SUBSCRIPTION",
+  "description":"Create push notification subscription.",
+  "status":"PENDING",
+  "createTimestamp":"2023-12-27T14:51:52+01:00",
+  "links":[
+    {
+      "rel":"self",
+      "href":"https://api.bol.com/shared-demo/process-status/1",
+      "method":"GET"
+    }
+  ]
+}

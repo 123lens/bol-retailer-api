@@ -1,0 +1,14 @@
+{
+  "processStatusId":"1",
+  "eventType":"DELETE_SUBSCRIPTION",
+  "description":"Delete push notification subscription with id 1234.",
+  "status":"PENDING",
+  "createTimestamp":"2023-12-27T15:33:31+01:00",
+  "links":[
+    {
+      "rel":"self",
+      "href":"https://api.bol.com/shared-demo/process-status/1",
+      "method":"GET"
+    }
+  ]
+}
