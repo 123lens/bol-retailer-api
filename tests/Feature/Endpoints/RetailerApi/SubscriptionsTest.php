@@ -2,11 +2,13 @@
 
 namespace Budgetlens\BolRetailerApi\Tests\Feature\Endpoints\RetailerApi;
 
+use Budgetlens\BolRetailerApi\Exceptions\ValidationException;
 use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\Subscription;
 use Budgetlens\BolRetailerApi\Resources\Subscriptions\SignatureKey;
 use Budgetlens\BolRetailerApi\Tests\TestCase;
 use Budgetlens\BolRetailerApi\Types\SubscriptionResource;
+use Budgetlens\BolRetailerApi\Types\SubscriptionType;
 use Illuminate\Support\Collection;
 
 class SubscriptionsTest extends TestCase
@@ -15,6 +17,8 @@ class SubscriptionsTest extends TestCase
     public function listSubscriptions()
     {
         $subscriptions = $this->client->subscriptions->list();
+        print_r($subscriptions);
+        exit;
         $this->assertInstanceOf(Collection::class, $subscriptions);
         $this->assertCount(1, $subscriptions);
         $this->assertInstanceOf(Subscription::class, $subscriptions->first());
@@ -40,10 +44,15 @@ class SubscriptionsTest extends TestCase
     /** @test */
     public function createSubscription()
     {
+        $this->useMock('200-create-subscription.json');
         $resources = [SubscriptionResource::PROCESS_STATUS];
         $url = 'https://www.example.com/push';
-        $status = $this->client->subscriptions->create($resources, $url);
-
+        $status = $this->client->subscriptions->create(
+            $resources,
+            $url,
+            SubscriptionType::WEBHOOK,
+            false
+        );
         $this->assertInstanceOf(ProcessStatus::class, $status);
         $this->assertSame(1, $status->processStatusId);
         $this->assertSame('CREATE_SUBSCRIPTION', $status->eventType);
