@@ -64,11 +64,19 @@ class SubscriptionsTest extends TestCase
     /** @test */
     public function updateSubscription()
     {
+        $this->useMock('200-update-subscription.json');
+
         $id = '1234';
         $resources = [SubscriptionResource::PROCESS_STATUS];
         $url = 'https://www.example.com/push';
 
-        $status = $this->client->subscriptions->update($id, $resources, $url);
+        $status = $this->client->subscriptions->update(
+            $id,
+            $resources,
+            $url,
+            SubscriptionType::WEBHOOK,
+            false
+        );
 
         $this->assertInstanceOf(ProcessStatus::class, $status);
         $this->assertSame(1, $status->processStatusId);
