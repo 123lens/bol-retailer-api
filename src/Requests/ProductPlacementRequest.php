@@ -7,5 +7,5 @@ use Budgetlens\BolRetailerApi\Support\Arr;
 
 class ProductPlacementRequest extends BaseRequest
 {
-    protected null | string $ean;
+    protected ?string $ean;
 }

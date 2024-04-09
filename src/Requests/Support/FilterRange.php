@@ -6,7 +6,7 @@ use Budgetlens\BolRetailerApi\Resources\BaseResource;
 
 class FilterRange extends BaseResource
 {
-    protected null | string $rangeId;
-    protected null | int $min;
-    protected null | int $max;
+    protected ?string $rangeId;
+    protected ?int $min;
+    protected ?int $max;
 }

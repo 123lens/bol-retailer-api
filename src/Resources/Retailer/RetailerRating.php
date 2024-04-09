@@ -6,11 +6,11 @@ use Budgetlens\BolRetailerApi\Resources\BaseResource;
 
 class RetailerRating extends BaseResource
 {
-    public null | float $retailerRating;
-    public null | float $productInformationRating;
-    public null | float $deliveryTimeRating;
-    public null | float $shippingRating;
-    public null | float $serviceRating;
+    public ?float $retailerRating;
+    public ?float $productInformationRating;
+    public ?float $deliveryTimeRating;
+    public ?float $shippingRating;
+    public ?float $serviceRating;
 
     public function setRetailerRatingAttribute($value): self
     {

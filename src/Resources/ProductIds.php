@@ -6,8 +6,8 @@ use Illuminate\Support\Collection;
 
 class ProductIds extends BaseResource
 {
-    public null | string $bolProductId;
-    public null | Collection $eans;
+    public ?string $bolProductId;
+    public ?Collection $eans;
 
     public function setEansAttribute($value): self
     {

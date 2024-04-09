@@ -6,9 +6,9 @@ use Illuminate\Support\Collection;
 
 class Variant extends BaseResource
 {
-    public null|string $size;
-    public null|int $width;
-    public null|int $height;
-    public null|string $mimeType;
-    public null|string $url;
+    public ?string $size;
+    public ?int $width;
+    public ?int $height;
+    public ?string $mimeType;
+    public ?string $url;
 }

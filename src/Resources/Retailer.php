@@ -7,14 +7,14 @@ use Budgetlens\BolRetailerApi\Resources\Retailer\RetailerReview;
 
 class Retailer extends BaseResource
 {
-    public null | string $retailerId;
-    public null | string $displayName;
-    public null | \DateTimeImmutable $registrationDate;
-    public null | bool $topRetailer;
-    public null | string $ratingMethod;
-    public null | RetailerRating $retailerRating;
+    public ?string $retailerId;
+    public ?string $displayName;
+    public ?\DateTimeImmutable $registrationDate;
+    public ?bool $topRetailer;
+    public ?string $ratingMethod;
+    public ?RetailerRating $retailerRating;
 
-    public null | RetailerReview $retailerReview;
+    public ?RetailerReview $retailerReview;
 
     public function setRegistrationDateAttribute($value): self
     {

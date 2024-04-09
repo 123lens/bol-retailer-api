@@ -17,7 +17,7 @@ use Illuminate\Support\Collection;
 
 class Products extends BaseEndpoint
 {
-    public function list(ListProductsRequest $request): null | ProductList
+    public function list(ListProductsRequest $request): ?ProductList
     {
         $response = $this->performApiCall(
             'POST',
@@ -35,7 +35,7 @@ class Products extends BaseEndpoint
         return null;
     }
 
-    public function listFilters(ListProductsRequest $request): null | FiltersList
+    public function listFilters(ListProductsRequest $request): ?FiltersList
     {
         $parameters = collect($request->toArray())
             ->map(function ($data, $key) {
@@ -60,7 +60,7 @@ class Products extends BaseEndpoint
         return null;
     }
 
-    public function getAssets(string $eancode, null | string $usage = null): Collection
+    public function getAssets(string $eancode, ?string $usage = null): Collection
     {
         $parameters = collect([
             'usage' => $usage
@@ -122,7 +122,7 @@ class Products extends BaseEndpoint
         return $collection;
     }
 
-    public function getPlacement(ProductPlacementRequest $request): null | ProductPlacement
+    public function getPlacement(ProductPlacementRequest $request): ?ProductPlacement
     {
         $response = $this->performApiCall(
             'GET',
@@ -140,7 +140,7 @@ class Products extends BaseEndpoint
         return null;
     }
 
-    public function getProductIds(string $eancode): null | ProductIds
+    public function getProductIds(string $eancode): ?ProductIds
     {
         $response = $this->performApiCall(
             'GET',
@@ -155,7 +155,7 @@ class Products extends BaseEndpoint
         return null;
     }
 
-    public function getProductRatings(string $eancode): null | ProductRatings
+    public function getProductRatings(string $eancode): ?ProductRatings
     {
         $response = $this->performApiCall(
             'GET',

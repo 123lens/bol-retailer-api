@@ -6,11 +6,11 @@ use Budgetlens\BolRetailerApi\Resources\BaseResource;
 
 class RetailerReview extends BaseResource
 {
-    public null | int $totalReviewCount;
-    public null | int $approvalPercentage;
-    public null | int $positiveReviewCount;
-    public null | int $neutralReviewCount;
-    public null | int $negativeReviewCount;
+    public ?int $totalReviewCount;
+    public ?int $approvalPercentage;
+    public ?int $positiveReviewCount;
+    public ?int $neutralReviewCount;
+    public ?int $negativeReviewCount;
 
     public function setTotalReviewCountAttribute($value): self
     {

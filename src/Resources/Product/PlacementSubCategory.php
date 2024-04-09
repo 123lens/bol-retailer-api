@@ -5,6 +5,6 @@ use Budgetlens\BolRetailerApi\Resources\BaseResource;
 
 class PlacementSubCategory extends BaseResource
 {
-    public null | string $id;
-    public null | string $name;
+    public ?string $id;
+    public ?string $name;
 }

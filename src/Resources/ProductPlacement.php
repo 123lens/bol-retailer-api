@@ -7,8 +7,8 @@ use Illuminate\Support\Collection;
 
 class ProductPlacement extends BaseResource
 {
-    public null | string $url;
-    public null | Collection $categories;
+    public ?string $url;
+    public ?Collection $categories;
 
     public function setCategoriesAttribute($value): self
     {

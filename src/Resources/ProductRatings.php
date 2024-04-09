@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 class ProductRatings extends BaseResource
 {
-    public null | Collection $ratings;
+    public ?Collection $ratings;
 
     public function getTotalVotes(): int
     {

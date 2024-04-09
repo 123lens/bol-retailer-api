@@ -9,9 +9,9 @@ use Illuminate\Support\Collection;
 
 class FiltersList extends BaseResource
 {
-    public null | Category $categoryData;
-    public null | Collection $filterRanges;
-    public null | Collection $filters;
+    public ?Category $categoryData;
+    public ?Collection $filterRanges;
+    public ?Collection $filters;
 
     public function setCategoryDataAttribute($value): self
     {

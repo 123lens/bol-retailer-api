@@ -6,6 +6,6 @@ use Budgetlens\BolRetailerApi\Resources\BaseResource;
 
 class ProductRating extends BaseResource
 {
-    public null | int $rating;
-    public null | int $count;
+    public ?int $rating;
+    public ?int $count;
 }

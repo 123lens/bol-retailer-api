@@ -7,8 +7,8 @@ use Illuminate\Support\Collection;
 
 class Category extends BaseResource
 {
-    public null | string $categoryName;
-    public null | Collection $categoryValues;
+    public ?string $categoryName;
+    public ?Collection $categoryValues;
 
     public function setCategoryValuesAttribute($value): self
     {

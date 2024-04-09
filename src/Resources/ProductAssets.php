@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 
 class ProductAssets extends BaseResource
 {
-    public null | Collection $assets;
+    public ?Collection $assets;
 
     public function setAssetsAttribute($value): self
     {

@@ -8,9 +8,9 @@ use Illuminate\Support\Collection;
 
 class Asset extends BaseResource
 {
-    public null | string $usage;
-    public null | int $order;
-    public null | Collection $variants;
+    public ?string $usage;
+    public ?int $order;
+    public ?Collection $variants;
 
     public function setVariantsAttribute($value)
     {

@@ -7,9 +7,9 @@ use Budgetlens\BolRetailerApi\Support\Arr;
 
 class ListProductsRequest extends BaseRequest
 {
-    protected null | string $searchTerm;
-    protected  null | string $categoryId;
-    protected  null | string $sort;
+    protected ?string $searchTerm;
+    protected  ?string $categoryId;
+    protected  ?string $sort;
     protected array $filterRanges = [];
     protected array $filterValues = [];
     protected  string $countryCode = "NL";

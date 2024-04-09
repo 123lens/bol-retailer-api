@@ -7,9 +7,9 @@ use Illuminate\Support\Collection;
 
 class PlacementCategory extends BaseResource
 {
-    public null | string $categoryId;
-    public null | string $categoryName;
-    public null | Collection $subcategories;
+    public ?string $categoryId;
+    public ?string $categoryName;
+    public ?Collection $subcategories;
 
     public function setSubcategoriesAttribute($value)
     {

@@ -47,7 +47,7 @@ class Client extends BaseClient implements ApiClient
     public $status;
 
     /** @var Products|null  */
-    public null | Products $products;
+    public $products;
 
     /** @var Promotions */
     public $promotions;
@@ -56,7 +56,7 @@ class Client extends BaseClient implements ApiClient
     public $replenishments;
 
     /** @var Retailers|null  */
-    public null | Retailers $retailers;
+    public Retailers $retailers;
 
     /** @var  Returns */
     public $returns;
