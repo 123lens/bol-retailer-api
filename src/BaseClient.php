@@ -72,12 +72,12 @@ abstract class BaseClient
         if (is_null($this->httpClient)) {
             $stack = HandlerStack::create();
 
-            // add token middleware
-            $stack->push(new RefreshToken($this->config));
-
             foreach ($this->config->getMiddleware() as $middlware) {
                 $stack->push($middlware);
             }
+
+            // add token middleware
+            $stack->push(new RefreshToken($this->config));
 
             $client = new HttpClient([
                 RequestOptions::VERIFY => CaBundle::getBundledCaBundlePath(),
