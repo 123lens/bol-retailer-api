@@ -208,10 +208,10 @@ class ProductsTest extends TestCase
         $this->useMock('200-get-product-best-offer-sold-be.json');
 
         $result = $this->client->products->getCompetingOffers(
-            '5035223124276',
-            'BE',
-            true,
-            'MODERATE'
+            eancode: '5035223124276',
+            countryCode: 'BE',
+            bestOfferOnly: true,
+            condition: 'MODERATE'
         );
         $this->assertInstanceOf(Collection::class, $result);
         $this->assertCount(1, $result);
@@ -236,7 +236,7 @@ class ProductsTest extends TestCase
         $this->useMock('200-get-product-all-offer-sold-nl.json');
 
         $result = $this->client->products->getCompetingOffers(
-            '9789463160315',
+            eancode: '9789463160315',
         );
 
         $this->assertInstanceOf(Collection::class, $result);
