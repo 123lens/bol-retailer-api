@@ -2,8 +2,10 @@
 
 namespace Budgetlens\BolRetailerApi\Endpoints;
 
+use Budgetlens\BolRetailerApi\Resources\ProcessStatus;
 use Budgetlens\BolRetailerApi\Resources\Shipment;
 use Budgetlens\BolRetailerApi\Resources\ShipmentItem;
+use Budgetlens\BolRetailerApi\Resources\Transport;
 use Illuminate\Support\Collection;
 
 class Shipments extends BaseEndpoint
@@ -58,5 +60,44 @@ class Shipments extends BaseEndpoint
         );
 
         return new Shipment(collect($response));
+    }
+
+    /**
+     * Ship Order Item
+     * @see https://api.bol.com/retailer/public/redoc/v8/retailer.html#operation/ship-order-item
+     * @param string $orderItemId
+     * @param string|null $shipmentReference
+     * @param string|null $shipmentLabelId
+     * @param Transport|null $transport
+     * @return ProcessStatus
+     */
+    public function shipOrderItem(
+        string $orderItemId,
+        string $shipmentReference = null,
+        string $shipmentLabelId = null,
+        ?Transport $transport = null
+    ): ProcessStatus {
+        $payload = collect([
+            'orderItems' => [
+                'orderItemId' => $orderItemId
+            ],
+            'shipmentReference' => $shipmentReference,
+            'shippingLabelId' => $shipmentLabelId,
+            'transport' => $transport
+        ])
+            ->when(!is_null($transport), function ($collection) use ($transport) {
+                return $collection->put('transport', $transport->toArray());
+            })
+            ->reject(function ($value) {
+                return is_null($value);
+            });
+
+        $response = $this->performApiCall(
+            'POST',
+            'shipments',
+            json_encode($payload->all())
+        );
+
+        return new ProcessStatus(collect($response));
     }
 }
