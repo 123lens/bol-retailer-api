@@ -25,7 +25,7 @@ abstract class BaseEndpoint
      * @param string $versionHeader
      * @return string
      */
-    protected function setApiVersionHeader(string $versionHeader): void
+    public function setApiVersionHeader(string $versionHeader): void
     {
         $this->apiClient->apiVersionHeader = $versionHeader;
     }
@@ -88,6 +88,16 @@ abstract class BaseEndpoint
             'application/vnd.retailer.v8+csv;charset=UTF-8',
             'application/vnd.retailer.v8+xml;charset=UTF-8',
         ];
+
+        // add direct response header best on request header
+        $directResponseHeaders = array_merge(
+            $directResponseHeaders,
+            [
+                str_replace("+json", "+pdf;charset=UTF-8", $this->apiClient->apiVersionHeader),
+                str_replace("+json", "+csv;charset=UTF-8", $this->apiClient->apiVersionHeader),
+                str_replace("+json", "+xml;charset=UTF-8", $this->apiClient->apiVersionHeader),
+            ]
+        );
 
         if (in_array(collect($response->getHeader('Content-Type'))->first(), $directResponseHeaders)) {
             return $response->getBody()->getContents();
