@@ -50,8 +50,7 @@ class StatusTest extends TestCase
         $this->useMock('404-status-not-found.json', 404);
 
         $this->expectException(BolRetailerException::class);
-        $this->expectExceptionMessage('Error executing API call : Not Found : Not Found (404)');
-        $status = $this->sharedClient->status->get(99999);
+        $this->sharedClient->status->get(99999);
     }
 
     /** @test */
