@@ -43,11 +43,11 @@ class Inbounds extends BaseEndpoint
      * @return Collection
      */
     public function list(
-        string $reference = null,
-        string $bsku = null,
-        \DateTime $creationStartDate = null,
-        \DateTime $creationEndDate = null,
-        string $state = null,
+        ?string $reference = null,
+        ?string $bsku = null,
+        ?\DateTime $creationStartDate = null,
+        ?\DateTime $creationEndDate = null,
+        ?string $state = null,
         int $page = 1
     ): Collection {
         if (!is_null($state) &&
@@ -210,7 +210,7 @@ class Inbounds extends BaseEndpoint
      * @param int $itemsToSend
      * @return Collection
      */
-    public function getDeliveryWindows(\DateTime $deliveryDate = null, int $itemsToSend = 1): Collection
+    public function getDeliveryWindows(?\DateTime $deliveryDate = null, int $itemsToSend = 1): Collection
     {
         $parameters = collect([
             'delivery-date' => $deliveryDate,

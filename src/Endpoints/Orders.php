@@ -107,8 +107,8 @@ class Orders extends BaseEndpoint
      */
     public function shipOrderItem(
         string $orderItemId,
-        string $shipmentReference = null,
-        string $shipmentLabelId = null,
+        ?string $shipmentReference = null,
+        ?string $shipmentLabelId = null,
         ?Transport $transport = null
     ): ProcessStatus {
         $payload = collect([

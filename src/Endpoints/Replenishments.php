@@ -45,10 +45,10 @@ class Replenishments extends BaseEndpoint
      * @return Collection
      */
     public function list(
-        string $reference = null,
-        string $eancode = null,
-        \DateTime $startDate = null,
-        \DateTime $endDate = null,
+        ?string $reference = null,
+        ?string $eancode = null,
+        ?\DateTime $startDate = null,
+        ?\DateTime $endDate = null,
         array $states = [],
         int $page = 1
     ): Collection {

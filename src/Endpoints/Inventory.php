@@ -18,10 +18,10 @@ class Inventory extends BaseEndpoint
      * @return Collection
      */
     public function get(
-        string $quantity = null,
-        string $stock = null,
-        string $state = null,
-        string $query = null,
+        ?string $quantity = null,
+        ?string $stock = null,
+        ?string $state = null,
+        ?string $query = null,
         int $page = 1
     ): Collection {
         $parameters = collect([

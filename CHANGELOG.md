@@ -4,6 +4,12 @@ All notable changes to `bol-retailer-api` will be documented in this file.
 
 ## [Unreleased]
 
+## [v10.1.0] - 2026-10-22
+
+### Changes
+- Support illuminate/collections 11, 12 and 13 (Laravel 11 to 13)
+- PHP 8.4/8.5 compatibility: explicit nullable parameter types, `(float)` instead of `(double)` casts
+
 ## [v10.0.1] - 2023-12-27
 
 ### Changes

@@ -25,7 +25,7 @@ class Invoices extends BaseEndpoint
      * @param \DateTime|null $periodEndDate
      * @return InvoiceResource
      */
-    public function list(\DateTime $periodStartDate = null, \DateTime $periodEndDate = null): InvoiceResource
+    public function list(?\DateTime $periodStartDate = null, ?\DateTime $periodEndDate = null): InvoiceResource
     {
         $parameters = collect([
             'period-start-date' => $periodStartDate,

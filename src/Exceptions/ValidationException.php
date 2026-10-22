@@ -7,7 +7,7 @@ class ValidationException extends \Exception
 {
     private $violations = [];
 
-    public function __construct($message = "", $code = 0, Throwable $previous = null)
+    public function __construct($message = "", $code = 0, ?Throwable $previous = null)
     {
         $this->setViolations($message);
 

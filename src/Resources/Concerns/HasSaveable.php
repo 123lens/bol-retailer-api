@@ -10,7 +10,7 @@ trait HasSaveable
      * @param $path
      * @return string|null
      */
-    public function save(string $path, string $filename = null): ?string
+    public function save(string $path, ?string $filename = null): ?string
     {
         if (is_null($filename)) {
             $filename = "{$this->id}.{$this->fileExt}";

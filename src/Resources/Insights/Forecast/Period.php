@@ -23,8 +23,8 @@ class Period extends BaseResource
 
     public function setTotalAttribute($value): self
     {
-        $this->minimum = (double)$value->minimum ?? 0;
-        $this->maximum = (double)$value->maximum ?? 0;
+        $this->minimum = (float)$value->minimum ?? 0;
+        $this->maximum = (float)$value->maximum ?? 0;
 
         return $this;
     }

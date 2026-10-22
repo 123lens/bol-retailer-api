@@ -16,7 +16,7 @@ class Shipments extends BaseEndpoint
      * @param int $page
      * @return Collection
      */
-    public function list(string $fulfilmentMethod = null, string $orderId = null, int $page = 1): Collection
+    public function list(?string $fulfilmentMethod = null, ?string $orderId = null, int $page = 1): Collection
     {
         $query = collect([
             'fulfilment-method' => $fulfilmentMethod,
